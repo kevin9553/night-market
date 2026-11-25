@@ -62,6 +62,18 @@ h1{margin:0;font:900 22px/1.05 "Noto Serif TC",serif;background:var(--acc);color
 .sign3{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:var(--acc);color:var(--accink,#fff8ea);font:900 26px/1.1 'Noto Serif TC',serif;padding:8px 22px;border-radius:10px;text-align:center;box-shadow:0 6px 16px #0008,inset 0 0 0 2px #fff1d6;pointer-events:none;white-space:nowrap}.sign3 small{display:block;font:700 13px 'Noto Sans TC',sans-serif;opacity:.85;margin-top:3px}@media(max-height:780px){.sign3{display:none}}
 #hint3{position:absolute;left:0;right:0;top:46%;text-align:center;font:900 18px 'Noto Sans TC',sans-serif;color:#ffecc8;text-shadow:0 2px 6px #000;pointer-events:none;animation:pulse 1.2s ease-in-out infinite alternate}#hint3[hidden]{display:none}@keyframes pulse{to{opacity:.5}}
 
+/* premium polish */
+#stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 85% 75% at 50% 48%,transparent 55%,rgba(10,4,2,.55));box-shadow:inset 0 14px 18px -10px rgba(0,0,0,.6)}
+.cust{background:linear-gradient(160deg,#36261a,#22160e);box-shadow:0 2px 0 #000a,inset 0 1px 0 #ffffff14;border:1px solid #ffffff0d}
+h1{outline:1.5px solid rgba(255,244,224,.45);outline-offset:-5px;letter-spacing:.02em}
+.panel{background:linear-gradient(#fbf3e2,var(--cream));box-shadow:0 -8px 24px #000a,inset 0 1px 0 #fff}
+.btn{background:linear-gradient(#fff,#f6eedd);box-shadow:0 3px 0 #d4c3a3,inset 0 1px 0 #fff}
+.btn.hot{background:linear-gradient(color-mix(in srgb,var(--acc) 82%,#fff),var(--acc));box-shadow:0 3px 0 var(--acc2),inset 0 1px 0 #ffffff55}
+.btn.on{background:linear-gradient(#8fcf4e,var(--jade));box-shadow:0 3px 0 #4f7a22,inset 0 1px 0 #ffffff55}
+.sign3{background:linear-gradient(color-mix(in srgb,var(--acc) 85%,#fff),var(--acc));text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.toast{background:linear-gradient(90deg,transparent,rgba(20,8,4,.55) 20%,rgba(20,8,4,.55) 80%,transparent);padding:6px 34px}
+.card{background:linear-gradient(#fdf6e8,var(--cream));box-shadow:0 20px 50px #000,0 0 0 1px #ffffff40 inset}
+
 :root{ --acc:#b8361e;--acc2:#6e1a0c;--acc3:#ff9a6a }
 .row+.row{margin-top:8px}
 </style></head><body>
@@ -215,7 +227,7 @@ function createEngine(cv){
   const VS=`attribute vec3 aP;attribute vec3 aN;attribute vec3 aC;uniform mat4 uM,uVP;uniform mat3 uNM;uniform vec3 uCR,uCU;uniform float uMode;varying vec3 vW,vN,vC,vO;
 void main(){vO=aP;vec4 w;if(uMode>2.5){w=uM*vec4(0.,0.,0.,1.);w.xyz+=(uCR*aP.x+uCU*aP.y)*length(uM[0].xyz);}else w=uM*vec4(aP,1.);vW=w.xyz;vN=uNM*aN;vC=aC;gl_Position=uVP*w;}`;
   const FS=`precision highp float;varying vec3 vW,vN,vC,vO;
-uniform vec3 uCol,uEmi,uCam,uSky,uGnd,uKD,uKC,uFD,uFC,uFog,uPL,uPC;uniform float uA,uSp,uSh,uRim,uNz,uNS,uVC,uMode,uFN,uFF,uPR,uExp;
+uniform vec3 uCol,uEmi,uCam,uSky,uGnd,uKD,uKC,uFD,uFC,uFog,uPL,uPC,uNA,uBD,uBC;uniform float uA,uSp,uSh,uRim,uNz,uNS,uVC,uMode,uFN,uFF,uPR,uExp,uRf;
 float h(vec3 p){return fract(sin(dot(p,vec3(12.9898,78.233,37.719)))*43758.5453);}
 float vn(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(h(i),h(i+vec3(1,0,0)),f.x),mix(h(i+vec3(0,1,0)),h(i+vec3(1,1,0)),f.x),f.y),mix(mix(h(i+vec3(0,0,1)),h(i+vec3(1,0,1)),f.x),mix(h(i+vec3(0,1,1)),h(i+vec3(1,1,1)),f.x),f.y),f.z);}
 vec3 L(vec3 c){return pow(max(c,0.),vec3(2.2));}
@@ -223,7 +235,7 @@ void main(){
  if(uMode>2.5){float d=length(vO.xy);gl_FragColor=vec4(uCol,smoothstep(1.,0.,d)*uA);return;}
  if(uMode>1.5){float d=length(vO.xz);gl_FragColor=vec4(0.,0.,0.,smoothstep(1.,.15,d)*uA);return;}
  vec3 base=L(mix(uCol,uCol*vC,uVC));
- if(uNz>0.){float n=vn(vO*uNS)*.65+vn(vO*uNS*2.9)*.35;base*=1.-uNz*smoothstep(.5,.78,n);}
+ if(uNz>0.){vec3 q=vO*uNA*uNS;float n=vn(q)*.65+vn(q*2.9)*.35;base*=1.-uNz*smoothstep(.5,.78,n);}
  if(uMode>.5){vec3 c=base+L(uEmi);gl_FragColor=vec4(pow(clamp(c,0.,1.),vec3(1./2.2)),uA);return;}
  vec3 V=normalize(uCam-vW);vec3 N=normalize(vN);if(dot(N,V)<0.)N=-N;
  vec3 hemi=mix(L(uGnd),L(uSky),N.y*.5+.5);
@@ -231,16 +243,18 @@ void main(){
  float d2=max(dot(N,normalize(uFD)),0.);
  vec3 pl=uPL-vW;float pd=length(pl);float at=max(0.,1.-pd/uPR);at*=at;float d3=max(dot(N,pl/pd),0.)*at;float s3=pow(max(dot(N,normalize(pl/pd+V)),0.),uSh)*uSp*at;
  float fr=pow(1.-max(dot(N,V),0.),3.);
- vec3 c=base*(hemi+uKC*d1+uFC*d2+uPC*d3)+uKC*s1+uPC*s3+fr*uRim*L(uSky)+L(uEmi);
+ vec3 B=normalize(uBD);float d4=max(dot(N,B),0.);float s4=pow(max(dot(N,normalize(B+V)),0.),uSh*.5)*uSp*.6;
+ vec3 R=reflect(-V,N);vec3 env=mix(L(uGnd)*.5,L(uSky)*1.5,smoothstep(-.3,.9,R.y))+vec3(1.,.82,.55)*pow(max(R.y,0.),12.)*2.2;
+ vec3 c=base*(hemi+uKC*d1+uFC*d2+uPC*d3+uBC*d4*.5)+uKC*s1+uPC*s3+uBC*s4+fr*uRim*L(uSky)+L(uEmi)+env*uRf*mix(.18,1.,fr);
  c*=uExp;float f=clamp((length(vW-uCam)-uFN)/(uFF-uFN),0.,1.);c=mix(c,L(uFog),f);
- c=c*(2.51*c+.03)/(c*(2.43*c+.59)+.14);gl_FragColor=vec4(pow(clamp(c,0.,1.),vec3(1./2.2)),uA);}`;
+ c=c*(2.51*c+.03)/(c*(2.43*c+.59)+.14);c=pow(clamp(c,0.,1.),vec3(1./2.2));c=mix(vec3(dot(c,vec3(.299,.587,.114))),c,1.08);c=c*c*(3.-2.*c)*.25+c*.75;gl_FragColor=vec4(clamp(c,0.,1.),uA);}`;
   function sh(t,s){const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(o));return o}
   const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);if(!gl.getProgramParameter(pr,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(pr));gl.useProgram(pr);
-  const U={};['uM','uVP','uNM','uCR','uCU','uMode','uCol','uEmi','uCam','uSky','uGnd','uKD','uKC','uFD','uFC','uFog','uPL','uPC','uA','uSp','uSh','uRim','uNz','uNS','uVC','uFN','uFF','uPR','uExp'].forEach(n=>U[n]=gl.getUniformLocation(pr,n));
+  const U={};['uM','uVP','uNM','uCR','uCU','uMode','uCol','uEmi','uCam','uSky','uGnd','uKD','uKC','uFD','uFC','uFog','uPL','uPC','uA','uSp','uSh','uRim','uNz','uNS','uVC','uFN','uFF','uPR','uExp','uNA','uBD','uBC','uRf'].forEach(n=>U[n]=gl.getUniformLocation(pr,n));
   const aP=gl.getAttribLocation(pr,'aP'),aN=gl.getAttribLocation(pr,'aN'),aC=gl.getAttribLocation(pr,'aC');
   gl.disable(gl.CULL_FACE);gl.enable(gl.DEPTH_TEST);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
   const E={gl,nodes:[],cam:{pos:[0,5,6],tgt:[0,0,0],fov:40},
-    env:{sky:hex(0x8a6a50),gnd:hex(0x2a1a10),kd:[.4,1,.5],kc:[1.5,1.3,1.05],fd:[-.6,.5,.4],fc:[.35,.3,.28],fog:hex(0x150d08),fn:12,ff:30,pl:[0,0,0],pc:[0,0,0],pr:4,exp:1.1},
+    env:{sky:hex(0x8a6a50),gnd:hex(0x2a1a10),kd:[.4,1,.5],kc:[1.5,1.3,1.05],fd:[-.6,.5,.4],fc:[.35,.3,.28],fog:hex(0x150d08),fn:12,ff:30,pl:[0,0,0],pc:[0,0,0],pr:4,exp:1.1,bd:[-.3,.6,-1],bc:[.55,.38,.22],sway:1},
     VP:null,W:1,H:1};
   E.mesh=g=>{const m={n:g.I.length};const b=(t,d)=>{const o=gl.createBuffer();gl.bindBuffer(t,o);gl.bufferData(t,d,gl.STATIC_DRAW);return o};
     m.p=b(gl.ARRAY_BUFFER,g.P);m.nb=b(gl.ARRAY_BUFFER,g.N);m.c=g.C?b(gl.ARRAY_BUFFER,g.C):null;m.big=g.P.length/3>65535&&u32;m.i=b(gl.ELEMENT_ARRAY_BUFFER,m.big?new Uint32Array(g.I):new Uint16Array(g.I));return m};
@@ -255,15 +269,15 @@ void main(){
   E.project=p=>{if(!E.VP)return[0,0,1];const v=E.VP,x=v[0]*p[0]+v[4]*p[1]+v[8]*p[2]+v[12],y=v[1]*p[0]+v[5]*p[1]+v[9]*p[2]+v[13],w=v[3]*p[0]+v[7]*p[1]+v[11]*p[2]+v[15];return[(x/w*.5+.5)*E.W,(1-(y/w*.5+.5))*E.H,w]};
   E.worldPos=(n,local=[0,0,0])=>M4.xf(world(n,frame),local);
   E.render=(W,H)=>{frame++;E.W=W;E.H=H;gl.viewport(0,0,cv.width,cv.height);const e=E.env;gl.clearColor(e.fog[0],e.fog[1],e.fog[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-    const c=E.cam,V=M4.look(c.pos,c.tgt,[0,1,0]);E.VP=M4.mul(M4.persp(c.fov*Math.PI/180,W/H,.1,60),V);
-    gl.uniformMatrix4fv(U.uVP,false,E.VP);gl.uniform3fv(U.uCR,[V[0],V[4],V[8]]);gl.uniform3fv(U.uCU,[V[1],V[5],V[9]]);gl.uniform3fv(U.uCam,c.pos);
+    const c=E.cam,tt=performance.now()/1000,sw=e.sway,cp=[c.pos[0]+Math.sin(tt*.31)*.07*sw,c.pos[1]+Math.sin(tt*.23)*.04*sw,c.pos[2]],V=M4.look(cp,c.tgt,[0,1,0]);E.VP=M4.mul(M4.persp(c.fov*Math.PI/180,W/H,.1,60),V);
+    gl.uniformMatrix4fv(U.uVP,false,E.VP);gl.uniform3fv(U.uCR,[V[0],V[4],V[8]]);gl.uniform3fv(U.uCU,[V[1],V[5],V[9]]);gl.uniform3fv(U.uCam,cp);gl.uniform3fv(U.uBD,e.bd);gl.uniform3fv(U.uBC,e.bc);
     gl.uniform3fv(U.uSky,e.sky);gl.uniform3fv(U.uGnd,e.gnd);gl.uniform3fv(U.uKD,e.kd);gl.uniform3fv(U.uKC,e.kc);gl.uniform3fv(U.uFD,e.fd);gl.uniform3fv(U.uFC,e.fc);gl.uniform3fv(U.uFog,e.fog);
     gl.uniform3fv(U.uPL,e.pl);gl.uniform3fv(U.uPC,e.pc);gl.uniform1f(U.uPR,e.pr);gl.uniform1f(U.uFN,e.fn);gl.uniform1f(U.uFF,e.ff);gl.uniform1f(U.uExp,e.exp);
-    const list=E.nodes.filter(n=>n.m&&vis(n)).map(n=>{const w=world(n,frame);return{n,w,d:Math.hypot(w[12]-c.pos[0],w[13]-c.pos[1],w[14]-c.pos[2])}});
+    const list=E.nodes.filter(n=>n.m&&vis(n)).map(n=>{const w=world(n,frame);return{n,w,d:Math.hypot(w[12]-cp[0],w[13]-cp[1],w[14]-cp[2])}});
     const op=list.filter(o=>o.n.a>=1&&o.n.mode<2),tr=list.filter(o=>!(o.n.a>=1&&o.n.mode<2)).sort((a,b)=>(a.n.order-b.n.order)||(b.d-a.d));
     gl.disable(gl.BLEND);gl.depthMask(true);op.forEach(draw);gl.enable(gl.BLEND);gl.depthMask(false);tr.forEach(draw);gl.depthMask(true)};
   function draw({n,w}){const m=n.m;gl.uniformMatrix4fv(U.uM,false,w);gl.uniformMatrix3fv(U.uNM,false,M4.nrm(w));
-    gl.uniform3fv(U.uCol,n.col);gl.uniform3fv(U.uEmi,n.emi);gl.uniform1f(U.uA,n.a);gl.uniform1f(U.uSp,n.sp);gl.uniform1f(U.uSh,n.sh);gl.uniform1f(U.uRim,n.rim);gl.uniform1f(U.uNz,n.nz);gl.uniform1f(U.uNS,n.ns);gl.uniform1f(U.uMode,n.mode);gl.uniform1f(U.uVC,m.c?1:0);
+    gl.uniform3fv(U.uCol,n.col);gl.uniform3fv(U.uEmi,n.emi);gl.uniform1f(U.uA,n.a);gl.uniform1f(U.uSp,n.sp);gl.uniform1f(U.uSh,n.sh);gl.uniform1f(U.uRim,n.rim);gl.uniform1f(U.uNz,n.nz);gl.uniform1f(U.uNS,n.ns);gl.uniform1f(U.uMode,n.mode);gl.uniform3fv(U.uNA,n.na||[1,1,1]);gl.uniform1f(U.uRf,n.refl!==undefined?n.refl:clamp((n.sp-.45)*.55,0,.5));gl.uniform1f(U.uVC,m.c?1:0);
     gl.bindBuffer(gl.ARRAY_BUFFER,m.p);gl.enableVertexAttribArray(aP);gl.vertexAttribPointer(aP,3,gl.FLOAT,false,0,0);
     gl.bindBuffer(gl.ARRAY_BUFFER,m.nb);gl.enableVertexAttribArray(aN);gl.vertexAttribPointer(aN,3,gl.FLOAT,false,0,0);
     if(m.c&&aC>=0){gl.bindBuffer(gl.ARRAY_BUFFER,m.c);gl.enableVertexAttribArray(aC);gl.vertexAttribPointer(aC,3,gl.FLOAT,false,0,0)}else if(aC>=0){gl.disableVertexAttribArray(aC);gl.vertexAttrib3f(aC,1,1,1)}
@@ -295,7 +309,7 @@ capPts[0][0]=0;capPts[capPts.length-1][0]=0;
 const CAP=GEO.lathe(capPts,28),NV=CAP.P.length/3;
 /* scene */
 E3.env.kd=[.35,1,.8];E3.env.kc=[1.45,1.25,1];E3.env.sky=C(0x8a6a50);E3.env.gnd=C(0x2a1408);E3.env.fog=C(0x120806);E3.env.pl=[0,.35,0];E3.env.pc=[1.6,.55,.12];E3.env.pr=3.2;
-E3.add(E3.mesh(GEO.rbox(16,.4,10,.1,2)),{pos:[0,-.2,0],col:C(0x4e2c16),nz:.25,ns:1.6,sp:.04});
+E3.add(E3.mesh(GEO.rbox(16,.4,10,.1,2)),{pos:[0,-.2,0],col:C(0x4e2c16),nz:.5,ns:1.1,na:[.35,6,7],sp:.12,sh:20,refl:.08});
 E3.add(E3.Q,{pos:[0,3,-3.4],scl:[10,4.5,1],col:C(0x2c1a10),nz:.3,ns:1.3,sp:0,rim:0});
 for(let i=0;i<9;i++)E3.add(SPH,{pos:[-4+i,4.3+Math.sin(i)*.15,-3.2],scl:[.15,.18,.15],col:C(0xff7050),emi:C(0xd0402a),mode:1});
 const grill=E3.group({pos:[0,0,-.1]});
