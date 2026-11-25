@@ -57,6 +57,10 @@ h1{margin:0;font:900 22px/1.05 "Noto Serif TC",serif;background:var(--acc);color
 @media(max-width:380px){h1{font-size:19px;padding:5px 9px 6px}.hud{gap:10px}.hud b{font-size:19px}}
 #tags{position:absolute;inset:0;pointer-events:none;overflow:hidden}.tag3{position:absolute;left:0;top:0;pointer-events:none;will-change:transform}
 .nogl{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--mut)}
+.mt{position:relative;width:44px;height:7px;border-radius:4px;background:linear-gradient(90deg,#efe3c8 0 53%,#7cc243 53% 73%,#6e300e 73%);box-shadow:0 0 0 2px rgba(0,0,0,.55)}.mt i{position:absolute;top:-3px;width:3px;height:13px;margin-left:-1.5px;background:#fff;left:var(--p,0)}
+.two{display:grid;gap:4px;width:52px;padding:3px 4px;border-radius:6px;background:rgba(0,0,0,.35)}.two .mt{width:44px}.two.ok{box-shadow:0 0 0 2px #ffd56a,0 0 10px #ffd56a99}
+.sign3{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:var(--acc);color:var(--accink,#fff8ea);font:900 26px/1.1 'Noto Serif TC',serif;padding:8px 22px;border-radius:10px;text-align:center;box-shadow:0 6px 16px #0008,inset 0 0 0 2px #fff1d6;pointer-events:none;white-space:nowrap}.sign3 small{display:block;font:700 13px 'Noto Sans TC',sans-serif;opacity:.85;margin-top:3px}@media(max-height:640px){.sign3{display:none}}
+#hint3{position:absolute;left:0;right:0;top:46%;text-align:center;font:900 18px 'Noto Sans TC',sans-serif;color:#ffecc8;text-shadow:0 2px 6px #000;pointer-events:none;animation:pulse 1.2s ease-in-out infinite alternate}#hint3[hidden]{display:none}@keyframes pulse{to{opacity:.5}}
 
 :root{ --acc:#d4243a;--acc2:#8a0f1e;--acc3:#ff8a8a }
 .row.fruits{--cols:5;margin-bottom:8px}#meter{position:absolute;left:6%;right:6%;top:10px;background:rgba(20,8,4,.86);border-radius:12px;padding:9px 10px 6px;pointer-events:none}#meter[hidden]{display:none}.mb{position:relative;height:20px;border-radius:6px;background:linear-gradient(90deg,#f3ead9 0 calc((1 - var(--z,.26))*50%),#f0b43a 0 calc((1 + var(--z,.26))*50%),#7a3510 0)}.mn{position:absolute;top:-5px;bottom:-5px;width:6px;margin-left:-3px;left:calc(var(--m,0)*100%);background:#fff;border-radius:3px;box-shadow:0 0 6px #000}.ml{display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-top:5px;color:#e8d8c0}.ml span:nth-child(2){color:#ffd06a}
@@ -241,6 +245,7 @@ void main(){
   E.mesh=g=>{const m={n:g.I.length};const b=(t,d)=>{const o=gl.createBuffer();gl.bindBuffer(t,o);gl.bufferData(t,d,gl.STATIC_DRAW);return o};
     m.p=b(gl.ARRAY_BUFFER,g.P);m.nb=b(gl.ARRAY_BUFFER,g.N);m.c=g.C?b(gl.ARRAY_BUFFER,g.C):null;m.big=g.P.length/3>65535&&u32;m.i=b(gl.ELEMENT_ARRAY_BUFFER,m.big?new Uint32Array(g.I):new Uint16Array(g.I));return m};
   E.updateMesh=(m,g)=>{gl.bindBuffer(gl.ARRAY_BUFFER,m.p);gl.bufferData(gl.ARRAY_BUFFER,g.P,gl.DYNAMIC_DRAW);gl.bindBuffer(gl.ARRAY_BUFFER,m.nb);gl.bufferData(gl.ARRAY_BUFFER,g.N,gl.DYNAMIC_DRAW)};
+  E.setColors=(m,C)=>{if(!m.c)m.c=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,m.c);gl.bufferData(gl.ARRAY_BUFFER,C,gl.DYNAMIC_DRAW)};
   E.add=(mesh,o={})=>{const n=Object.assign({m:mesh,col:[1,1,1],pos:[0,0,0],rot:[0,0,0],scl:[1,1,1],sp:.3,sh:30,rim:.15,emi:[0,0,0],a:1,nz:0,ns:20,mode:0,vis:true,parent:null,order:0},o);E.nodes.push(n);return n};
   E.group=o=>E.add(null,o||{});
   E.remove=n=>{const i=E.nodes.indexOf(n);if(i>=0)E.nodes.splice(i,1);E.nodes.filter(c=>c.parent===n).forEach(E.remove)};
