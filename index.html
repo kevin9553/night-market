@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>夜市小吃街</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+/* VOICE: 熱鬧溫暖的夜市入口，像走進一條亮著燈泡的小吃街
+   IDEA: 夜市街道本身——拉著燈串的街口、一攤一攤的攤車招牌
+   PICTURE: 街口全景插畫，燈串、攤車遮雨棚、熱氣；下方每款遊戲是一台攤車
+   COLOUR and TYPE: 深夜褐底、燈泡暖黃、燈籠紅；每攤一個招牌色；Noto Serif TC 招牌字
+   LAYOUT: 街口主視覺 → 攤車格子（手機兩欄）→ 小提示 */
+:root{color-scheme:dark;--bg:#150d08;--ink:#fbefdc;--mut:#c4ad92;--red:#c8322b;--warm:#ffcf7a;--cream:#f6ecd5;--cink:#3a2414}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Noto Sans TC",system-ui,sans-serif;overflow-x:clip}
+.hero{position:relative;padding:max(18px,env(safe-area-inset-top)) max(5vw,16px) 0;text-align:center;background:radial-gradient(ellipse 90% 70% at 50% 30%,#3a1d10,transparent 70%),linear-gradient(#0c0705,#1d100a)}
+.hero h1{margin:14px 0 2px;font:900 clamp(40px,12vw,68px)/1.05 "Noto Serif TC",serif;color:#fff2d8;text-shadow:0 0 26px #ff8a3a88,0 3px 0 #8f1d17;text-wrap:balance}
+.hero p{margin:0 auto;max-width:30em;color:var(--mut);font-size:16px}
+.street{display:block;width:100%;max-width:900px;height:auto;margin:10px auto 0}
+.band{padding:clamp(22px,4vw,48px) max(5vw,14px)}
+.wrap{max-width:980px;margin:0 auto}
+.lead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin:0 0 14px}
+.lead h2{margin:0;font:900 26px/1.1 "Noto Serif TC",serif;color:var(--warm)}
+.lead span{color:var(--mut);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,165px),1fr));gap:14px}
+.stall{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--cink);background:var(--cream);border-radius:14px;overflow:hidden;box-shadow:0 10px 24px #000a;transition:transform .2s}
+.stall:hover{transform:translateY(-4px)}.stall:focus-visible{outline:3px solid var(--warm);outline-offset:3px}
+.awn{height:30px;background:repeating-linear-gradient(90deg,var(--c) 0 22px,#fff6e6 22px 44px);-webkit-mask:radial-gradient(11px 10px at 11px 20px,#000 98%,transparent) 0 0/22px 30px repeat-x,linear-gradient(#000 0 0) 0 0/100% 20px no-repeat;mask:radial-gradient(11px 10px at 11px 20px,#000 98%,transparent) 0 0/22px 30px repeat-x,linear-gradient(#000 0 0) 0 0/100% 20px no-repeat}
+.pic{position:relative;margin:-6px 10px 0;height:128px;border-radius:10px;background:radial-gradient(ellipse at 50% 70%,#ffcf7a55,transparent 70%),#2a1810;display:grid;place-items:center;overflow:hidden}
+.pic svg{width:100%;height:100%}
+.tag{position:absolute;top:8px;right:8px;background:var(--red);color:#fff;font:700 13px/1 "Noto Sans TC",sans-serif;padding:5px 7px;border-radius:6px}
+.txt{padding:10px 12px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.txt h3{margin:0;font:900 21px/1.15 "Noto Serif TC",serif;color:var(--cd)}
+.txt p{margin:0;font-size:14px;color:#6a4a32;line-height:1.45;flex:1}
+.go{margin-top:8px;display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:10px;background:var(--c);color:var(--ci,#fff);font-weight:900;font-size:16px;box-shadow:0 3px 0 var(--cd)}
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px;margin-top:22px}
+.tips div{background:#24160e;border:1px solid #ffffff14;border-radius:12px;padding:12px 14px;color:var(--mut);font-size:14px}
+.tips b{display:block;color:var(--ink);font-size:16px;margin-bottom:2px}
+footer{text-align:center;color:#8a7360;font-size:13px;padding:10px 16px max(28px,env(safe-area-inset-bottom))}
+@media(prefers-reduced-motion:no-preference){.steam{animation:rise 3s ease-in infinite}.steam:nth-of-type(2){animation-delay:1s}.steam:nth-of-type(3){animation-delay:2s}.bulb{animation:tw 2.4s ease-in-out infinite alternate}}
+@keyframes rise{0%{transform:translateY(8px);opacity:0}30%{opacity:.5}100%{transform:translateY(-30px);opacity:0}}
+@keyframes tw{to{opacity:.55}}
+</style></head><body>
+<header class="hero">
+  <h1>夜市小吃街</h1>
+  <p>四攤 3D 小吃、一個人顧攤。照客人點的做，抓準火候，看你今晚能賺多少。</p>
+  <svg class="street" viewBox="0 0 900 300" role="img" aria-label="亮著燈串的夜市街口，四台小吃攤車">
+    <defs>
+      <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient>
+      <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2214"/><stop offset="1" stop-color="#150d08"/></linearGradient>
+      <g id="b"><circle r="9" fill="url(#glow)"/><circle r="3.2" fill="#fff0c8"/></g>
+    </defs>
+    <path d="M0 150 L0 70 L60 70 L60 40 L120 40 L120 80 L190 80 L190 30 L250 30 L250 90 L330 90 L330 55 L400 55 L400 85 L480 85 L480 35 L560 35 L560 75 L640 75 L640 45 L720 45 L720 80 L800 80 L800 50 L900 50 L900 150 Z" fill="#22140d"/>
+    <g fill="#ffcf7a" opacity=".35"><rect x="80" y="55" width="8" height="10"/><rect x="205" y="45" width="8" height="10"/><rect x="225" y="60" width="8" height="10"/><rect x="500" y="50" width="8" height="10"/><rect x="660" y="60" width="8" height="10"/><rect x="830" y="65" width="8" height="10"/></g>
+    <rect y="210" width="900" height="90" fill="url(#ground)"/>
+    <path d="M0 22 Q225 92 450 30 Q675 92 900 22" stroke="#3a2a1e" stroke-width="2" fill="none"/>
+    <g class="bulb"><use href="#b" x="40" y="35"/><use href="#b" x="110" y="55"/><use href="#b" x="180" y="66"/><use href="#b" x="250" y="66"/><use href="#b" x="320" y="55"/><use href="#b" x="390" y="40"/></g>
+    <g class="bulb" style="animation-delay:1.2s"><use href="#b" x="510" y="40"/><use href="#b" x="580" y="55"/><use href="#b" x="650" y="66"/><use href="#b" x="720" y="66"/><use href="#b" x="790" y="55"/><use href="#b" x="860" y="35"/></g>
+    <g id="stalls">
+      <!-- stall 1: tofu -->
+      <g transform="translate(30 120)">
+        <rect x="6" y="40" width="188" height="100" rx="6" fill="#5a3420"/><rect x="6" y="40" width="188" height="12" fill="#3a2010"/>
+        <path d="M0 10 h200 v24 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 z" fill="#c8322b"/>
+        <rect x="40" y="-22" width="120" height="30" rx="4" fill="#fff2d8"/><text x="100" y="-1" text-anchor="middle" font-family="Noto Serif TC,serif" font-weight="900" font-size="20" fill="#c8322b">臭豆腐</text>
+        <ellipse cx="100" cy="70" rx="52" ry="14" fill="#2b2522"/><ellipse cx="100" cy="67" rx="44" ry="10" fill="#e8a23a"/>
+        <circle class="steam" cx="90" cy="50" r="8" fill="#fff" opacity=".4"/><circle class="steam" cx="110" cy="45" r="7" fill="#fff" opacity=".4"/>
+      </g>
+      <g transform="translate(250 130)">
+        <rect x="6" y="40" width="168" height="90" rx="6" fill="#5a3420"/>
+        <path d="M0 10 h180 v24 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 z" fill="#d4243a"/>
+        <rect x="30" y="-20" width="120" height="28" rx="4" fill="#fff2d8"/><text x="90" y="0" text-anchor="middle" font-family="Noto Serif TC,serif" font-weight="900" font-size="19" fill="#d4243a">糖葫蘆</text>
+        <rect x="120" y="58" width="34" height="50" rx="6" fill="#e0bb5c"/>
+        <g stroke="#e2c38a" stroke-width="2"><line x1="128" y1="60" x2="124" y2="20"/><line x1="138" y1="60" x2="138" y2="16"/><line x1="148" y1="60" x2="152" y2="20"/></g>
+        <g fill="#e0344a"><circle cx="124" cy="26" r="6"/><circle cx="125" cy="38" r="6"/><circle cx="138" cy="22" r="6"/><circle cx="138" cy="34" r="6"/><circle cx="152" cy="26" r="6"/><circle cx="151" cy="38" r="6"/></g>
+      </g>
+      <g transform="translate(470 125)">
+        <rect x="6" y="40" width="168" height="95" rx="6" fill="#5a3420"/>
+        <path d="M0 10 h180 v24 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 z" fill="#e8a640"/>
+        <rect x="30" y="-20" width="120" height="28" rx="4" fill="#fff2d8"/><text x="90" y="0" text-anchor="middle" font-family="Noto Serif TC,serif" font-weight="900" font-size="19" fill="#9a5a12">雞蛋糕</text>
+        <rect x="40" y="56" width="100" height="40" rx="5" fill="#2e2a26"/><g fill="#e3a23e"><circle cx="62" cy="76" r="9"/><circle cx="90" cy="76" r="9"/><circle cx="118" cy="76" r="9"/></g>
+        <circle class="steam" cx="80" cy="50" r="7" fill="#fff" opacity=".4"/>
+      </g>
+      <g transform="translate(690 120)">
+        <rect x="6" y="40" width="168" height="100" rx="6" fill="#5a3420"/>
+        <path d="M0 10 h180 v24 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 q-10 12 -20 0 z" fill="#e8862a"/>
+        <rect x="30" y="-20" width="120" height="28" rx="4" fill="#fff2d8"/><text x="90" y="0" text-anchor="middle" font-family="Noto Serif TC,serif" font-weight="900" font-size="19" fill="#8f4510">地瓜球</text>
+        <ellipse cx="90" cy="72" rx="50" ry="14" fill="#2b2522"/><ellipse cx="90" cy="69" rx="42" ry="10" fill="#e8a23a"/>
+        <g fill="#f0a040"><circle cx="72" cy="66" r="6"/><circle cx="90" cy="70" r="6"/><circle cx="106" cy="65" r="6"/></g>
+        <circle class="steam" cx="95" cy="48" r="8" fill="#fff" opacity=".4"/>
+      </g>
+    </g>
+  </svg>
+</header>
+
+<main class="band"><div class="wrap">
+  <div class="lead"><h2>今晚營業的攤位</h2><span>點攤位開始玩</span></div>
+  <div class="grid">
+    <a class="stall" href="stinky-tofu.html" style="--c:#c8322b;--cd:#8f1d17">
+      <div class="awn"></div>
+      <div class="pic"><span class="tag">3D</span>
+        <svg viewBox="0 0 160 128" aria-hidden="true"><ellipse cx="80" cy="96" rx="62" ry="20" fill="#f8f6f1"/><ellipse cx="80" cy="94" rx="50" ry="14" fill="#9a1d0c" opacity=".7"/>
+          <g stroke="#7a3a12" stroke-width="1"><rect x="44" y="64" width="30" height="26" rx="5" fill="#d98a2e"/><rect x="78" y="60" width="30" height="26" rx="5" fill="#c9771f"/><rect x="60" y="74" width="30" height="24" rx="5" fill="#e0a040"/><rect x="94" y="76" width="26" height="22" rx="5" fill="#d0801f"/></g>
+          <g fill="#7a3a12" opacity=".45"><circle cx="52" cy="72" r="1.5"/><circle cx="66" cy="80" r="1.5"/><circle cx="88" cy="68" r="1.5"/><circle cx="100" cy="74" r="1.5"/><circle cx="72" cy="86" r="1.5"/><circle cx="104" cy="86" r="1.5"/></g>
+          <g stroke-width="3" stroke-linecap="round"><path d="M64 66 l14 -6" stroke="#d9e8b0"/><path d="M70 62 l10 4" stroke="#b8d47a"/><path d="M80 58 l12 2" stroke="#f3f0dc"/><path d="M88 62 l10 -6" stroke="#f08a3a"/><path d="M74 58 l6 -8" stroke="#d9e8b0"/></g>
+          <g fill="#fff" opacity=".35"><circle class="steam" cx="62" cy="44" r="8"/><circle class="steam" cx="96" cy="40" r="7"/></g></svg></div>
+      <div class="txt"><h3>炸臭豆腐</h3><p>油鍋現炸，火候到了撈起來，配泡菜、調辣度。</p><span class="go">開始玩 →</span></div>
+    </a>
+    <a class="stall" href="tanghulu.html" style="--c:#d4243a;--cd:#8a0f1e">
+      <div class="awn"></div>
+      <div class="pic"><span class="tag">3D</span><svg viewBox="0 0 160 128" aria-hidden="true"><defs><radialGradient id="rb" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ff7080"/><stop offset="1" stop-color="#8a0a1a"/></radialGradient></defs>
+          <g transform="rotate(-12 64 70)"><line x1="64" y1="14" x2="64" y2="122" stroke="#e2c38a" stroke-width="4" stroke-linecap="round"/><g fill="url(#rb)"><circle cx="64" cy="28" r="12"/><circle cx="64" cy="53" r="12"/><circle cx="64" cy="78" r="12"/></g><g fill="#fff" opacity=".8"><ellipse cx="59" cy="23" rx="4" ry="2"/><ellipse cx="59" cy="48" rx="4" ry="2"/><ellipse cx="59" cy="73" rx="4" ry="2"/></g></g>
+          <g transform="rotate(10 102 70)"><line x1="102" y1="18" x2="102" y2="122" stroke="#e2c38a" stroke-width="4" stroke-linecap="round"/><circle cx="102" cy="32" r="11" fill="#ffc04a"/><path d="M102 44 c-14 6 -13 22 0 26 c13 -4 14 -20 0 -26z" fill="#ff5560"/><circle cx="102" cy="84" r="10" fill="#c5e86c"/><g fill="#fff" opacity=".8"><ellipse cx="97" cy="27" rx="4" ry="2"/><ellipse cx="97" cy="80" rx="3" ry="2"/></g></g></svg></div>
+      <div class="txt"><h3>糖葫蘆</h3><p>照順序串水果，抓準時機沾糖漿，糖衣要晶亮酥脆。</p><span class="go">開始玩 →</span></div>
+    </a>
+    <a class="stall" href="eggcake.html" style="--c:#e8a640;--cd:#9a5a12;--ci:#3a1f05">
+      <div class="awn"></div>
+      <div class="pic"><span class="tag">3D</span><svg viewBox="0 0 160 128" aria-hidden="true"><path d="M40 52 h80 l-8 66 h-64z" fill="#e9d2a8"/><path d="M40 52 h80 l-4 10 h-72z" fill="#d4b886"/>
+          <path d="M62 30 l5 10 11 1 -8 8 2 11 -10 -5 -10 5 2 -11 -8 -8 11 -1z" fill="#e3a23e" stroke="#9a5a12"/>
+          <path d="M98 58 c-14 -8 -14 -24 0 -18 c14 -6 14 10 0 18z" fill="#e8a640" stroke="#9a5a12"/>
+          <g transform="translate(82 48)"><ellipse cx="-4" cy="0" rx="13" ry="9" fill="#dc9a38" stroke="#9a5a12"/><path d="M8 0 l9 -8 v16z" fill="#dc9a38" stroke="#9a5a12"/><circle cx="-11" cy="-2" r="1.6" fill="#5a2a0a"/></g>
+          <text x="80" y="96" text-anchor="middle" font-family="Noto Serif TC,serif" font-weight="900" font-size="15" fill="#9a5a12">雞蛋糕</text>
+          <g fill="#fff" opacity=".35"><circle class="steam" cx="70" cy="22" r="7"/><circle class="steam" cx="96" cy="20" r="6"/></g></svg></div>
+      <div class="txt"><h3>雞蛋糕</h3><p>按住倒麵糊，剛好滿不溢出，烤到金黃再夾進紙袋。</p><span class="go">開始玩 →</span></div>
+    </a>
+    <a class="stall" href="sweetball.html" style="--c:#e8862a;--cd:#8f4510">
+      <div class="awn"></div>
+      <div class="pic"><span class="tag">3D</span><svg viewBox="0 0 160 128" aria-hidden="true"><defs><radialGradient id="sb" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffd58a"/><stop offset="1" stop-color="#c96a1a"/></radialGradient></defs>
+          <path d="M46 62 h68 l-10 58 h-48z" fill="#f2ead8"/><path d="M46 62 h68" stroke="#c8322b" stroke-width="5"/>
+          <g fill="url(#sb)"><circle cx="62" cy="56" r="11"/><circle cx="84" cy="52" r="12"/><circle cx="104" cy="57" r="10"/><circle cx="72" cy="38" r="11"/><circle cx="95" cy="36" r="10"/><circle cx="84" cy="22" r="9"/></g>
+          <g fill="#c2185b" opacity=".55"><circle cx="70" cy="34" r="1.4"/><circle cx="90" cy="48" r="1.4"/><circle cx="100" cy="34" r="1.4"/><circle cx="60" cy="52" r="1.4"/><circle cx="82" cy="20" r="1.4"/></g>
+          <g fill="#fff" opacity=".6"><ellipse cx="58" cy="52" rx="3" ry="2"/><ellipse cx="80" cy="47" rx="3.5" ry="2"/><ellipse cx="68" cy="34" rx="3" ry="2"/></g></svg></div>
+      <div class="txt"><h3>地瓜球</h3><p>浮起來就用漏勺壓，壓滿四下膨成空心球，加不加梅粉照點。</p><span class="go">開始玩 →</span></div>
+    </a>
+  </div>
+  <div class="tips">
+    <div><b>每天有營收目標</b>達標就能進下一天，客人會越來越急。</div>
+    <div><b>完美出餐有連擊</b>火候、份量、配料全對，連續完美還會加碼小費。</div>
+    <div><b>用手機玩最順</b>每款都是直立畫面，一隻手點就能顧攤。</div>
+  </div>
+</div></main>
+<footer>夜市小吃街 · 四款小遊戲 · 打開聲音更有臨場感</footer>
+</body></html>

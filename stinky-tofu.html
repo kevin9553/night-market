@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>夜市炸臭豆腐 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+/* VOICE: 夜市攤位，暖黃燈泡下滾燙的油鍋，忙碌又療癒
+   IDEA: 一個真實的臭豆腐攤台——深油鍋、白鐵生豆腐盤、白瓷出餐盤
+   PICTURE: 全幅 3D 場景：油面起伏、豆腐由白炸到金黃、油泡與熱氣
+   COLOUR and TYPE: 夜色深褐、燈籠紅、熱油金、米色操作面板；招牌 Noto Serif TC
+   LAYOUT: 直立：招牌與計時 → 排隊客人 → 3D 攤台（右側火力） → 米色配料面板 */
+:root{color-scheme:dark;--bg:#150d08;--ink:#fbefdc;--mut:#c4ad92;--red:#c8322b;--red2:#8f1d17;--oil:#eaa63c;--jade:#7cb342;--cream:#f6ecd5;--cink:#3a2414;--card:#2a1c13}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.45 "Noto Sans TC",system-ui,sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+#app{height:100vh;height:100dvh;max-width:560px;margin:0 auto;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.lan{height:22px;flex:none;background:radial-gradient(ellipse 8px 10px at 50% 60%,#ff6a4a,var(--red) 60%,transparent 64%) 0 0/40px 22px repeat-x;filter:drop-shadow(0 0 8px #ff4a2a99)}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 14px 8px;flex:none}
+h1{margin:0;font:900 24px/1.05 "Noto Serif TC",serif;background:var(--red);color:#fff4e0;padding:5px 12px 7px;border-radius:6px;box-shadow:0 3px 0 var(--red2),0 0 22px #c8322b66;white-space:nowrap}
+.hud{display:flex;gap:16px;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.hud span{display:block;font-size:13px;font-weight:500;color:var(--mut)}.hud b{font-size:22px;line-height:1.1}
+#counter{flex:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:0 10px;min-height:78px}
+.cust{border:0;font:inherit;color:inherit;cursor:pointer;background:var(--card);border-radius:12px;padding:6px 6px 8px;display:grid;grid-template-columns:36px minmax(0,1fr);gap:4px 6px;align-items:center;text-align:left;box-shadow:0 2px 0 #000a;animation:in .35s ease-out;min-height:44px}
+.cust svg{width:36px;height:36px}
+.cust .o{font-size:13px;line-height:1.3}.cust .o b{font-size:18px;color:var(--oil)}
+.cust .pat{grid-column:1/-1;height:5px;border-radius:3px;background:#0007;overflow:hidden}.cust .pat i{display:block;height:100%}
+.cust.ready{box-shadow:0 0 0 3px #7cd34a,0 0 16px #7cd34a88;background:#2f3a1c}
+.cust.shake{animation:sh .35s}.cust:focus-visible{outline:3px solid var(--oil)}
+.empty{grid-column:1/-1;color:var(--mut);font-size:13px;align-self:center;text-align:center}
+#stage{position:relative;flex:1;min-height:200px;overflow:hidden}
+#stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.heat{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:#1b120cd9;border:1px solid #ffffff1a;border-radius:16px;padding:8px 6px;display:grid;gap:6px;text-align:center;font-size:13px;color:var(--mut)}
+.heat button{width:46px;height:46px;border:0;border-radius:12px;font:900 18px "Noto Serif TC",serif;background:var(--cream);color:var(--cink);cursor:pointer;box-shadow:0 3px 0 #0008}
+.heat button.on{background:linear-gradient(#ffcf7a,#e9932f);color:#4a1c05;box-shadow:0 3px 0 #8a4a10,0 0 14px #ffae4a99}
+.hint{position:absolute;left:12px;bottom:10px;right:76px;font-size:13px;color:#f0dcc0;text-shadow:0 1px 3px #000;pointer-events:none}
+.panel{flex:none;background:var(--cream);color:var(--cink);border-radius:18px 18px 0 0;padding:12px 14px 14px;box-shadow:0 -6px 20px #0009}
+.sum{font-weight:900;font-size:17px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px}
+.sum small{font-weight:500;font-size:13px;color:#7a5a40;align-self:center}
+.row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.btn{min-height:48px;border:0;border-radius:12px;font:700 16px "Noto Sans TC",sans-serif;cursor:pointer;background:#fff;color:var(--cink);box-shadow:0 3px 0 #d4c3a3;white-space:nowrap}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #d4c3a3}.btn:focus-visible{outline:3px solid var(--red)}
+.btn.on{background:var(--jade);color:#fff;box-shadow:0 3px 0 #4f7a22}.btn.hot{background:var(--red);color:#fff;box-shadow:0 3px 0 var(--red2)}
+.toast{position:fixed;left:50%;top:42%;transform:translateX(-50%);font:900 26px "Noto Serif TC",serif;pointer-events:none;text-shadow:0 2px 0 #000,0 0 14px #000;animation:up 1.1s forwards;white-space:nowrap;z-index:5}
+.ov{position:fixed;inset:0;background:#120b07d0;display:flex;align-items:center;justify-content:center;padding:20px;z-index:9;backdrop-filter:blur(3px)}
+.ov[hidden]{display:none}
+.card{max-width:380px;width:100%;background:var(--cream);color:var(--cink);border-radius:18px;padding:24px 22px;text-align:center;box-shadow:0 20px 50px #000}
+.card h2{margin:0 0 4px;font:900 32px/1.1 "Noto Serif TC",serif;color:var(--red)}
+.card ol{text-align:left;padding-left:1.3em;margin:12px 0 18px;color:#6a4a32}.card ol b{color:var(--cink)}
+.big{font:900 48px/1 "Noto Serif TC",serif;color:var(--red);margin:8px 0;font-variant-numeric:tabular-nums}
+.card .btn{background:var(--red);color:#fff;font-size:19px;width:100%;min-height:54px;box-shadow:0 4px 0 var(--red2)}
+.goalline{margin-top:8px;font-weight:900;color:var(--red)}.stars{font-size:34px;letter-spacing:4px;color:#d9c9ad;line-height:1.2}.stars b{color:#e9a12e}
+.err{position:absolute;inset:0;display:grid;place-items:center;color:var(--mut);padding:20px;text-align:center}
+@keyframes up{0%{opacity:0;transform:translate(-50%,10px)}15%{opacity:1}100%{opacity:0;transform:translate(-50%,-50px)}}
+@keyframes in{from{transform:translateY(-12px);opacity:0}}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media(prefers-reduced-motion:reduce){.cust,.toast{animation:none}}
+</style></head><body>
+<div id="app">
+  <div class="lan" aria-hidden="true"></div>
+  <header><h1>老巷臭豆腐</h1>
+    <div class="hud"><div><span id="dayl">第 1 天</span><b id="time">120</b></div><div><span id="goal">目標 $400</span><b id="money">$0</b></div></div></header>
+  <div id="counter" aria-label="排隊客人"><div class="empty">等客人上門…</div></div>
+  <div id="stage">
+    <div class="heat" role="group" aria-label="火力">火力<button data-h="2">大</button><button data-h="1" class="on">中</button><button data-h="0">小</button></div>
+    <div class="hint">點左邊生豆腐下鍋 · 指針到綠區時點鍋裡的豆腐撈起</div>
+  </div>
+  <div class="panel">
+    <div class="sum"><span id="sum">盤中 0 塊</span><small>配好後點客人出餐</small></div>
+    <div class="row"><button class="btn" id="kim">泡菜：不加</button><button class="btn" id="spi">辣度：不辣</button><button class="btn" id="trash">倒掉重來</button></div>
+  </div>
+</div>
+<div class="ov" id="start"><div class="card">
+  <h2>炸臭豆腐</h2><div>今晚夜市只有你一個人顧攤</div><div class="goalline" id="sgoal">第 1 天 · 營收目標 $400</div>
+  <ol><li><b>點白鐵盤上的生豆腐</b>下鍋，一鍋最多 6 塊</li><li>豆腐上方指針走到<b>綠區</b>時點它撈起</li><li>照客人要的<b>塊數、泡菜、辣度</b>配好</li><li><b>點客人</b>出餐。火力越大炸越快</li></ol>
+  <button class="btn" id="go">開攤！</button>
+  <div><a href="index.html" style="display:inline-block;margin-top:14px;color:#8a5a36;font-weight:700;text-decoration:underline;text-underline-offset:3px;padding:8px">← 回夜市小吃街</a></div>
+</div></div>
+<div class="ov" id="end" hidden><div class="card">
+  <h2 id="etitle">收攤了</h2><div class="stars" id="stars"></div><div>今晚營收</div><div class="big" id="final">$0</div>
+  <div id="stats" style="color:#6a4a32"></div><p id="best" style="margin:6px 0 18px;font-weight:700"></p>
+  <button class="btn" id="again">再擺一攤</button>
+  <div><a href="index.html" style="display:inline-block;margin-top:14px;color:#8a5a36;font-weight:700;text-decoration:underline;text-underline-offset:3px;padding:8px">← 回夜市小吃街</a></div>
+</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+{
+const $=s=>document.querySelector(s);
+if(!window.THREE){$('#stage').insertAdjacentHTML('beforeend','<div class="err">3D 引擎載入失敗，請重新整理頁面</div>')}
+else{
+const T=THREE,C=h=>new T.Color(h).convertSRGBToLinear();
+const SP=['不辣','小辣','大辣'],HEAT=[.7,1,1.5],COOK=6.5,ROUND=120,NS=6,OILY=-.25;
+const stage=p=>p<.8?'raw':p<=1.1?'good':p<1.4?'over':'char';
+const CS=[[0,0xf4ecd6],[.55,0xecd08e],[.8,0xe0a040],[1.1,0xb4661e],[1.4,0x5a3012],[1.8,0x1e140c]].map(([p,h])=>[p,C(h)]);
+function colorAt(p,o){for(let i=1;i<CS.length;i++)if(p<=CS[i][0]){const t=(p-CS[i-1][0])/(CS[i][0]-CS[i-1][0]);return o.copy(CS[i-1][1]).lerp(CS[i][1],t)}return o.copy(CS[CS.length-1][1])}
+function cvs(w,h,f){const c=document.createElement('canvas');c.width=w;c.height=h;f(c.getContext('2d'),w,h);return c}
+function tex(c,srgb){const t=new T.CanvasTexture(c);if(srgb)t.encoding=T.sRGBEncoding;return t}
+
+/* renderer & scene */
+const stageEl=$('#stage');
+const R=new T.WebGLRenderer({antialias:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.outputEncoding=T.sRGBEncoding;R.toneMapping=T.ACESFilmicToneMapping;R.toneMappingExposure=1.1;
+R.shadowMap.enabled=true;R.shadowMap.type=T.PCFSoftShadowMap;stageEl.prepend(R.domElement);
+const scene=new T.Scene();scene.background=C(0x150d08);scene.fog=new T.Fog(scene.background,13,28);
+const cam=new T.PerspectiveCamera(38,1,.1,60);
+{const pm=new T.PMREMGenerator(R),es=new T.Scene();es.background=C(0x2a1a10);
+ [[0,6,0,9,0xfff2e0],[-5,2,3,4,0xffb070],[5,3,-2,4,0xffd9a0],[0,1,6,5,0x806040]].forEach(([x,y,z,s,c])=>{const m=new T.Mesh(new T.PlaneGeometry(s,s),new T.MeshBasicMaterial({color:c,side:T.DoubleSide}));m.position.set(x,y,z);m.lookAt(0,0,0);es.add(m)});
+ scene.environment=pm.fromScene(es,.04).texture}
+scene.add(new T.HemisphereLight(0xffe2c0,0x2a1a10,.5));
+const spot=new T.SpotLight(0xffc488,2.6,30,.62,.55,1);spot.position.set(1.6,7,3);spot.target.position.set(0,-.5,.8);spot.castShadow=true;spot.shadow.mapSize.set(1024,1024);spot.shadow.bias=-.0005;scene.add(spot,spot.target);
+const fill=new T.DirectionalLight(0xffd7a8,.45);fill.position.set(-4,5,5);scene.add(fill);
+const oilLight=new T.PointLight(0xff8a2a,.8,4,2);oilLight.position.set(0,.3,0);scene.add(oilLight);
+
+/* counter */
+const wood=tex(cvs(512,512,(g,w,h)=>{g.fillStyle='#5a3620';g.fillRect(0,0,w,h);for(let i=0;i<240;i++){g.strokeStyle=`rgba(${Math.random()<.5?'30,15,5':'130,85,48'},${Math.random()*.25})`;g.lineWidth=1+Math.random()*3;const y=Math.random()*h;g.beginPath();g.moveTo(0,y);g.bezierCurveTo(w*.3,y+Math.random()*12-6,w*.7,y+Math.random()*12-6,w,y);g.stroke()}g.fillStyle='rgba(0,0,0,.4)';for(let i=0;i<8;i++)g.fillRect(0,i*64,w,2)}),true);
+wood.wrapS=wood.wrapT=T.RepeatWrapping;wood.repeat.set(3,3);
+const counter=new T.Mesh(new T.PlaneGeometry(16,12),new T.MeshStandardMaterial({map:wood,roughness:.75}));counter.rotation.x=-Math.PI/2;counter.position.y=-.92;counter.receiveShadow=true;scene.add(counter);
+
+/* wok */
+const steel=new T.MeshStandardMaterial({color:C(0x3d3834),metalness:.85,roughness:.36,side:T.DoubleSide});
+const prof=[[0,-.9],[.9,-.88],[1.3,-.72],[1.55,-.32],[1.68,.12],[1.74,.3]].map(([x,y])=>new T.Vector2(x,y));
+const wok=new T.Mesh(new T.LatheGeometry(prof,72),steel);wok.castShadow=wok.receiveShadow=true;scene.add(wok);
+const rim=new T.Mesh(new T.TorusGeometry(1.74,.05,12,96),steel);rim.rotation.x=Math.PI/2;rim.position.y=.3;rim.castShadow=true;scene.add(rim);
+[-1,1].forEach(s=>{const h=new T.Mesh(new T.TorusGeometry(.2,.045,10,28),steel);h.rotation.x=Math.PI/2;h.position.set(s*1.93,.22,0);h.castShadow=true;scene.add(h)});
+const oilG=new T.RingGeometry(.001,1.57,72,14),oilBase=oilG.attributes.position.array.slice();
+const oilM=new T.MeshStandardMaterial({color:C(0xb8741c),roughness:.1,metalness:.2,emissive:C(0x6a3000),emissiveIntensity:.35,transparent:true,opacity:.94});
+const oil=new T.Mesh(oilG,oilM);oil.rotation.x=-Math.PI/2;oil.position.y=OILY;oil.receiveShadow=true;scene.add(oil);
+
+/* tofu */
+const tofuC=cvs(256,256,(g,w,h)=>{g.fillStyle='#f2f0ea';g.fillRect(0,0,w,h);const d=g.getImageData(0,0,w,h);for(let i=0;i<d.data.length;i+=4){const n=(Math.random()-.5)*28;d.data[i]+=n;d.data[i+1]+=n;d.data[i+2]+=n}g.putImageData(d,0,0);
+  for(let i=0;i<300;i++){const r=1+Math.random()*3.5;g.fillStyle=`rgba(80,60,35,${.25+Math.random()*.45})`;g.beginPath();g.ellipse(Math.random()*w,Math.random()*h,r,r*(.5+Math.random()*.6),Math.random()*3,0,7);g.fill()}});
+const tofuTex=tex(tofuC,true),tofuBump=tex(tofuC);
+function roundedBox(w,h,d,r,s){const g=new T.BoxGeometry(w,h,d,s,s,s),p=g.attributes.position,n=g.attributes.normal,v=new T.Vector3(),c=new T.Vector3(),hw=w/2-r,hh=h/2-r,hd=d/2-r;
+  for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i);c.set(Math.max(-hw,Math.min(hw,v.x)),Math.max(-hh,Math.min(hh,v.y)),Math.max(-hd,Math.min(hd,v.z)));v.sub(c).normalize();n.setXYZ(i,v.x,v.y,v.z);v.multiplyScalar(r).add(c);p.setXYZ(i,v.x,v.y,v.z)}return g}
+const tofuGeo=roundedBox(.5,.4,.5,.08,6),NV=tofuGeo.attributes.position.count,EDGE=new Float32Array(NV),NOI=new Float32Array(NV);
+{const n=tofuGeo.attributes.normal,p=tofuGeo.attributes.position;for(let i=0;i<NV;i++){const m=Math.max(Math.abs(n.getX(i)),Math.abs(n.getY(i)),Math.abs(n.getZ(i)));EDGE[i]=Math.min(1,(1-m)/.4);
+  const h=Math.sin(p.getX(i)*129.9+p.getY(i)*782.3+p.getZ(i)*377.1)*43758.5;NOI[i]=h-Math.floor(h)}}
+function tofuMat(){return new T.MeshStandardMaterial({map:tofuTex,bumpMap:tofuBump,bumpScale:.012,roughness:.88,color:CS[0][1].clone(),vertexColors:true})}
+/* edges and random patches fry darker than the flat faces */
+function paint(m,p){const mt=m.material;colorAt(p,mt.color);const k=Math.min(1,p/1.1);mt.roughness=.88-.5*k;mt.bumpScale=.012+.035*k;
+  if(Math.abs(p-m.userData.lp)<.015)return;m.userData.lp=p;const c=m.geometry.attributes.color,kk=Math.min(1.3,p/1.1);
+  for(let i=0;i<NV;i++){const d=Math.max(.35,1-EDGE[i]*.42*kk-NOI[i]*.26*kk);c.setXYZ(i,d,d*.96,d*.9)}c.needsUpdate=true}
+function newTofu(){const g=tofuGeo.clone();g.setAttribute('color',new T.BufferAttribute(new Float32Array(NV*3).fill(1),3));
+  const m=new T.Mesh(g,tofuMat());m.userData.lp=-1;m.castShadow=m.receiveShadow=true;scene.add(m);return m}
+function rm(m){scene.remove(m);const src=(m.userData&&m.userData.src)||m;if(src.geometry){src.geometry.dispose();src.material.dispose()}}
+/* on the plate each tofu is snipped into four pieces, night-market style */
+function cut(m){const i=S.pm.indexOf(m);if(i<0)return;const g=new T.Group();g.position.copy(m.position);g.rotation.y=m.rotation.y;
+  for(let k=0;k<4;k++){const q=new T.Mesh(m.geometry,m.material);q.castShadow=q.receiveShadow=true;q.scale.set(.29,.6,.29);q.userData.dx=k&1?1:-1;q.userData.dz=k&2?1:-1;q.position.set(q.userData.dx*.073,0,q.userData.dz*.073);g.add(q)}
+  g.userData={src:m,cut:0};scene.remove(m);scene.add(g);S.pm[i]=g;
+  beep(2600,.03,'square',.04);setTimeout(()=>beep(2300,.03,'square',.04),90)}
+
+/* raw tray & plate */
+const TRAY=new T.Vector3(-1.2,-.89,2.45),PLATE=new T.Vector3(1.2,-.9,2.45);
+const tray=new T.Mesh(new T.BoxGeometry(1.55,.06,1.1),new T.MeshStandardMaterial({color:C(0xa9adb0),metalness:.9,roughness:.28}));tray.position.copy(TRAY);tray.castShadow=tray.receiveShadow=true;scene.add(tray);
+const trayTofu=[[-.42,-.22],[.1,-.25],[-.18,.25],[.38,.2]].map(([x,z])=>{const m=newTofu();m.position.set(TRAY.x+x,TRAY.y+.23,TRAY.z+z);m.rotation.y=Math.random()-.5;return m});
+const plate=new T.Mesh(new T.LatheGeometry([[0,0],[.72,0],[.86,.05],[.97,.11],[.99,.1],[.95,.04],[.8,-.02],[0,-.02]].map(([x,y])=>new T.Vector2(x,y)),64),new T.MeshStandardMaterial({color:C(0xf8f6f1),roughness:.22,side:T.DoubleSide}));
+plate.position.copy(PLATE);plate.castShadow=plate.receiveShadow=true;scene.add(plate);
+const sauce=new T.Mesh(new T.CircleGeometry(.6,40),new T.MeshStandardMaterial({color:C(0x9a1d0c),roughness:.15,transparent:true,opacity:.85}));sauce.rotation.x=-Math.PI/2;sauce.position.set(PLATE.x,PLATE.y+.006,PLATE.z);sauce.visible=false;scene.add(sauce);
+const SPOTS=[[-.3,-.17],[0,-.2],[.3,-.17],[-.3,.17],[0,.2],[.3,.17]];
+const kimchi=new T.Group();{const cols=[0xd9e8b0,0xf3f0dc,0xb8d47a,0xf08a3a];for(let i=0;i<46;i++){const m=new T.Mesh(new T.BoxGeometry(.2,.02,.05),new T.MeshStandardMaterial({color:C(cols[i%4]),roughness:.4}));const a=Math.random()*7,r=Math.sqrt(Math.random())*.3;m.position.set(Math.cos(a)*r,.02+Math.random()*.06,Math.sin(a)*r);m.rotation.set(Math.random()-.5,Math.random()*6,Math.random()-.5);kimchi.add(m)}}
+kimchi.position.set(PLATE.x,PLATE.y+.25,PLATE.z);kimchi.visible=false;scene.add(kimchi);
+const chili=new T.Group();{const g=new T.SphereGeometry(.022,6,5),mt=new T.MeshStandardMaterial({color:C(0xd42a10),roughness:.2});for(let i=0;i<34;i++){const m=new T.Mesh(g,mt);const a=Math.random()*7,r=Math.sqrt(Math.random())*.45;m.position.set(Math.cos(a)*r,Math.random()*.04,Math.sin(a)*r);chili.add(m)}}
+chili.position.set(PLATE.x,PLATE.y+.25,PLATE.z);scene.add(chili);
+
+/* meters */
+function meter(){const c=cvs(160,28,()=>{}),t=tex(c,true),s=new T.Sprite(new T.SpriteMaterial({map:t,depthTest:false,transparent:true}));s.scale.set(.7,.122,1);s.renderOrder=10;s.userData={c,t,last:-1};scene.add(s);return s}
+function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.fill()}
+function drawMeter(s,p){const v=Math.round(Math.min(p,1.5)*80);if(v===s.userData.last)return;s.userData.last=v;const g=s.userData.c.getContext('2d'),W=160,x=f=>6+(W-12)*f/1.5;
+  g.clearRect(0,0,W,28);g.fillStyle='rgba(20,10,5,.8)';rr(g,1,5,W-2,18,9);g.fillStyle='#efe3c8';g.fillRect(x(0),10,x(.8)-x(0),8);g.fillStyle='#7cc243';g.fillRect(x(.8),10,x(1.1)-x(.8),8);g.fillStyle='#6e300e';g.fillRect(x(1.1),10,x(1.5)-x(1.1),8);
+  g.fillStyle='#fff';rr(g,x(Math.min(p,1.5))-3,1,6,26,3);s.userData.t.needsUpdate=true}
+
+/* bubbles & steam */
+const NB=200,bubs=new T.InstancedMesh(new T.SphereGeometry(1,10,8),new T.MeshStandardMaterial({color:C(0xfff0c8),roughness:.04,transparent:true,opacity:.6}),NB);
+bubs.instanceMatrix.setUsage(T.DynamicDrawUsage);scene.add(bubs);
+const B=Array.from({length:NB},()=>({life:0})),dum=new T.Object3D();let bi=0;
+function addB(x,y,z,vx,vy,vz,size,max,grav){const b=B[bi=(bi+1)%NB];Object.assign(b,{x,y,z,vx,vy,vz,size,max,life:max,grav})}
+function splash(p){for(let i=0;i<18;i++){const a=Math.random()*7,s=.8+Math.random()*1.4;addB(p.x,OILY+.05,p.z,Math.cos(a)*s,1.6+Math.random()*2,Math.sin(a)*s,.025+Math.random()*.02,1.2,true)}}
+const stTex=tex(cvs(64,64,g=>{const gr=g.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,255,255,.9)');gr.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=gr;g.fillRect(0,0,64,64)}));
+const ST=Array.from({length:48},()=>{const s=new T.Sprite(new T.SpriteMaterial({map:stTex,transparent:true,opacity:0,depthWrite:false}));scene.add(s);return{s,life:0}});
+function addSteam(x,y,z,dark,k=1){const o=ST.find(o=>o.life<=0);if(!o)return;o.k=k;o.life=o.max=1.4+Math.random();o.s.position.set(x+(Math.random()-.5)*.3,y,z+(Math.random()-.5)*.3);o.vx=(Math.random()-.5)*.25;o.s.material.color.setHex(dark?0x3a3a3a:0xffffff);o.peak=dark?.75:.2}
+
+/* skimmer (漏勺) */
+const holes=tex(cvs(128,128,g=>{g.fillStyle='#000';g.fillRect(0,0,128,128);g.fillStyle='#fff';g.beginPath();g.arc(64,64,63,0,7);g.fill();g.fillStyle='#000';for(let y=8;y<128;y+=11)for(let x=8+(y%22?5:0);x<128;x+=11){g.beginPath();g.arc(x,y,3.2,0,7);g.fill()}g.fillStyle='#fff';g.beginPath();g.arc(64,64,63,0,7);g.lineWidth=7;g.strokeStyle='#fff';g.stroke()}));
+const skim=new T.Group();
+{const sm=new T.MeshStandardMaterial({color:C(0xb9bcbe),metalness:.95,roughness:.25,side:T.DoubleSide,alphaMap:holes,alphaTest:.5});
+ const disk=new T.Mesh(new T.CircleGeometry(.4,40),sm);disk.rotation.x=-Math.PI/2;disk.castShadow=true;
+ const ring=new T.Mesh(new T.TorusGeometry(.4,.018,8,48),steel);ring.rotation.x=Math.PI/2;
+ const handle=new T.Mesh(new T.CylinderGeometry(.022,.022,2,10),new T.MeshStandardMaterial({color:C(0x8a8d90),metalness:.9,roughness:.3}));
+ handle.rotation.z=-(Math.PI/2-.35);handle.position.set(1.33,.33,0);handle.castShadow=true;
+ const grip=new T.Mesh(new T.CylinderGeometry(.04,.04,.6,12),new T.MeshStandardMaterial({color:C(0x6b3a1e),roughness:.6}));grip.rotation.z=-(Math.PI/2-.35);grip.position.set(2.08,.6,0);
+ skim.add(disk,ring,handle,grip)}
+const SKREST=new T.Vector3(.95,.36,-1.15);skim.position.copy(SKREST);skim.rotation.y=.75;scene.add(skim);
+let carry=null;
+
+/* night-market bokeh in the distance */
+const BK=[];for(let i=0;i<14;i++){const s=new T.Sprite(new T.SpriteMaterial({map:stTex,color:[0xff7a3a,0xffc060,0xff4a3a][i%3],transparent:true,opacity:.5,depthWrite:false,fog:false}));
+  s.position.set(-6+i*.95+Math.random()*.4,.6+Math.random()*1.6,-4.5-Math.random()*2);const k=.5+Math.random()*.7;s.scale.set(k,k,1);s.userData.ph=Math.random()*6;scene.add(s);BK.push(s)}
+/* pulsing hint ring under the raw-tofu tray */
+const hintRing=new T.Mesh(new T.RingGeometry(.92,1.02,48),new T.MeshBasicMaterial({color:0xffc860,transparent:true,opacity:0,depthWrite:false}));
+hintRing.rotation.x=-Math.PI/2;hintRing.scale.set(1,.72,1);hintRing.position.set(TRAY.x,-.915,TRAY.z);scene.add(hintRing);
+
+/* animations */
+const A=[];
+function anim(m,to,dur,arc,s1,done,spin=true){for(let i=A.length-1;i>=0;i--)if(A[i].m===m)A.splice(i,1);A.push({m,from:m.position.clone(),to:to.clone(),dur,arc,s0:m.scale.x,s1,done,spin,t:0})}
+function buzz(ms){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
+const RIP=[];function ripple(x,z,a=1){RIP.push({x,y:-z,t:0,a});if(RIP.length>8)RIP.shift()}
+const slotPos=i=>{const a=i/NS*Math.PI*2+.3;return new T.Vector3(Math.cos(a)*.86,OILY+.07,Math.sin(a)*.86)};
+
+/* audio */
+let ac=null;
+function beep(f,d,type='sine',v=.15){if(!ac)return;try{const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.connect(g).connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}}
+let fryG=null;
+function startFry(){if(!ac||fryG)return;try{const n=ac.sampleRate*2|0,b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(Math.random()<.12?1:.22);
+  const s=ac.createBufferSource(),f=ac.createBiquadFilter();s.buffer=b;s.loop=true;f.type='bandpass';f.frequency.value=4200;f.Q.value=.6;fryG=ac.createGain();fryG.gain.value=0;s.connect(f).connect(fryG).connect(ac.destination);s.start()}catch(e){fryG=null}}
+function sizzle(len=.7,vol=.25){if(!ac)return;try{const n=ac.sampleRate*len|0,b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n)*(Math.random()<.3?1:.3);const s=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();f.type='highpass';f.frequency.value=2500;g.gain.value=vol;s.buffer=b;s.connect(f).connect(g).connect(ac.destination);s.start()}catch(e){}}
+function toast(msg,col='#fff'){const d=document.createElement('div');d.className='toast';d.textContent=msg;d.style.color=col;document.body.appendChild(d);setTimeout(()=>d.remove(),1100)}
+
+/* game state */
+let S,cid=0,DAY=1;const goal=d=>250+d*150;
+function reset(){
+  if(S){S.slots.forEach(s=>s&&kill(s));S.pm.forEach(rm)}
+  A.forEach(a=>{if(a.m!==skim&&a.m.parent)rm(a.m)});A.length=0;carry=null;skim.position.copy(SKREST);
+  S={t:0,money:0,served:0,perfect:0,lost:0,run:false,slots:Array(NS).fill(null),plate:[],pm:[],kim:false,spi:0,heat:1,cust:[],next:1,streak:0,hit:false};
+  setHeat(1);setTop();renderCust();
+}
+function kill(s){A.forEach((a,i)=>a.m===s.mesh&&A.splice(i,1));rm(s.mesh);if(s.meter)scene.remove(s.meter)}
+function drop(i){
+  if(i<0){toast('鍋子滿了！','#ffd56a');return}
+  const src=trayTofu[Math.floor(Math.random()*trayTofu.length)],m=newTofu();m.position.copy(src.position);m.rotation.y=Math.random()*6;
+  const s=S.slots[i]={mesh:m,p:0,state:'drop',meter:null,st:'',ph:Math.random()*6};
+  anim(m,slotPos(i),.5,1.3,1,()=>{if(S.slots[i]!==s)return;s.state='fry';s.meter=meter();splash(m.position);ripple(m.position.x,m.position.z,1.3);sizzle();for(let k=0;k<4;k++)addSteam(m.position.x,0,m.position.z)});
+}
+function scoop(i){
+  const s=S.slots[i];if(!s||s.state!=='fry')return;const st=stage(s.p);
+  if(st==='char'){S.slots[i]=null;scene.remove(s.meter);anim(s.mesh,new T.Vector3(-3.5,1.5,1),.5,.8,.3,()=>rm(s.mesh));toast('焦炭丟掉…','#bbb');return}
+  if(S.plate.length>=6){toast('盤子滿了！','#ffd56a');return}
+  S.slots[i]=null;scene.remove(s.meter);
+  const k=S.plate.length,[ox,oz]=SPOTS[k],m=s.mesh;S.plate.push(s.p);S.pm.push(m);
+  ripple(m.position.x,m.position.z,.7);m.rotation.x=m.rotation.z=0;carry=m;skim.position.set(m.position.x,OILY-.05,m.position.z);
+  for(let j=0;j<8;j++){const a=Math.random()*7;addB(m.position.x+Math.cos(a)*.2,OILY+.03,m.position.z+Math.sin(a)*.2,Math.cos(a)*.6,1+Math.random(),Math.sin(a)*.6,.02,1,true)}
+  anim(m,new T.Vector3(PLATE.x+ox,PLATE.y+.13,PLATE.z+oz),.55,1,.6,()=>{if(carry===m){carry=null;anim(skim,SKREST,.35,.3,1,null,false)}setTimeout(()=>{if(S.pm.includes(m))cut(m)},120);setTop()},false);
+  beep(st==='good'?880:330,.12,'triangle');if(st==='good')buzz(15);
+  toast(st==='raw'?'還沒熟喔':st==='good'?'金黃酥脆！':'有點焦了',st==='raw'?'#f3ead2':st==='good'?'#ffd56a':'#d08a4a');
+  setTop();
+}
+function clearPlate(fly){
+  if(carry&&S.pm.includes(carry)){carry=null;anim(skim,SKREST,.35,.3,1,null,false)}
+  S.pm.forEach(m=>fly?anim(m,m.position.clone().add(new T.Vector3(0,2.5,-4)),.45,.3,.2,()=>rm(m)):(A.forEach((a,i)=>a.m===m&&A.splice(i,1)),rm(m)));
+  S.pm=[];S.plate=[];S.kim=false;S.spi=0;setTop();
+}
+function setTop(){
+  const n=S.plate.length;kimchi.visible=S.kim&&n>0;chili.visible=S.spi>0&&n>0;sauce.visible=n>0;
+  chili.children.forEach((c,i)=>c.visible=i<(S.spi===2?34:14));sauce.material.color.copy(C([0x5a2e10,0xc0561a,0x9a1d0c][S.spi]));sauce.scale.setScalar([.8,.88,1][S.spi]);
+  const ky=PLATE.y+(n>3?.3:.27);kimchi.position.y=ky;chili.position.y=ky+.02;
+  const kb=$('#kim'),sb=$('#spi');kb.textContent='泡菜：'+(S.kim?'加':'不加');kb.classList.toggle('on',S.kim);sb.textContent='辣度：'+SP[S.spi];sb.classList.toggle('hot',S.spi>0);
+  $('#sum').textContent=`盤中 ${n} 塊`+(S.kim?' · 泡菜':'')+(S.spi?' · '+SP[S.spi]:'');markReady();
+}
+function markReady(){document.querySelectorAll('.cust').forEach(b=>{const k=S.cust.find(x=>x.id===+b.dataset.c);b.classList.toggle('ready',!!k&&k.n===S.plate.length&&k.kim===S.kim&&k.spi===S.spi)})}
+function setHeat(h){S.heat=h;document.querySelectorAll('.heat button').forEach(b=>b.classList.toggle('on',+b.dataset.h===h))}
+$('#kim').onclick=()=>{S.kim=!S.kim;setTop();beep(600,.05)};
+$('#spi').onclick=()=>{S.spi=(S.spi+1)%3;setTop();beep(500+S.spi*150,.05)};
+$('#trash').onclick=()=>{if(!S.plate.length)return;clearPlate(false);beep(200,.15,'square',.05)};
+document.querySelectorAll('.heat button').forEach(b=>b.onclick=()=>{setHeat(+b.dataset.h);beep(300+ +b.dataset.h*200,.06);if(+b.dataset.h===2)sizzle(.4,.12)});
+
+/* tapping the 3D scene */
+const ray=new T.Raycaster(),ndc=new T.Vector2();
+R.domElement.addEventListener('pointerdown',e=>{
+  if(!S.run)return;const r=R.domElement.getBoundingClientRect();ndc.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(ndc,cam);
+  const fry=S.slots.filter(s=>s&&s.state==='fry').map(s=>s.mesh);
+  const h=ray.intersectObjects(fry)[0];if(h){scoop(S.slots.findIndex(s=>s&&s.mesh===h.object));return}
+  const hit=ray.intersectObjects([tray,...trayTofu,oil,plate])[0];if(!hit)return;
+  const free=()=>S.slots.findIndex(s=>!s);
+  if(hit.object===oil){let best=-1,bd=.5;S.slots.forEach((s,i)=>{if(s&&s.state==='fry'){const d=s.mesh.position.distanceTo(hit.point);if(d<bd){bd=d;best=i}}});
+    if(best>=0)return scoop(best);let fi=-1;bd=9;S.slots.forEach((s,i)=>{if(!s){const d=slotPos(i).distanceTo(hit.point);if(d<bd){bd=d;fi=i}}});return drop(fi)}
+  if(hit.object!==plate)drop(free());
+});
+
+/* customers */
+const SKIN=['#f2c9a0','#e0ac7e','#c68b5e','#f5d6b8'],HAIR=['#2b1d14','#5a3a22','#111','#8a8a8a','#b5462f'];
+const face=c=>`<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="${c.shirt}"/><circle cx="32" cy="34" r="19" fill="${c.skin}"/><path d="M13 32c0-13 9-19 19-19s19 6 19 19c-5-7-11-9-19-9s-14 2-19 9z" fill="${c.hair}"/><circle cx="25" cy="35" r="2.2" fill="#2a1a10"/><circle cx="39" cy="35" r="2.2" fill="#2a1a10"/><path class="m" d="M26 43q6 5 12 0" stroke="#2a1a10" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>`;
+function spawn(){const n=(DAY>=3?[2,3,3,4,4,5,6]:[2,3,3,4,4,5])[Math.floor(Math.random()*(DAY>=3?7:6))],max=Math.max(15,36-S.t/7-(DAY-1)*3);
+  S.cust.push({id:++cid,n,kim:Math.random()<.7,spi:Math.floor(Math.random()*3),pat:max,max,skin:SKIN[cid%4],hair:HAIR[Math.floor(Math.random()*5)],shirt:`hsl(${Math.random()*360},40%,38%)`});renderCust();beep(1200,.08)}
+function renderCust(){const c=$('#counter');
+  c.innerHTML=S.cust.length?S.cust.map(k=>`<button class="cust" data-c="${k.id}" aria-label="客人要 ${k.n} 塊，${k.kim?'加泡菜':'不加泡菜'}，${SP[k.spi]}">${face(k)}<div class="o"><b>${k.n}</b> 塊<br>${k.kim?'泡菜':'無泡菜'}·${SP[k.spi]}</div><div class="pat"><i></i></div></button>`).join(''):'<div class="empty">等客人上門…</div>';
+  c.querySelectorAll('.cust').forEach(b=>b.onclick=()=>serve(+b.dataset.c));markReady()}
+function serve(id){
+  if(!S.run)return;const k=S.cust.find(x=>x.id===id),el=$(`.cust[data-c="${id}"]`);if(!k)return;
+  if(!S.plate.length){toast('盤子是空的','#ffd56a');return}
+  if(S.plate.length!==k.n){toast(`我要 ${k.n} 塊啦！`,'#ff8a7a');el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');beep(180,.2,'sawtooth',.06);return}
+  let pay=0,raw=0,good=0;
+  S.plate.forEach(p=>{const s=stage(p);if(s==='good'){pay+=30;good++}else if(s==='over')pay+=18;else if(s==='raw'){pay+=8;raw++}});
+  const wrong=[];if(S.kim!==k.kim)wrong.push(k.kim?'泡菜呢？':'我不要泡菜');if(S.spi!==k.spi)wrong.push(S.spi>k.spi?'太辣了！':'不夠辣！');if(raw)wrong.unshift('還是生的！');
+  if(wrong.length)pay=Math.round(pay*.5);
+  const perfect=!wrong.length&&good===k.n;
+  if(perfect){S.streak++;pay+=Math.round(k.pat/k.max*20)+(S.streak-1)*5;S.perfect++}else S.streak=0;
+  S.money+=pay;S.served++;
+  toast(perfect?`+$${pay} 讚啦！${S.streak>1?' 連續'+S.streak:''}`:`+$${pay} ${wrong[0]||'有點焦…'}`,perfect?'#ffd56a':'#ffb08a');
+  if(perfect){beep(988,.1,'triangle');setTimeout(()=>beep(1319,.18,'triangle'),90)}else beep(400,.15,'triangle');
+  S.cust=S.cust.filter(x=>x!==k);clearPlate(true);renderCust();hud();
+}
+function hud(){if(S.run&&!S.hit&&S.money>=goal(DAY)){S.hit=true;setTimeout(()=>toast('達成今日目標！','#7cd34a'),600)}$('#time').textContent=Math.max(0,Math.ceil(ROUND-S.t));$('#money').textContent='$'+S.money}
+
+/* camera fit */
+const TGT=new T.Vector3(0,-.45,.9),DIR=new T.Vector3(0,1.4,1).normalize();
+function resize(){const w=stageEl.clientWidth,h=stageEl.clientHeight;if(!w||!h)return;R.setSize(w,h,false);cam.aspect=w/h;
+  const vf=T.MathUtils.degToRad(cam.fov)/2,hf=Math.atan(Math.tan(vf)*cam.aspect),d=Math.max(2.4/Math.tan(hf),2.75/Math.tan(vf));
+  cam.position.copy(TGT).addScaledVector(DIR,d);cam.lookAt(TGT);cam.updateProjectionMatrix()}
+const ro=new ResizeObserver(resize);ro.observe(stageEl);resize();
+
+/* main loop */
+const clock=new T.Clock();let el=0;
+function frame(){requestAnimationFrame(frame);try{step()}catch(e){console.error(e)}}
+function step(){
+  const dt=Math.min(.05,clock.getDelta());el+=dt;const hm=HEAT[S.heat];
+  /* oil surface */
+  const pa=oilG.attributes.position,amp=.006+.006*hm;
+  for(let i=0;i<pa.count;i++){const x=oilBase[i*3],y=oilBase[i*3+1],r=Math.hypot(x,y);let w=amp*(Math.sin(r*9-el*4.5)+.6*Math.sin(x*6+el*3.1)*Math.cos(y*5-el*2.3));for(const q of RIP){const d=Math.hypot(x-q.x,y-q.y),f=d-q.t*.9;w+=q.a*.03*Math.exp(-q.t*1.3)*Math.sin(d*16-q.t*12)*Math.exp(-f*f*9)}pa.array[i*3+2]=r<.01?0:w*Math.min(1,(1.57-r)*4)}
+  for(let i=RIP.length-1;i>=0;i--)if((RIP[i].t+=dt)>2.6)RIP.splice(i,1);
+  pa.needsUpdate=true;oilG.computeVertexNormals();
+  oilM.emissiveIntensity=.22+.18*hm+Math.sin(el*7)*.03;oilLight.intensity=.5+.4*hm;
+  /* animations */
+  for(let i=A.length-1;i>=0;i--){const a=A[i];a.t+=dt;const k=Math.min(1,a.t/a.dur),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+    a.m.position.lerpVectors(a.from,a.to,e);a.m.position.y+=Math.sin(Math.PI*k)*a.arc;a.m.scale.setScalar(a.s0+(a.s1-a.s0)*e);if(k<1){if(a.spin)a.m.rotation.y+=dt*4}else{A.splice(i,1);a.done&&a.done()}}
+  if(carry){skim.position.set(carry.position.x,carry.position.y-.13*carry.scale.x/.6-.02,carry.position.z);if(Math.random()<.5)addB(carry.position.x+(Math.random()-.5)*.3,carry.position.y-.15,carry.position.z+(Math.random()-.5)*.3,0,-.5,0,.014,.6,true)}
+  skim.rotation.y+=((carry?-.55:.75)-skim.rotation.y)*Math.min(1,dt*8);
+  BK.forEach(s=>s.material.opacity=.32+.2*Math.sin(el*1.3+s.userData.ph));
+  hintRing.material.opacity=S.run&&!S.slots.some(Boolean)?.35+.3*Math.sin(el*5):0;
+  if(fryG){const n=S.run?S.slots.filter(s=>s&&s.state==='fry').length:0;fryG.gain.setTargetAtTime(Math.min(.13,.03*n*hm),ac.currentTime,.15)}
+  /* frying */
+  S.slots.forEach((s,i)=>{if(!s||s.state!=='fry')return;const m=s.mesh;
+    if(S.run)s.p+=dt/COOK*hm;paint(m,s.p);const pf=Math.min(1,s.p/1.1);m.scale.set(1+.05*pf,1+.1*pf,1+.05*pf);
+    m.position.y=OILY+.07+Math.sin(el*3+s.ph)*.018;m.rotation.x=Math.sin(el*2.1+s.ph)*.05;m.rotation.z=Math.cos(el*1.7+s.ph)*.05;
+    s.meter.position.set(m.position.x,m.position.y+.42,m.position.z);drawMeter(s.meter,s.p);
+    const st=stage(s.p);
+    m.material.emissive.setHex(st==='good'?0x3a1a00:0);m.material.emissiveIntensity=st==='good'?.5+.3*Math.sin(el*8):0;
+    const rate=hm*(st==='raw'?26:st==='good'?16:8);
+    if(Math.random()<rate*dt){const a=Math.random()*7,r=.3+Math.random()*.1;addB(m.position.x+Math.cos(a)*r,OILY+.01,m.position.z+Math.sin(a)*r,0,0,0,.02+Math.random()*.035,.25+Math.random()*.35,false)}
+    if(Math.random()<(st==='char'?3:.5*hm)*dt)addSteam(m.position.x,m.position.y+.25,m.position.z,st==='char'||st==='over');
+    if(s.st!==st){s.st=st;if(st==='char'){toast('焦掉了！快丟掉','#aaa');beep(150,.3,'sawtooth',.05)}}});
+  if(Math.random()<hm*4*dt){const a=Math.random()*7,r=Math.random()*1.4;addB(Math.cos(a)*r,OILY+.01,Math.sin(a)*r,0,0,0,.012+Math.random()*.02,.3,false)}
+  S.pm.forEach(m=>{const u=m.userData;if(u.cut!==undefined&&u.cut<1){u.cut=Math.min(1,u.cut+dt*5);const d=.073+.016*u.cut;m.children.forEach(q=>q.position.set(q.userData.dx*d,0,q.userData.dz*d))}});
+  S.pm.forEach(m=>{if(m!==carry&&Math.random()<1.1*dt)addSteam(m.position.x,m.position.y+.12,m.position.z,false,.55)});
+  /* bubbles */
+  B.forEach((b,i)=>{let sc=0;if(b.life>0){b.life-=dt;if(b.grav){b.vy-=9*dt;b.x+=b.vx*dt;b.y+=b.vy*dt;b.z+=b.vz*dt;if(b.y<OILY&&b.vy<0)b.life=0;sc=b.size}else sc=b.size*Math.sin(Math.PI*Math.min(1,1-b.life/b.max))}
+    dum.position.set(b.x||0,b.y||0,b.z||0);dum.scale.setScalar(Math.max(sc,0)||1e-4);dum.updateMatrix();bubs.setMatrixAt(i,dum.matrix)});
+  bubs.instanceMatrix.needsUpdate=true;
+  ST.forEach(o=>{if(o.life<=0){o.s.material.opacity=0;return}o.life-=dt;const t=1-o.life/o.max;o.s.position.y+=dt*.7;o.s.position.x+=o.vx*dt;o.s.scale.setScalar((.35+t*1.3)*o.k);o.s.material.opacity=o.peak*Math.sin(Math.PI*Math.min(1,t))});
+  /* game */
+  if(S.run){S.t+=dt;let gone=false;
+    S.cust.forEach(k=>{k.pat-=dt;const e=$(`.cust[data-c="${k.id}"]`);if(!e)return;const r=Math.max(0,k.pat/k.max),bar=e.querySelector('.pat i');
+      bar.style.width=r*100+'%';bar.style.background=r>.5?'#7cb342':r>.25?'#e8a23a':'#d63a2f';e.querySelector('.m').setAttribute('d',r>.5?'M26 43q6 5 12 0':r>.25?'M26 44h12':'M26 46q6-5 12 0');if(k.pat<=0)gone=true});
+    if(gone){S.cust=S.cust.filter(k=>{if(k.pat>0)return true;S.lost++;S.streak=0;toast('客人等太久走掉了','#ff8a7a');return false});renderCust()}
+    if(S.t>=S.next&&S.cust.length<3){spawn();S.next=S.t+(3+Math.random()*4)*Math.max(.5,1-S.t/220-(DAY-1)*.07)}
+    hud();if(S.t>=ROUND)end()}
+  R.render(scene,cam);
+}
+function start(){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();ac.resume&&ac.resume();startFry()}catch(e){ac=null}
+  reset();S.run=true;dayUI();$('#start').hidden=true;$('#end').hidden=true;hud()}
+function dayUI(){$('#dayl').textContent=`第 ${DAY} 天`;$('#goal').textContent=`目標 $${goal(DAY)}`;$('#sgoal').textContent=`第 ${DAY} 天 · 營收目標 $${goal(DAY)}`}
+function end(){S.run=false;let best=0;try{best=+localStorage.getItem('tofuBest3d')||0;if(S.money>best)localStorage.setItem('tofuBest3d',S.money)}catch(e){}
+  const g=goal(DAY),st=S.money>=g*1.6?3:S.money>=g*1.3?2:S.money>=g?1:0;
+  $('#stars').innerHTML='<b>'+'★'.repeat(st)+'</b>'+'☆'.repeat(3-st);
+  $('#etitle').textContent=st?`第 ${DAY} 天 過關！`:`第 ${DAY} 天 沒達標`;
+  $('#again').textContent=st?`開始第 ${DAY+1} 天`:`重新挑戰第 ${DAY} 天（目標 $${g}）`;if(st)DAY++;
+  $('#final').textContent='$'+S.money;$('#stats').textContent=`出餐 ${S.served} 份 · 完美 ${S.perfect} 份 · 跑掉 ${S.lost} 位`;
+  $('#best').textContent=S.money>best?'刷新最高紀錄！':`最高紀錄 $${best}`;$('#end').hidden=false;beep(660,.3,'triangle')}
+$('#go').onclick=start;$('#again').onclick=start;
+reset();
+/* a few tofu already frying behind the start screen */
+[0,2,4].forEach((i,n)=>{const m=newTofu();m.position.copy(slotPos(i));S.slots[i]={mesh:m,p:.3+n*.35,state:'fry',meter:meter(),st:'',ph:n*2}});
+frame();
+}
+}
+</script>
+</body></html>
