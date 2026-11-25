@@ -75,22 +75,22 @@ h1{outline:1.5px solid rgba(255,244,224,.45);outline-offset:-5px;letter-spacing:
 .card{background:linear-gradient(#fdf6e8,var(--cream));box-shadow:0 20px 50px #000,0 0 0 1px #ffffff40 inset}
 
 :root{ --acc:#2f3a8a;--acc2:#161c4a;--acc3:#ffb45a }
-.row+.row{margin-top:8px}.mt.tk{width:36px;background:linear-gradient(90deg,#efe3c8 0 30%,#8fc7ff 30% 53%,#7cc243 53% 73%,#6e300e 73%)}.flip{text-align:center;font:900 14px 'Noto Sans TC',sans-serif;color:#8fd0ff;text-shadow:0 1px 3px #000;margin-bottom:2px;animation:pulse .5s ease-in-out infinite alternate}
+.panel{padding:10px 12px 12px}.panel .row{gap:6px}.panel .row+.row{margin-top:6px}.btn.sm{min-height:44px;font-size:15px}.row.fills .btn.fr{min-height:52px;font-size:12px;padding:3px 1px}.row.fills .btn img{width:24px;height:24px}.btn.go2{background:linear-gradient(#ffe2a8,#ffc35a);box-shadow:0 3px 0 #b8781a,inset 0 1px 0 #fff;color:#4a2805}.mt.tk{width:36px;background:linear-gradient(90deg,#efe3c8 0 28%,#8fc7ff 28% 50%,#7cc243 50% 72%,#6e300e 72%)}.flip{text-align:center;font:900 14px 'Noto Sans TC',sans-serif;color:#8fd0ff;text-shadow:0 1px 3px #000;margin-bottom:2px;animation:pulse .5s ease-in-out infinite alternate}#guide{position:absolute;left:10px;right:10px;top:8px;background:rgba(255,248,234,.94);color:#3a2414;border-radius:12px;padding:8px 12px;font:700 15px/1.4 'Noto Sans TC',sans-serif;text-align:center;box-shadow:0 4px 12px #0007;pointer-events:none}#guide[hidden]{display:none}
 </style></head><body>
 <div id="app">
   <div class="lan" aria-hidden="true"></div>
   <header><h1>大顆章魚燒</h1>
     <div class="hud"><div><span id="dayl">第 1 天</span><b id="time">0</b></div><div><span id="goal">目標</span><b id="money">$0</b></div></div></header>
   <div id="counter" aria-label="排隊客人"><div class="empty">等客人上門…</div></div>
-  <div id="stage"><canvas id="cv" aria-label="章魚燒烤盤"></canvas><div id="tags"></div><div class="sign3">章魚燒<small>醬汁・美乃滋・柴魚片　現烤現翻</small></div><div id="hint3" hidden>按「倒麵糊」倒滿烤盤</div></div>
+  <div id="stage"><canvas id="cv" aria-label="章魚燒烤盤"></canvas><div id="tags"></div><div id="guide" hidden></div></div>
   <div class="panel">
-    <div class="sum"><span id="sum"></span><small>顆數和配料對了就點客人</small></div>
-    <div class="row" style="--cols:2"><button class="btn hot" id="pourall">倒麵糊</button><button class="btn" id="dumpt">倒掉重來</button></div><div class="row"><button class="btn" id="t_sauce">醬汁</button><button class="btn" id="t_mayo">美乃滋</button><button class="btn" id="t_bonito">柴魚</button></div>
+    <div class="sum"><span id="sum"></span><small>顆數、餡料、醬料都對了就點客人</small></div>
+    <div class="row" style="--cols:5"><button class="btn sm" data-h="0">弱火</button><button class="btn sm" data-h="1">中火</button><button class="btn sm" data-h="2">強火</button><button class="btn sm go2" id="turnall">轉</button><button class="btn sm go2" id="takeall">夾起</button></div><div class="row fills" style="--cols:5"><button class="btn fr" data-f="tako"><img alt="">章魚</button><button class="btn fr" data-f="tenkasu"><img alt="">天婦羅屑</button><button class="btn fr" data-f="negi"><img alt="">蔥花</button><button class="btn fr" data-f="beni"><img alt="">紅薑</button><button class="btn fr" data-f="cheese"><img alt="">起司</button><button class="btn fr" data-f="choco"><img alt="">巧克力</button><button class="btn fr" data-f="banana"><img alt="">香蕉</button><button class="btn fr" data-f="straw"><img alt="">草莓</button><button class="btn fr" data-f="grape"><img alt="">葡萄</button><button class="btn fr" data-f="mikan"><img alt="">橘子</button></div><div class="row" style="--cols:4"><button class="btn sm" id="t_sauce">醬汁</button><button class="btn sm" id="t_mayo">美乃滋</button><button class="btn sm" id="t_bonito">柴魚</button><button class="btn sm" id="dumpt">倒掉</button></div>
   </div>
 </div>
 <div class="ov" id="start"><div class="card">
-  <h2>做章魚燒</h2><div>竹籤一勾一翻，圓滾滾、外酥內軟</div><div class="goalline" id="sgoal"></div>
-  <ol><li>按<b>倒麵糊</b>倒滿烤盤，也可以點空洞單獨倒</li><li>指針過了<b>藍區</b>、出現「翻！」時<b>點一下翻面</b>，太早翻會散掉</li><li>烤到<b>綠區</b>（金黃發亮）<b>再點一次</b>夾進船盒</li><li>照客人要的<b>顆數、醬汁、美乃滋、柴魚</b>配好，<b>點客人</b>出餐</li></ol>
+  <h2>做章魚燒</h2><div>刷油、倒麵糊、撒餡料、竹籤一轉，圓滾滾外酥內軟</div><div class="goalline" id="sgoal"></div>
+  <ol><li><b>按住左邊刷子</b>在烤盤上抹油，再<b>按住右邊麵糊壺</b>拖到洞上倒麵糊</li><li>照客人點的<b>撒餡料</b>（整盤一起撒），甜口味不加醬</li><li>出現「翻！」按<b>轉</b>翻面，烤到金黃按<b>夾起</b>放進船盒；火力越大越快</li><li>配好<b>醬汁、美乃滋、柴魚</b>，<b>點客人</b>出餐</li></ol>
   <button class="btn" id="go">開攤！</button>
   <div><a class="home" href="index.html">← 回夜市小吃街</a></div>
 </div></div>
@@ -177,6 +177,7 @@ function end(){S.run=false;loopVol(0);let best=0;const key='nm_best_'+G.key;try{
 function pos(e){const r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]}
 cv.addEventListener('pointerdown',e=>{if(!S||!S.run||!G.down)return;try{cv.setPointerCapture(e.pointerId)}catch(_){}G.down(...pos(e))});
 ['pointerup','pointercancel'].forEach(t=>cv.addEventListener(t,e=>{if(S&&G.up)G.up(...pos(e))}));
+cv.addEventListener('pointermove',e=>{if(S&&S.run&&G.move)G.move(...pos(e))});
 function boot(game){G=game;if(!game.gl)cx=cv.getContext('2d');fit();reset();dayUI();G.demo&&G.demo();$('#go').onclick=start;$('#again').onclick=start;requestAnimationFrame(loop)}
 
 /* ---------- mini3d: a small WebGL renderer for the night-market games ---------- */
@@ -191,6 +192,11 @@ const M4={
   nrm(m){const a=m[0],b=m[1],c=m[2],d=m[4],e=m[5],f=m[6],g=m[8],h=m[9],i=m[10],A=e*i-f*h,B=-(d*i-f*g),C=d*h-e*g,det=a*A+b*B+c*C||1e-9;
     /* inverse-transpose of the 3x3 */
     return[A/det,B/det,C/det,-(b*i-c*h)/det,(a*i-c*g)/det,-(a*h-b*g)/det,(b*f-c*e)/det,-(a*f-c*d)/det,(a*e-b*d)/det]},
+  inv(m){const o=new Array(16),[a00,a01,a02,a03,a10,a11,a12,a13,a20,a21,a22,a23,a30,a31,a32,a33]=m;
+    const b00=a00*a11-a01*a10,b01=a00*a12-a02*a10,b02=a00*a13-a03*a10,b03=a01*a12-a02*a11,b04=a01*a13-a03*a11,b05=a02*a13-a03*a12,b06=a20*a31-a21*a30,b07=a20*a32-a22*a30,b08=a20*a33-a23*a30,b09=a21*a32-a22*a31,b10=a21*a33-a23*a31,b11=a22*a33-a23*a32;
+    const d=1/(b00*b11-b01*b10+b02*b09+b03*b08-b04*b07+b05*b06);
+    o[0]=(a11*b11-a12*b10+a13*b09)*d;o[1]=(a02*b10-a01*b11-a03*b09)*d;o[2]=(a31*b05-a32*b04+a33*b03)*d;o[3]=(a22*b04-a21*b05-a23*b03)*d;o[4]=(a12*b08-a10*b11-a13*b07)*d;o[5]=(a00*b11-a02*b08+a03*b07)*d;o[6]=(a32*b02-a30*b05-a33*b01)*d;o[7]=(a20*b05-a22*b02+a23*b01)*d;
+    o[8]=(a10*b10-a11*b08+a13*b06)*d;o[9]=(a01*b08-a00*b10-a03*b06)*d;o[10]=(a30*b04-a31*b02+a33*b00)*d;o[11]=(a21*b02-a20*b04-a23*b00)*d;o[12]=(a11*b07-a10*b09-a12*b06)*d;o[13]=(a00*b09-a01*b07+a02*b06)*d;o[14]=(a31*b01-a30*b03-a32*b00)*d;o[15]=(a20*b03-a21*b01+a22*b00)*d;return o},
   xf(m,v){return[m[0]*v[0]+m[4]*v[1]+m[8]*v[2]+m[12],m[1]*v[0]+m[5]*v[1]+m[9]*v[2]+m[13],m[2]*v[0]+m[6]*v[1]+m[10]*v[2]+m[14]]}
 };
 function sub(a,b){return[a[0]-b[0],a[1]-b[1],a[2]-b[2]]}function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]}
@@ -267,6 +273,9 @@ void main(){
   function vis(n){return n.vis&&(!n.parent||vis(n.parent))}
   let frame=0;
   E.project=p=>{if(!E.VP)return[0,0,1];const v=E.VP,x=v[0]*p[0]+v[4]*p[1]+v[8]*p[2]+v[12],y=v[1]*p[0]+v[5]*p[1]+v[9]*p[2]+v[13],w=v[3]*p[0]+v[7]*p[1]+v[11]*p[2]+v[15];return[(x/w*.5+.5)*E.W,(1-(y/w*.5+.5))*E.H,w]};
+  /* screen point -> point on the horizontal plane y=py */
+  E.unproject=(sx,sy,py)=>{if(!E.VP)return null;const iv=M4.inv(E.VP),nx=sx/E.W*2-1,ny=1-sy/E.H*2;const h=(z)=>{const v=[nx,ny,z,1],o=[0,0,0,0];for(let r=0;r<4;r++)o[r]=iv[r]*v[0]+iv[4+r]*v[1]+iv[8+r]*v[2]+iv[12+r]*v[3];return[o[0]/o[3],o[1]/o[3],o[2]/o[3]]};
+    const a=h(-1),b=h(1),dy=b[1]-a[1];if(Math.abs(dy)<1e-6)return null;const t=(py-a[1])/dy;return[a[0]+(b[0]-a[0])*t,py,a[2]+(b[2]-a[2])*t]};
   E.worldPos=(n,local=[0,0,0])=>M4.xf(world(n,frame),local);
   E.render=(W,H)=>{frame++;E.W=W;E.H=H;gl.viewport(0,0,cv.width,cv.height);const e=E.env;gl.clearColor(e.fog[0],e.fog[1],e.fog[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
     const c=E.cam,tt=performance.now()/1000,sw=e.sway,cp=[c.pos[0]+Math.sin(tt*.31)*.07*sw,c.pos[1]+Math.sin(tt*.23)*.04*sw,c.pos[2]],V=M4.look(cp,c.tgt,[0,1,0]);E.VP=M4.mul(M4.persp(c.fov*Math.PI/180,W/H,.1,60),V);
@@ -294,100 +303,172 @@ void main(){
   return E}
 /* DOM labels pinned to 3D points (meters, dots) */
 function makeTags(host){const pool=[];return{get(i){let el=pool[i];if(!el){el=document.createElement('div');el.className='tag3';host.appendChild(el);pool[i]=el}return el},hideFrom(i){for(let k=i;k<pool.length;k++)pool[k].style.display='none'}}}
-/* ---------- 章魚燒 3D ---------- */
-const COOK=9,TURN=.45,GRIDN=12,BR=.33;
-const TB=[[0,[246,228,176]],[.45,[242,210,140]],[.8,[226,156,62]],[1.1,[188,104,34]],[1.4,[96,52,20]],[1.8,[30,20,12]]];
+/* ---------- 章魚燒 3D（刷油、倒麵糊、十種餡料、火力、轉） ---------- */
+const COOK=10,TURN=.45,BR=.43,DP=.34,PANY=.8,PZ=-.25,HEATS=[.65,1,1.5];
+const FILL={tako:{n:'章魚',c:0xc8607a},tenkasu:{n:'天婦羅屑',c:0xf0d9a0},negi:{n:'蔥花',c:0x6abf4a},beni:{n:'紅薑',c:0xe8304a},cheese:{n:'起司',c:0xffd94a},
+  choco:{n:'巧克力',c:0x6a3a1e},banana:{n:'香蕉',c:0xf6eab0},straw:{n:'草莓',c:0xff4a5a},grape:{n:'葡萄',c:0x8a4ab8},mikan:{n:'橘子',c:0xffa024}};
+const SAVORY=['tenkasu','negi','beni','cheese'],SWEET=['choco','banana','straw','grape','mikan'];
+const TB=[[0,[246,228,176]],[.45,[242,210,140]],[.8,[226,156,62]],[1.15,[188,104,34]],[1.45,[96,52,20]],[1.8,[30,20,12]]];
 const colAt=p=>{for(let i=1;i<TB.length;i++)if(p<=TB[i][0]){const t=(p-TB[i-1][0])/(TB[i][0]-TB[i-1][0]);return TB[i-1][1].map((v,j)=>(v+(TB[i][1][j]-v)*t)/255)}return TB[TB.length-1][1].map(v=>v/255)};
-const tIcon=()=>icon('tako',(g,s)=>{const r=s*.34,gr=g.createRadialGradient(s*.42,s*.4,2,s/2,s/2,r);gr.addColorStop(0,'#e8a850');gr.addColorStop(1,'#9a5418');g.fillStyle=gr;g.beginPath();g.arc(s/2,s/2,r,0,7);g.fill();
-  g.fillStyle='#5a2a10';g.beginPath();g.ellipse(s/2,s*.44,r*.85,r*.55,0,Math.PI,0);g.fill();g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.moveTo(s*.28,s*.4);for(let i=0;i<4;i++)g.lineTo(s*(.34+i*.1),s*(i%2?.36:.46));g.stroke();g.fillStyle='#e8b0a0';g.fillRect(s*.45,s*.24,s*.1,s*.05)});
+function drawFill(g,k,s){const c='#'+FILL[k].c.toString(16).padStart(6,'0');g.save();g.translate(s/2,s/2);g.fillStyle=c;g.strokeStyle=c;
+  if(k==='tako'){g.beginPath();g.ellipse(0,0,s*.3,s*.22,-.3,0,7);g.fill();g.fillStyle='#f6d2da';for(let i=0;i<4;i++){g.beginPath();g.arc(-s*.15+i*s*.1,s*.08,s*.04,0,7);g.fill()}}
+  else if(k==='tenkasu'){for(let i=0;i<9;i++){g.beginPath();g.arc(Math.cos(i*2.4)*s*.22,Math.sin(i*2.4)*s*.18,s*.08,0,7);g.fill()}g.fillStyle='rgba(160,110,40,.4)';for(let i=0;i<5;i++){g.beginPath();g.arc(Math.cos(i*1.7)*s*.15,Math.sin(i*1.7)*s*.12,s*.04,0,7);g.fill()}}
+  else if(k==='negi'){g.lineWidth=s*.07;[[-.14,-.06],[.12,-.1],[0,.12]].forEach(([x,y])=>{g.beginPath();g.arc(x*s,y*s,s*.12,0,7);g.stroke()})}
+  else if(k==='beni'){g.lineWidth=s*.07;g.lineCap='round';for(let i=0;i<5;i++){g.beginPath();g.moveTo(-s*.25+i*s*.1,-s*.25);g.quadraticCurveTo(s*.1,0,-s*.2+i*s*.12,s*.26);g.stroke()}}
+  else if(k==='cheese'){g.beginPath();g.moveTo(-s*.28,s*.2);g.lineTo(s*.28,s*.2);g.lineTo(s*.1,-s*.24);g.lineTo(-s*.28,-s*.02);g.closePath();g.fill();g.fillStyle='rgba(200,150,0,.5)';g.beginPath();g.arc(0,s*.05,s*.05,0,7);g.fill()}
+  else if(k==='choco'){g.fillRect(-s*.26,-s*.2,s*.52,s*.4);g.strokeStyle='rgba(0,0,0,.35)';g.lineWidth=2;g.strokeRect(-s*.26,-s*.2,s*.26,s*.2);g.strokeRect(0,0,s*.26,s*.2)}
+  else if(k==='banana'){g.beginPath();g.arc(0,0,s*.27,0,7);g.fill();g.fillStyle='rgba(180,150,60,.45)';g.beginPath();g.arc(0,0,s*.08,0,7);g.fill()}
+  else if(k==='straw'){g.beginPath();g.moveTo(0,s*.3);g.bezierCurveTo(-s*.36,s*.05,-s*.28,-s*.26,0,-s*.2);g.bezierCurveTo(s*.28,-s*.26,s*.36,s*.05,0,s*.3);g.fill();g.fillStyle='#3f8f2a';g.fillRect(-s*.1,-s*.28,s*.2,s*.08)}
+  else if(k==='grape'){[[-.12,-.06],[.12,-.06],[0,.12]].forEach(([x,y])=>{g.beginPath();g.arc(x*s,y*s,s*.14,0,7);g.fill()})}
+  else{g.beginPath();g.ellipse(0,0,s*.3,s*.18,-.5,0,7);g.fill();g.strokeStyle='rgba(255,255,255,.5)';g.lineWidth=2;g.beginPath();g.ellipse(0,0,s*.2,s*.1,-.5,0,7);g.stroke()}
+  g.fillStyle='rgba(255,255,255,.4)';g.beginPath();g.ellipse(-s*.08,-s*.08,s*.06,s*.03,-.5,0,7);g.fill();g.restore()}
+const fIcon=k=>icon('fl_'+k,(g,s)=>drawFill(g,k,s));
+const tIcon=()=>icon('tako',(g,s)=>{const r=s*.34,gr=g.createRadialGradient(s*.42,s*.4,2,s/2,s/2,r);gr.addColorStop(0,'#e8a850');gr.addColorStop(1,'#9a5418');g.fillStyle=gr;g.beginPath();g.arc(s/2,s/2,r,0,7);g.fill();g.fillStyle='#5a2a10';g.beginPath();g.ellipse(s/2,s*.44,r*.85,r*.55,0,Math.PI,0);g.fill()});
 const E3=createEngine(cv);
 if(!E3)$('#stage').insertAdjacentHTML('beforeend','<div class="nogl">這台裝置不支援 3D 畫面</div>');
 const C=hex,SPH=E3.mesh(GEO.sphere(1,26,18));
-/* scene */
-E3.env.kd=[.35,1,.75];E3.env.kc=[1.4,1.22,.98];E3.env.sky=C(0x8a6a50);E3.env.gnd=C(0x2a1408);E3.env.fog=C(0x120806);E3.env.pl=[0,.35,1.6];E3.env.pc=[1.2,.5,.12];E3.env.pr=3;
+const HX=[-1.5,-.5,.5,1.5],HZ=[-.5,.5],HOLES=[];HZ.forEach(z=>HX.forEach(x=>HOLES.push([x,z])));
+/* ---- scene ---- */
+E3.env.kd=[.35,1,.75];E3.env.kc=[1.4,1.22,.98];E3.env.sky=C(0x8a6a50);E3.env.gnd=C(0x2a1408);E3.env.fog=C(0x120806);E3.env.pl=[0,.3,PZ+1.3];E3.env.pc=[1.1,.45,.1];E3.env.pr=3;
 E3.add(E3.mesh(GEO.rbox(16,.4,10,.1,2)),{pos:[0,-.2,0],col:C(0x4e2c16),nz:.5,ns:1.1,na:[.35,6,7],sp:.12,sh:20,refl:.08});
 E3.add(E3.Q,{pos:[0,3,-3.4],scl:[10,4.5,1],col:C(0x2c1a10),nz:.3,ns:1.3,sp:0,rim:0});
 for(let i=0;i<9;i++)E3.add(SPH,{pos:[-4+i,4.3+Math.sin(i)*.15,-3.2],scl:[.15,.18,.15],col:C(0xff8060),emi:C(0xd0503a),mode:1});
-const stand=E3.add(E3.mesh(GEO.rbox(4.6,.55,3.5,.08,3)),{pos:[0,.275,-.1],col:C(0x2f3a8a),sp:.6,sh:40,rim:.3});
-E3.add(E3.mesh(GEO.rbox(4.7,.06,3.6,.03,2)),{pos:[0,.56,-.1],col:C(0x9a9c9e),sp:.9,sh:60});
-const flame=E3.add(E3.mesh(GEO.rbox(4.2,.05,.1,.02,2)),{pos:[0,.38,1.66],col:[1,.5,.15],emi:C(0xff7020),mode:1});
-E3.blob(stand,3.2,-.27,.55);
-const PANY=.78;
-E3.add(E3.mesh(GEO.rbox(4.3,.22,3.3,.06,3)),{pos:[0,PANY-.11,-.1],col:C(0x22201e),sp:.25,sh:20,nz:.25,ns:6});
-const HOLE=E3.mesh(GEO.lathe([[0,-BR*.95],[BR*.45,-BR*.85],[BR*.8,-BR*.55],[BR*.98,-BR*.15],[BR*1.06,0]],28));
-const RIM=E3.mesh(GEO.torus(BR*1.06,.025,32,6));
-const cells=[];for(let i=0;i<GRIDN;i++){const x=-1.47+(i%4)*.98,z=-.98+Math.floor(i/4)*.95-.1;
-  E3.add(HOLE,{pos:[x,PANY,z],col:C(0x0e0c0b),sp:.3,sh:20});E3.add(RIM,{pos:[x,PANY,z],col:C(0x3a3634),sp:.6});
-  const ball=E3.add(SPH,{pos:[x,PANY,z],scl:[BR,BR,BR],col:colAt(0),nz:.3,ns:10,sp:.25,sh:30,vis:false});
-  const batter=E3.add(E3.D,{pos:[x,PANY+.005,z],scl:[BR*1.04,1,BR*1.04],col:colAt(0),nz:.35,ns:7,sp:.3,vis:false});
-  const tako=E3.add(SPH,{pos:[x+.06,PANY+.03,z-.02],scl:[.09,.05,.08],col:C(0xb84a5a),sp:.6,vis:false});
-  const onion=E3.add(SPH,{pos:[x-.1,PANY+.02,z+.07],scl:[.05,.015,.04],col:C(0x6abf4a),vis:false});
-  cells.push({x,z,st:'empty',p:0,turned:false,spill:false,ang:0,ball,batter,tako,onion})}
-/* boat tray */
-const BOAT=[2.45,.04,1.95];
-const boat=E3.add(E3.mesh(GEO.rbox(1.25,.08,.75,.04,2)),{pos:BOAT.slice(),col:C(0xe2c58e),nz:.3,ns:5,sp:.1});
-E3.add(E3.mesh(GEO.rbox(1.35,.16,.06,.02,2)),{pos:[BOAT[0],.1,BOAT[2]-.4],col:C(0xd6b47a),nz:.3,ns:5});E3.add(E3.mesh(GEO.rbox(1.35,.16,.06,.02,2)),{pos:[BOAT[0],.1,BOAT[2]+.4],col:C(0xd6b47a),nz:.3,ns:5});
-E3.blob(boat,.9,-.035,.4);
-const MAYO=E3.mesh(GEO.lathe([[0,0],[.02,0],[.02,1],[0,1]],6));
-const mayo=E3.group({vis:false});for(let i=0;i<5;i++)E3.add(MAYO,{parent:mayo,pos:[BOAT[0]-.5+i*.25,.6,BOAT[2]-.3],rot:[Math.PI/2,(i%2?.5:-.5),0],scl:[1,.62,1],col:[1,1,.97],sp:.8,sh:60});
-const bonito=E3.group({vis:false});for(let i=0;i<14;i++)E3.add(SPH,{parent:bonito,pos:[BOAT[0]+rnd(-.5,.5),.62+rnd(0,.04),BOAT[2]+rnd(-.25,.25)],rot:[rnd(-.6,.6),rnd(0,6),rnd(-.6,.6)],scl:[.07,.008,.05],col:C(0xd9a08a),sp:.3});
-/* pick stick */
-const stick=E3.add(E3.mesh(GEO.lathe([[0,0],[.012,0],[.012,1.3],[0,1.32]],6)),{col:C(0xe2c38a),vis:false,rot:[0,0,.35]});
+const stand=E3.add(E3.mesh(GEO.rbox(4.8,.5,2.7,.08,3)),{pos:[0,.25,PZ],col:C(0x2f3a8a),sp:.6,sh:40,rim:.3});
+const flame=E3.add(E3.mesh(GEO.rbox(4.3,.05,.1,.02,2)),{pos:[0,.32,PZ+1.36],col:[1,.5,.15],emi:C(0xff7020),mode:1});
+E3.blob(stand,3.2,-.245,.55);
+/* pan surface with real hemispherical dimples */
+const PW=4.5,PD=2.4,hdepth=(x,z)=>{let y=0;for(const [hx,hz] of HOLES){const d=Math.hypot(x-hx,z-hz);if(d<BR)y=Math.min(y,-DP*Math.sqrt(1-(d/BR)*(d/BR)));else if(d<BR*1.08)y=Math.min(y,.012*Math.sin((d-BR)/(BR*.08)*Math.PI))}return y};
+const PG=grid(180,96,(u,v)=>{const x=-PW/2+u*PW,z=-PD/2+v*PD;return[x,hdepth(x,z),z]},false);PG.N=computeNormals(PG.P,PG.I);
+const pan=E3.add(E3.mesh(PG),{pos:[0,PANY,PZ],col:C(0x262422),sp:.35,sh:30,nz:.25,ns:7});
+E3.add(E3.mesh(GEO.rbox(PW+.12,.34,PD+.12,.05,2)),{pos:[0,PANY-.19,PZ],col:C(0x1c1a18),sp:.3});
+E3.add(E3.mesh(GEO.rbox(1.1,.12,.32,.06,3)),{pos:[PW/2+.6,PANY-.1,PZ],col:C(0x8a5a30),nz:.4,ns:4,na:[.3,4,4],sp:.2});
+const OILM=E3.mesh(GEO.lathe(Array.from({length:9},(_,i)=>{const t=i/8;return[BR*t,-DP*Math.sqrt(Math.max(0,1-t*t))+.006]}),32));
+const BALLR=BR*.9;
+const HS=HOLES.map(([x,z])=>{const wx=x,wz=z+PZ;
+  const oil=E3.add(OILM,{pos:[wx,PANY,wz],col:[1,.85,.45],a:.32,sp:2.2,sh:140,refl:.6,order:2,vis:false});
+  const bat=E3.add(E3.D,{pos:[wx,PANY,wz],col:colAt(0),nz:.35,ns:7,sp:.35,vis:false});
+  const spill=E3.add(E3.D,{pos:[wx,PANY+.008,wz],col:colAt(0),nz:.3,ns:6,sp:.3,vis:false});
+  const ball=E3.add(SPH,{pos:[wx,PANY-DP+BALLR,wz],scl:[BALLR,BALLR,BALLR],col:colAt(0),nz:.3,ns:9,sp:.3,sh:30,vis:false});
+  return{x:wx,z:wz,oiled:false,fill:0,set:[],p:0,turned:false,broken:false,stuck:false,ang:0,oil,bat,spill,ball,pieces:[]}});
+/* tools */
+const BRUSH_HOME=[-2.5,0,PZ+1.55],PITCH_HOME=[2.5,0,PZ+1.55];
+E3.add(E3.mesh(GEO.lathe([[0,0],[.26,0],[.28,.3],[.24,.3],[.22,.05],[0,.05]],24)),{pos:BRUSH_HOME.slice(),col:C(0xf4f2ee),sp:.8,sh:60});
+E3.add(E3.D,{pos:[BRUSH_HOME[0],.26,BRUSH_HOME[2]],scl:[.22,1,.22],col:[1,.82,.35],sp:2,sh:120,refl:.5});
+const brush=E3.group({pos:BRUSH_HOME.slice()});
+E3.add(E3.mesh(GEO.lathe([[0,0],[.035,0],[.035,1.1],[0,1.12]],8)),{parent:brush,pos:[0,.2,0],rot:[0,0,-.35],col:C(0xd9b77a),sp:.2});
+E3.add(E3.mesh(GEO.rbox(.2,.18,.12,.05,3)),{parent:brush,pos:[0,.12,0],col:C(0xf2e2b8),nz:.6,ns:30,sp:.4});
+const pitch=E3.group({pos:PITCH_HOME.slice()});
+E3.add(E3.mesh(GEO.lathe([[0,0],[.3,0],[.32,.08],[.32,.62],[.35,.68],[0,.68]],28)),{parent:pitch,col:C(0xcfd2d5),sp:1.2,sh:80,rim:.4});
+E3.add(E3.D,{parent:pitch,pos:[0,.66,0],scl:[.3,1,.3],col:C(0xf4e2a8),sp:.4});
+E3.add(E3.mesh(GEO.torus(.18,.035,20,8)),{parent:pitch,pos:[.36,.38,0],rot:[Math.PI/2,0,0],col:C(0xb9bcbe),sp:1});
+E3.add(E3.mesh(GEO.lathe([[0,0],[.06,0],[.03,.32],[0,.32]],10)),{parent:pitch,pos:[-.3,.55,0],rot:[0,0,1.1],col:C(0xcfd2d5),sp:1.2});
+const stream=E3.add(E3.mesh(GEO.lathe([[0,0],[.04,0],[.03,1],[0,1]],10)),{col:C(0xf4e2a8),vis:false,sp:.5});
+/* paper boat */
+const BOAT=[0,.03,PZ+1.95];
+const boatN=E3.group({pos:BOAT.slice()});
+E3.add(E3.mesh(GEO.rbox(2.3,.06,.85,.03,2)),{parent:boatN,col:C(0xe8d6ae),nz:.25,ns:5,sp:.1});
+[[0,-.44],[0,.44]].forEach(([x,z])=>E3.add(E3.mesh(GEO.rbox(2.4,.22,.05,.02,2)),{parent:boatN,pos:[x,.1,z],rot:[z<0?.25:-.25,0,0],col:C(0xdcc596),nz:.25,ns:5}));
+E3.blob(boatN,1.5,-.025,.35);
+const MAYO=E3.mesh(GEO.lathe([[0,0],[.022,0],[.022,1],[0,1]],6));
+const mayo=E3.group({parent:boatN,vis:false});for(let i=0;i<9;i++)E3.add(MAYO,{parent:mayo,pos:[-1+i*.25,.54,-.32],rot:[Math.PI/2,(i%2?.55:-.55),0],scl:[1,.72,1],col:[1,1,.97],sp:.8,sh:60});
+const bonito=E3.group({parent:boatN,vis:false});for(let i=0;i<20;i++)E3.add(SPH,{parent:bonito,pos:[rnd(-1,1),.55+rnd(0,.04),rnd(-.28,.28)],rot:[rnd(-.6,.6),rnd(0,6),rnd(-.6,.6)],scl:[.08,.008,.055],col:C(0xd9a08a),sp:.3});
+const NEGI=E3.mesh(GEO.torus(1,.3,14,6)),CUBE=E3.mesh(GEO.rbox(.13,.1,.13,.02,2));
 const tags=makeTags($('#tags'));
-const T2={boat:[],boatN:[],sauce:false,mayo:false,bonito:false,el:0,stk:null};
-function frame(W,H){const tgt=[.25,.6,.45],dir=norm([0,1.3,1]),vf=E3.cam.fov*Math.PI/360,hf=Math.atan(Math.tan(vf)*W/H),d=Math.max(3.4/Math.tan(hf),2.4/Math.tan(vf));
+const T2={boat:[],boatN:[],sauce:false,mayo:false,bonito:false,el:0,heat:1,tool:null,ptr:null};
+function frame(W,H){const tgt=[0,.55,PZ+.85],dir=norm([0,1.3,1]),vf=E3.cam.fov*Math.PI/360,hf=Math.atan(Math.tan(vf)*W/H),d=Math.max(2.85/Math.tan(hf),2.05/Math.tan(vf));
   E3.cam.tgt=tgt;E3.cam.pos=[tgt[0]+dir[0]*d,tgt[1]+dir[1]*d,tgt[2]+dir[2]*d]}
-function pour(c){c.st='cook';c.p=0;c.turned=false;c.spill=false;c.ang=0}
-function pourAll(){if(!S.run)return;let n=0;cells.forEach(c=>{if(c.st==='empty'){pour(c);n++}});if(!n){toast('烤盤都滿了','#ffd56a');return}noise(.9,.22,2600);beep(420,.08)}
-function cellAt(x,y){let best=-1,bd=1e9;cells.forEach((c,i)=>{const p=E3.project([c.x,PANY,c.z]),q=E3.project([c.x+BR*1.3,PANY,c.z]),r=Math.max(20,Math.abs(q[0]-p[0])),d=Math.hypot(x-p[0],y-p[1]);if(d<r&&d<bd){bd=d;best=i}});return best}
-function stg(c){if(c.p>=1.4)return'char';if(!c.turned||c.spill)return'bad';if(c.p<.8)return'raw';if(c.p<=1.1)return'good';return'over'}
-function tapCell(x,y){const i=cellAt(x,y);if(i<0)return;const c=cells[i];T2.stk={x:c.x,z:c.z,t:0};
-  if(c.st==='empty'){pour(c);noise(.4,.15,2600);return}
-  if(c.p>=1.4){c.st='empty';toast('焦了，挖掉','#bbb');return}
-  if(!c.turned){c.turned=true;if(c.p<TURN){c.spill=true;toast('太早翻，散掉了','#ff9a7a');beep(180,.15,'sawtooth',.05)}else{beep(700,.06,'triangle')}return}
-  if(c.ang<Math.PI*.95)return;
-  if(T2.boat.length>=8){toast('船盒滿了！','#ffd56a');return}
-  const s=stg(c);c.st='empty';const k=T2.boat.length,n=E3.add(SPH,{pos:[BOAT[0]-.45+(k%4)*.3,.27,BOAT[2]-.14+Math.floor(k/4)*.28],scl:[BR*.85,BR*.85,BR*.85],col:colAt(Math.min(c.p,1.3)),nz:.3,ns:10,sp:.4,sh:40});
-  const sc=E3.add(SPH,{parent:n,pos:[0,.42,0],scl:[1.06,.66,1.06],col:C(0x4a200c),a:.92,sp:1.4,sh:90,vis:false,order:3});n.sauceN=sc;
-  T2.boat.push(s);T2.boatN.push(n);beep(s==='good'?880:360,.1,'triangle');
-  toast(s==='good'?'外酥內軟！':s==='bad'?(c.spill?'形狀散掉了':'沒翻面，半顆'):s==='raw'?'還沒熟':'有點焦',s==='good'?'#ffd56a':'#f3d2a0');if(s==='good')buzz(12);updSum()}
-boot({key:'takoyaki',gl:true,round:90,patience:40,loop:true,goal:d=>240+d*130,
+const st=h=>h.fill<=0?'empty':h.turned?'ball':'batter';
+function qual(h){if(h.p>=1.45)return'char';if(h.broken||h.stuck||h.fill<.65)return'bad';if(h.p<.8)return'raw';if(h.p<=1.15)return'good';return'over'}
+function holeAt(x,y){let best=-1,bd=1e9;HS.forEach((h,i)=>{const p=E3.project([h.x,PANY,h.z]),q=E3.project([h.x+BR,PANY,h.z]),r=Math.max(22,Math.abs(q[0]-p[0])*1.1),d=Math.hypot(x-p[0],y-p[1]);if(d<r&&d<bd){bd=d;best=i}});return best}
+function clearHole(h){h.fill=0;h.set=[];h.p=0;h.turned=h.broken=h.stuck=false;h.ang=0;h.pieces.forEach(n=>E3.remove(n));h.pieces=[]}
+function turn(h,quiet){if(st(h)!=='batter')return false;if(h.p<TURN){if(quiet)return false;h.broken=true;toast('還太軟，翻破了','#ff9a7a');beep(180,.15,'sawtooth',.05)}
+  if(!h.oiled){h.stuck=true;if(!quiet)toast('沒刷油，黏鍋了','#ff9a7a')}h.turned=true;return true}
+function take(h,quiet){if(st(h)!=='ball'||h.ang<Math.PI*.9)return false;const q=qual(h);
+  if(q==='char'){clearHole(h);h.oiled=false;if(!quiet)toast('焦了，挖掉','#bbb');return false}
+  if(T2.boat.length>=8){if(!quiet)toast('船盒滿了！','#ffd56a');return false}
+  const k=T2.boat.length,n=E3.add(SPH,{parent:boatN,pos:[-.84+(k%4)*.56,.27,-.16+Math.floor(k/4)*.32],scl:[BALLR*.78,BALLR*.78,BALLR*.78],col:colAt(Math.min(h.p,1.3)),nz:.3,ns:9,sp:.45,sh:40});
+  n.sauceN=E3.add(SPH,{parent:n,pos:[0,.42,0],scl:[1.06,.66,1.06],col:C(0x4a200c),a:.92,sp:1.4,sh:90,vis:false,order:3});
+  T2.boat.push({q,set:h.set.slice().sort().join(',')});T2.boatN.push(n);h.oiled=false;clearHole(h);
+  if(!quiet){beep(q==='good'?880:360,.1,'triangle');toast(q==='good'?'外酥內軟！':q==='bad'?'形狀壞了':q==='raw'?'還沒熟':'有點焦',q==='good'?'#ffd56a':'#f3d2a0');if(q==='good')buzz(12)}
+  updSum();return true}
+function addFilling(k){if(!S.run)return;const hs=HS.filter(h=>st(h)==='batter');if(!hs.length){toast('先倒麵糊','#ffd56a');return}
+  let n=0;hs.forEach(h=>{if(h.set.includes(k))return;h.set.push(k);n++;const i=h.set.length,a=i*2.2,r=BR*.32;
+    const o={pos:[h.x+Math.cos(a)*r,PANY,h.z+Math.sin(a)*r],col:C(FILL[k].c),sp:.5,sh:40};let m=SPH;
+    if(k==='tako')Object.assign(o,{scl:[.12,.07,.1],nz:.3,ns:20});else if(k==='tenkasu')Object.assign(o,{scl:[.09,.04,.08],nz:.6,ns:30});else if(k==='negi'){m=NEGI;Object.assign(o,{scl:[.07,.07,.07]})}
+    else if(k==='beni')Object.assign(o,{scl:[.13,.02,.025],rot:[0,a,0]});else if(k==='cheese'||k==='choco'){m=CUBE;Object.assign(o,{rot:[0,a,0]})}else if(k==='banana')Object.assign(o,{scl:[.1,.025,.1]});else if(k==='grape')Object.assign(o,{scl:[.08,.08,.08],sp:1});else Object.assign(o,{scl:[.1,.06,.085]});
+    h.pieces.push(E3.add(m,o))});
+  if(n){beep(640,.05,'triangle');toast(`撒上${FILL[k].n}`,'#ffe6b0')}else toast(`已經放過${FILL[k].n}了`,'#f3ead2')}
+function grabTool(x,y){const b=E3.project(E3.worldPos(brush,[0,.3,0])),p=E3.project(E3.worldPos(pitch,[0,.4,0]));
+  if(Math.hypot(x-b[0],y-b[1])<60)return'oil';if(Math.hypot(x-p[0],y-p[1])<70)return'batter';return null}
+boot({key:'takoyaki',gl:true,round:100,patience:46,loop:true,goal:d=>250+d*140,
   layout:frame,
-  reset(){cells.forEach(c=>{c.st='empty';c.p=0;c.turned=false;c.spill=false;c.ang=0});T2.boatN.forEach(n=>E3.remove(n));T2.boatN=[];T2.boat=[];T2.sauce=T2.mayo=T2.bonito=false;setT();E3.clearParts()},
-  demo(){cells.forEach((c,i)=>{if(i%3===2)return;pour(c);c.p=.2+((i*.37)%1)*.9;if(c.p>.5){c.turned=true;c.ang=Math.PI}})},
-  order(day){return{n:pick(day<2?[4,6]:[4,6,8]),sauce:Math.random()<.85,mayo:Math.random()<.6,bonito:Math.random()<.6}},
-  orderText:o=>`客人要 ${o.n} 顆，${o.sauce?'醬汁':'不要醬'}、${o.mayo?'美乃滋':'不要美乃滋'}、${o.bonito?'柴魚':'不要柴魚'}`,
-  orderHTML:o=>`<img src="${tIcon()}" alt=""><b>${o.n}</b> 顆<br>${[o.sauce&&'醬',o.mayo&&'美乃滋',o.bonito&&'柴魚'].filter(Boolean).join('·')||'原味'}`,
-  matches:o=>T2.boat.length===o.n&&T2.sauce===o.sauce&&T2.mayo===o.mayo&&T2.bonito===o.bonito,
-  check(o){if(!T2.boat.length)return{err:'船盒是空的'};if(T2.boat.length!==o.n)return{err:`我要 ${o.n} 顆啦！`};
-    let pay=0,perfect=true,msg='';T2.boat.forEach(s=>{if(s==='good')pay+=8;else{perfect=false;pay+=s==='over'?5:2;msg=s==='over'?'有點焦':s==='raw'?'裡面還是生的':'形狀怪怪的'}});
-    if(T2.sauce!==o.sauce||T2.mayo!==o.mayo||T2.bonito!==o.bonito){pay=Math.round(pay*.5);perfect=false;msg=T2.sauce!==o.sauce?(o.sauce?'醬汁呢？':'我不要醬'):T2.mayo!==o.mayo?(o.mayo?'美乃滋呢？':'我不要美乃滋'):(o.bonito?'柴魚呢？':'我不要柴魚')}
-    return perfect?{pay:pay+6,perfect:true}:{pay,msg}},
+  reset(){HS.forEach(h=>{clearHole(h);h.oiled=false});T2.boatN.forEach(n=>E3.remove(n));T2.boatN=[];T2.boat=[];T2.sauce=T2.mayo=T2.bonito=false;T2.tool=null;setHeat(1);setT();E3.clearParts()},
+  demo(){HS.forEach((h,i)=>{if(i===3||i===6)return;h.oiled=true;h.fill=1;h.p=.25+i*.12;if(h.p>.55){h.turned=true;h.ang=Math.PI}})},
+  order(day){const sweet=day>=2&&Math.random()<.3;let set;
+    if(sweet)set=SWEET.slice().sort(()=>Math.random()-.5).slice(0,1+(Math.random()<.5?1:0));else set=['tako',...SAVORY.slice().sort(()=>Math.random()-.5).slice(0,day<2?1:1+(Math.random()<.5?1:0))];
+    return{n:pick(day<2?[4,6]:[4,6,8]),set:set.sort(),sweet,sauce:!sweet&&Math.random()<.85,mayo:!sweet&&Math.random()<.6,bonito:!sweet&&Math.random()<.6}},
+  orderText:o=>`客人要 ${o.n} 顆，餡料：${o.set.map(k=>FILL[k].n).join('、')}，${o.sweet?'甜口味不加醬':[o.sauce&&'醬汁',o.mayo&&'美乃滋',o.bonito&&'柴魚'].filter(Boolean).join('、')||'不加醬'}`,
+  orderHTML:o=>`<b>${o.n}</b>顆 ${o.set.map(k=>`<img src="${fIcon(k)}" alt="${FILL[k].n}">`).join('')}<br>${o.sweet?'甜的':[o.sauce&&'醬',o.mayo&&'美乃滋',o.bonito&&'柴魚'].filter(Boolean).join('·')||'不加醬'}`,
+  matches:o=>T2.boat.length===o.n&&T2.boat.every(b=>b.set===o.set.join(','))&&T2.sauce===o.sauce&&T2.mayo===o.mayo&&T2.bonito===o.bonito,
+  check(o){if(!T2.boat.length)return{err:'船盒是空的'};if(T2.boat.length!==o.n)return{err:`我要 ${o.n} 顆啦！`};if(!T2.boat.every(b=>b.set===o.set.join(',')))return{err:'餡料不對！'};
+    let pay=0,perfect=true,msg='';T2.boat.forEach(b=>{if(b.q==='good')pay+=9;else{perfect=false;pay+=b.q==='over'?5:2;msg=b.q==='over'?'有點焦':b.q==='raw'?'裡面還是生的':'形狀怪怪的'}});
+    if(T2.sauce!==o.sauce||T2.mayo!==o.mayo||T2.bonito!==o.bonito){pay=Math.round(pay*.5);perfect=false;msg=o.sweet?'甜的不要加醬啦':T2.sauce!==o.sauce?(o.sauce?'醬汁呢？':'我不要醬'):T2.mayo!==o.mayo?(o.mayo?'美乃滋呢？':'我不要美乃滋'):(o.bonito?'柴魚呢？':'我不要柴魚')}
+    return perfect?{pay:pay+8,perfect:true}:{pay,msg}},
   clear(){T2.boatN.forEach(n=>E3.remove(n));T2.boatN=[];T2.boat=[];T2.sauce=T2.mayo=T2.bonito=false;setT()},
-  sum:()=>T2.boat.length?`<span class="bag"><img src="${tIcon()}" alt="">船盒 ${T2.boat.length} 顆</span><span style="font-weight:500;font-size:14px">${[T2.sauce&&'醬汁',T2.mayo&&'美乃滋',T2.bonito&&'柴魚'].filter(Boolean).join(' · ')||'原味'}</span>`:'船盒是空的',
-  update(dt,run){let n=0;cells.forEach(c=>{if(c.st!=='cook')return;n++;if(run)c.p+=dt/COOK*(c.turned?1:.85);c.ang+=((c.turned?Math.PI:0)-c.ang)*Math.min(1,dt*10)});
-    if(T2.stk){T2.stk.t+=dt;if(T2.stk.t>.35)T2.stk=null}loopVol(run?Math.min(.1,.008*n):0)},
+  sum:()=>T2.boat.length?`<span class="bag"><img src="${tIcon()}" alt="">船盒 ${T2.boat.length} 顆</span><span style="font-weight:500;font-size:14px">${[T2.sauce&&'醬汁',T2.mayo&&'美乃滋',T2.bonito&&'柴魚'].filter(Boolean).join(' · ')||'不加醬'}</span>`:'船盒是空的',
+  update(dt,run){const hm=HEATS[T2.heat];let n=0;
+    HS.forEach(h=>{if(h.fill<=0)return;n++;if(run)h.p+=dt/COOK*hm*(h.turned?1:.9);h.ang+=((h.turned?Math.PI:0)-h.ang)*Math.min(1,dt*9)});
+    if(T2.tool&&T2.ptr){const p=T2.ptr;HS.forEach(h=>{const d=Math.hypot(p[0]-h.x,p[2]-h.z);
+      if(T2.tool==='oil'&&d<BR*1.15&&!h.oiled&&st(h)==='empty'){h.oiled=true;beep(900,.03,'sine',.04)}
+      if(T2.tool==='batter'&&d<BR*.95&&!h.turned){if(h.fill<=0)h.p=0;h.fill=Math.min(1.5,h.fill+dt*.85)}})}
+    loopVol(run?Math.min(.1,.009*n*hm):0)},
   draw(_,W,H,dt){if(!E3)return;T2.el+=dt;const el=T2.el;let ti=0;
-    cells.forEach(c=>{const on=c.st==='cook',half=on&&c.ang<Math.PI*.5;c.batter.vis=half;c.tako.vis=half;c.onion.vis=half;c.ball.vis=on&&!half;
-      if(on){const col=colAt(Math.min(c.p,1.8));c.batter.col=colAt(Math.min(c.p*.45,.5));c.batter.pos[1]=PANY+.005+Math.min(.06,c.p*.08);
-        c.ball.col=col;c.ball.pos=[c.x,PANY+.02+(c.spill?-.08:.07),c.z];c.ball.scl=c.spill?[BR*1.15,BR*.55,BR*1.08]:[BR,BR,BR];c.ball.rot=[c.ang+Math.PI,0,0];c.ball.sp=.2+.35*Math.min(1,c.p);
-        const s=stg(c);c.ball.emi=c.turned&&s==='good'?[.24+.1*Math.sin(el*8+c.x*3),.1,0]:[0,0,0];
-        if(Math.random()<dt*(c.p>=1.4?5:1.2))E3.puff([c.x+rnd(-.15,.15),PANY+.2,c.z],{vy:.6,r:.06,grow:.25,a:c.p>=1.4?.35:.12,col:c.p>=1.4?[.3,.3,.3]:[1,1,1],life:1.1,max:1.1});
-        if(Math.random()<dt*4)E3.puff([c.x+rnd(-.25,.25),PANY+.02,c.z+rnd(-.25,.25)],{vy:.03,r:.02,grow:.04,a:.7,col:[1,.94,.75],life:.35,max:.35});
-        const sp=E3.project([c.x,PANY,c.z+BR*1.25]),t=tags.get(ti++);t.style.display='block';t.style.transform=`translate(${sp[0]-22}px,${sp[1]}px)`;
-        const want=!c.turned&&c.p>=TURN?'f':'m';if(t.dataset.k!==want){t.dataset.k=want;t.innerHTML=(want==='f'?'<div class="flip">翻！</div>':'')+'<div class="mt tk"><i></i></div>'}
-        t.querySelector('.mt').style.setProperty('--p',Math.min(100,c.p/1.5*100)+'%')}});
+    HS.forEach(h=>{const s=st(h);h.oil.vis=h.oiled&&s!=='ball';
+      const batter=s==='batter'||(s==='ball'&&h.ang<Math.PI*.5);h.bat.vis=batter;h.spill.vis=batter&&h.fill>1.02;h.ball.vis=s==='ball'&&h.ang>=Math.PI*.5;
+      const f=Math.min(h.fill,1),lvl=-DP+DP*f,rad=BR*Math.sqrt(Math.max(.02,1-(lvl/DP)*(lvl/DP)));
+      if(batter){const c=colAt(Math.min(h.p*.4,.45));h.bat.pos=[h.x,PANY+lvl+.004,h.z];h.bat.scl=[rad,1,rad];h.bat.col=c;
+        if(h.fill>1.02){const e=BR*(1+(h.fill-1)*1.3);h.spill.scl=[e,1,e];h.spill.col=c}}
+      h.pieces.forEach(pc=>{pc.vis=batter;pc.pos[1]=PANY+lvl+.03});
+      if(h.ball.vis){h.ball.col=colAt(Math.min(h.p,1.8));h.ball.rot=[h.ang+Math.PI,0,0];h.ball.scl=h.broken||h.stuck?[BALLR*1.08,BALLR*.7,BALLR*1.04]:[BALLR,BALLR,BALLR];
+        h.ball.sp=.25+.35*Math.min(1,h.p);const q=qual(h);h.ball.emi=q==='good'?[.24+.1*Math.sin(el*8+h.x*3),.1,0]:[0,0,0]}
+      if(h.fill>0){if(Math.random()<dt*(h.p>=1.45?5:1.1))E3.puff([h.x+rnd(-.15,.15),PANY+.25,h.z],{vy:.6,r:.06,grow:.25,a:h.p>=1.45?.35:.12,col:h.p>=1.45?[.3,.3,.3]:[1,1,1],life:1.1,max:1.1});
+        if(Math.random()<dt*4)E3.puff([h.x+rnd(-.3,.3),PANY+.03,h.z+rnd(-.3,.3)],{vy:.03,r:.02,grow:.04,a:.7,col:[1,.94,.75],life:.35,max:.35});
+        const sp=E3.project([h.x,PANY,h.z+BR*1.1]),t=tags.get(ti++);t.style.display='block';t.style.transform=`translate(${sp[0]-18}px,${sp[1]}px)`;
+        const want=!h.turned&&h.p>=TURN?'f':'m';if(t.dataset.k!==want){t.dataset.k=want;t.innerHTML=(want==='f'?'<div class="flip">翻！</div>':'')+'<div class="mt tk"><i></i></div>'}
+        t.querySelector('.mt').style.setProperty('--p',Math.min(100,h.p/1.6*100)+'%')}});
     tags.hideFrom(ti);
+    const home=(g,hm,k)=>{for(let i=0;i<3;i++)g.pos[i]+=(hm[i]-g.pos[i])*Math.min(1,dt*k)};
+    if(T2.tool==='oil'&&T2.ptr){brush.pos=[T2.ptr[0],PANY+.05,T2.ptr[2]];brush.rot=[0,0,Math.sin(el*14)*.15]}else{home(brush,BRUSH_HOME,10);brush.rot=[0,0,0]}
+    if(T2.tool==='batter'&&T2.ptr){pitch.pos=[T2.ptr[0]+.5,PANY+.75,T2.ptr[2]];pitch.rot=[0,0,.95];stream.vis=true;stream.pos=[T2.ptr[0]+.02,PANY-.1,T2.ptr[2]];stream.scl=[1,.95,1]}
+    else{home(pitch,PITCH_HOME,10);pitch.rot=[0,0,pitch.rot[2]*.8];stream.vis=false}
     T2.boatN.forEach(n=>n.sauceN.vis=T2.sauce);mayo.vis=T2.mayo&&T2.boat.length>0;bonito.vis=T2.bonito&&T2.boat.length>0;
-    if(T2.stk){const k=Math.sin(Math.PI*Math.min(1,T2.stk.t/.35));stick.vis=true;stick.pos=[T2.stk.x+.15,PANY+.05+(1-k)*.4,T2.stk.z]}else stick.vis=false;
-    flame.emi=[1+.15*Math.sin(el*9),.42,.1];
-    E3.stepParts(dt);E3.render(W,H);$('#hint3').hidden=!(S&&S.run&&!cells.some(c=>c.st==='cook')&&!T2.boat.length)},
-  down(x,y){tapCell(x,y)}
+    pan.sp=.35+.03*HS.filter(h=>h.oiled).length;
+    flame.emi=[.7+.35*T2.heat+.15*Math.sin(el*9),.3+.08*T2.heat,.08];E3.env.pc=[.7+.35*T2.heat,.3+.1*T2.heat,.08];
+    E3.stepParts(dt);E3.render(W,H);guide()},
+  down(x,y){const t=grabTool(x,y);if(t){T2.tool=t;T2.ptr=E3.unproject(x,y,PANY+.1);beep(t==='oil'?520:420,.05);return}
+    const i=holeAt(x,y);if(i<0)return;const h=HS[i],s=st(h);
+    if(s==='batter'){if(turn(h,false))beep(700,.06,'triangle')}else if(s==='ball')take(h,false);else toast(h.oiled?'拿右邊麵糊壺倒進來':'先拿左邊刷子刷油','#ffe6b0')},
+  move(x,y){if(T2.tool)T2.ptr=E3.unproject(x,y,PANY+.1)},
+  up(){if(T2.tool==='batter'&&HS.some(h=>h.fill>0))noise(.3,.08,3000);T2.tool=null;T2.ptr=null}
 });
+let lastGuide='';
+function guide(){const g=$('#guide');if(!g||!S)return;let t='';
+  if(!S.run)t='';else if(T2.boat.length&&!HS.some(h=>h.fill>0))t='⑥ 配好醬汁、美乃滋、柴魚，點客人出餐';
+  else if(HS.some(h=>st(h)==='ball'&&qual(h)==='good'))t='⑤ 金黃了！點球或按「夾起」放進船盒';
+  else if(HS.some(h=>st(h)==='batter'&&h.p>=TURN))t='④ 底部定型了，按「轉」翻面';
+  else if(HS.some(h=>st(h)==='batter'&&!h.set.length))t='③ 點下方餡料，照客人點的撒進去';
+  else if(HS.some(h=>st(h)==='batter'))t='等麵糊底部定型…';
+  else if(HS.some(h=>h.oiled))t='② 按住右邊麵糊壺，拖到洞上倒麵糊';else t='① 按住左邊刷子，在烤盤上抹油';
+  if(t!==lastGuide){lastGuide=t;g.textContent=t;g.hidden=!t}}
+function setHeat(i){T2.heat=i;document.querySelectorAll('[data-h]').forEach(b=>b.classList.toggle('hot',+b.dataset.h===i))}
 function setT(){[['sauce','醬汁'],['mayo','美乃滋'],['bonito','柴魚']].forEach(([k,n])=>{const b=$('#t_'+k);if(!b)return;b.textContent=n;b.classList.toggle('on',T2[k])});updSum()}
-$('#pourall').onclick=pourAll;
+document.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{setHeat(+b.dataset.h);beep(300+ +b.dataset.h*200,.06)});
+document.querySelectorAll('[data-f]').forEach(b=>{b.querySelector('img').src=fIcon(b.dataset.f);b.onclick=()=>addFilling(b.dataset.f)});
+$('#turnall').onclick=()=>{if(!S.run)return;let n=0;HS.forEach(h=>{if(st(h)==='batter'&&h.p>=TURN&&turn(h,true))n++});if(n){noise(.4,.12,3000);beep(700,.06,'triangle');toast(`翻了 ${n} 顆`,'#ffe6b0')}else toast('還沒有可以翻的','#f3ead2')};
+$('#takeall').onclick=()=>{if(!S.run)return;let n=0;HS.forEach(h=>{if(st(h)==='ball'&&h.p>=.8&&h.p<1.45&&take(h,true))n++});if(n){beep(880,.1,'triangle');toast(`夾起 ${n} 顆`,'#ffd56a')}else toast('還沒有烤好的','#f3ead2')};
 ['sauce','mayo','bonito'].forEach(k=>$('#t_'+k).onclick=()=>{T2[k]=!T2[k];setT();beep(600,.05)});
 $('#dumpt').onclick=()=>{if(!T2.boat.length)return;T2.boatN.forEach(n=>E3.remove(n));T2.boatN=[];T2.boat=[];updSum();beep(200,.15,'square',.05)};
+
 
 }
 </script>
