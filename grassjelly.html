@@ -75,7 +75,7 @@ h1{outline:1.5px solid rgba(255,244,224,.45);outline-offset:-5px;letter-spacing:
 .card{background:linear-gradient(#fdf6e8,var(--cream));box-shadow:0 20px 50px #000,0 0 0 1px #ffffff40 inset}
 
 :root{ --acc:#3a2218;--acc2:#1a0c08;--acc3:#f2a640 }
-.panel .row+.row{margin-top:8px}.row.tops{--cols:6;gap:5px}.row.tops .btn.fr{min-height:54px;font-size:12px;padding:3px 1px}.row.tops .btn img{width:26px;height:26px}.mt.bw{width:60px;height:9px;background:linear-gradient(90deg,#efe3c8 0 64%,#7cc243 64% 86%,#6e300e 86%)}.potm{width:120px;padding:5px 8px;border-radius:10px;background:rgba(20,10,6,.8);color:#f3e6d0;font:700 12px 'Noto Sans TC',sans-serif;box-shadow:0 4px 10px #0007}.potm b{display:block;margin-bottom:3px}.potm .pb{height:8px;border-radius:4px;background:#0008;overflow:hidden}.potm .pb i{display:block;height:100%}.potm span{display:block;color:#ff8a6a;margin-top:2px;min-height:0}.potm.warn{box-shadow:0 0 0 2px #ff6a4a,0 0 14px #ff6a4a99;animation:pulse .5s ease-in-out infinite alternate}#guide{position:absolute;left:10px;right:10px;top:8px;background:rgba(255,248,234,.94);color:#3a2414;border-radius:12px;padding:8px 12px;font:700 15px/1.4 'Noto Sans TC',sans-serif;text-align:center;box-shadow:0 4px 12px #0007;pointer-events:none}#guide[hidden]{display:none}
+.panel .row+.row{margin-top:8px}.row.tops{--cols:6;gap:5px}.row.tops .btn.fr{min-height:54px;font-size:12px;padding:3px 1px}.row.tops .btn img{width:26px;height:26px}.mt.bw{width:60px;height:9px;background:linear-gradient(90deg,#efe3c8 0 64%,#7cc243 64% 86%,#6e300e 86%)}.potm{width:120px;padding:5px 8px;border-radius:10px;background:rgba(20,10,6,.8);color:#f3e6d0;font:700 12px 'Noto Sans TC',sans-serif;box-shadow:0 4px 10px #0007}.potm b{display:block;margin-bottom:3px}.potm .pb{height:8px;border-radius:4px;background:#0008;overflow:hidden}.potm .pb i{display:block;height:100%}.potm span{display:block;color:#ff8a6a;margin-top:2px;min-height:0}.potm.warn{box-shadow:0 0 0 2px #ff6a4a,0 0 14px #ff6a4a99;animation:pulse .5s ease-in-out infinite alternate}#guide{position:absolute;left:10px;right:10px;top:8px;background:rgba(255,248,234,.94);color:#3a2414;border-radius:12px;padding:8px 12px;font:700 15px/1.4 'Noto Sans TC',sans-serif;text-align:center;box-shadow:0 4px 12px #0007;pointer-events:none}#guide[hidden]{display:none}.chip{width:44px;text-align:center;background:rgba(255,248,234,.92);color:#3a2414;border-radius:8px;padding:1px 0;font:900 12px 'Noto Sans TC',sans-serif;box-shadow:0 2px 6px #0008}.cust .o img{width:22px;height:22px}
 </style></head><body>
 <div id="app">
   <div class="lan" aria-hidden="true"></div>
@@ -304,8 +304,8 @@ void main(){
 /* DOM labels pinned to 3D points (meters, dots) */
 function makeTags(host){const pool=[];return{get(i){let el=pool[i];if(!el){el=document.createElement('div');el.className='tag3';host.appendChild(el);pool[i]=el}return el},hideFrom(i){for(let k=i;k<pool.length;k++)pool[k].style.display='none'}}}
 /* ---------- 燒仙草 3D（顧鍋攪拌、湯勺盛碗、配料） ---------- */
-const TOP={taro:{n:'芋圓',c:0xc9a8d8},sweet:{n:'地瓜圓',c:0xf2a640},pearl:{n:'粉圓',c:0x2a1a14},peanut:{n:'花生',c:0xe8cf9a},bean:{n:'紅豆',c:0x7a1f24},yuan:{n:'小湯圓',c:0xf8f4ee}};
-const TK=Object.keys(TOP),POTC=[-1.15,0,-.55],BOWLC=[1.25,0,.95],POTR=1.15,POTH=1.45,BOWLR=.62,BOWLH=.42,LAD=.42;
+const TOP={taro:{n:'芋圓',c:0xb48ae0},sweet:{n:'地瓜圓',c:0xff9a1e},pearl:{n:'粉圓',c:0x3a2418},peanut:{n:'花生',c:0xe2b878},bean:{n:'紅豆',c:0xa0202a},yuan:{n:'小湯圓',c:0xfffcf6}};
+const TK=Object.keys(TOP),POTC=[-1.15,0,-.55],BOWLC=[.95,0,1.1],POTR=1.15,POTH=1.45,BOWLR=.62,BOWLH=.42,LAD=.42;
 function drawTop(g,k,s){const c='#'+TOP[k].c.toString(16).padStart(6,'0');g.save();g.translate(s/2,s/2);g.fillStyle=c;
   const blob=(x,y,rx,ry,a=0)=>{g.beginPath();g.ellipse(x*s,y*s,rx*s,ry*s,a,0,7);g.fill()};
   if(k==='taro'||k==='sweet'){[[-.14,-.08],[.12,-.1],[0,.12]].forEach(([x,y],i)=>{g.fillStyle=c;g.beginPath();g.roundRect?g.roundRect(x*s-s*.11,y*s-s*.08,s*.22,s*.16,s*.06):g.rect(x*s-s*.11,y*s-s*.08,s*.22,s*.16);g.fill()})}
@@ -342,12 +342,12 @@ E3.add(E3.mesh(GEO.lathe([[0,-.2],[.15,-.18],[.24,-.1],[.26,0],[.24,.01],[.22,-.
 const ladleFill=E3.add(E3.D,{parent:ladle,pos:[0,-.04,0],scl:[.21,1,.21],col:C(0x1c0e0a),sp:2,sh:140,refl:.3});
 E3.add(E3.mesh(GEO.lathe([[0,0],[.03,0],[.03,1.5],[0,1.52]],8)),{parent:ladle,pos:[.24,0,0],rot:[0,0,-1.05],col:C(0xb0b3b6),sp:1.2});
 /* serving bowl */
-const bowl=E3.group({pos:BOWLC.slice()});
+const BSC=1.6,bowl=E3.group({pos:BOWLC.slice(),scl:[BSC,BSC,BSC]});
 E3.add(E3.mesh(GEO.lathe([[0,0],[.28,0],[.3,.03],[.46,.14],[.58,.32],[.63,BOWLH],[.6,BOWLH+.01],[.55,.33],[.44,.17],[.27,.07],[0,.07]],48)),{parent:bowl,col:C(0xf6f3ee),sp:.9,sh:70,rim:.3});
 E3.add(E3.mesh(GEO.torus(.6,.012,48,4)),{parent:bowl,pos:[0,BOWLH-.06,0],scl:[1,1,1],col:C(0x3a6ab8),sp:.6});
 E3.blob(bowl,.85,.005,.45);
 const bowlJ=E3.add(E3.D,{parent:bowl,pos:[0,.1,0],col:C(0x1c0e0a),sp:1.2,sh:140,refl:.12,nz:.3,ns:4,vis:false});
-const spillJ=E3.add(E3.D,{pos:[BOWLC[0],.012,BOWLC[2]],col:C(0x1c0e0a),sp:1.6,sh:100,refl:.3,vis:false});
+const spillJ=E3.add(E3.D,{pos:[BOWLC[0],.012,BOWLC[2]+.05],col:C(0x1c0e0a),sp:1.6,sh:100,refl:.3,vis:false});
 const LINE=E3.add(E3.mesh(GEO.torus(1,.008,48,4)),{parent:bowl,col:[1,.85,.4],mode:1,a:.7,order:4});
 const milk=E3.group({parent:bowl,vis:false});for(let i=0;i<14;i++){const a=i*.8,r=.08+i*.028;E3.add(SPH,{parent:milk,pos:[Math.cos(a)*r,0,Math.sin(a)*r],rot:[0,-a,0],scl:[.08,.012,.03],col:C(0xfff8ea),sp:1,sh:80})}
 const stream=E3.add(E3.mesh(GEO.lathe([[0,0],[.05,0],[.035,1],[0,1]],10)),{col:C(0x1c0e0a),vis:false,sp:2,sh:120});
@@ -359,16 +359,18 @@ const tags=makeTags($('#tags'));
 const J={pot:.75,scorch:0,ld:0,tool:null,ptr:null,lastAng:null,bowl:{fill:0,scorched:false,tops:[],milk:false,pieces:[]},el:0,stirV:0,hold:false};
 function frame(W,H){const tgt=[.05,.75,.15],dir=norm([0,1.15,1]),vf=E3.cam.fov*Math.PI/360,hf=Math.atan(Math.tan(vf)*W/H),d=Math.max(2.75/Math.tan(hf),2.2/Math.tan(vf));
   E3.cam.tgt=tgt;E3.cam.pos=[tgt[0]+dir[0]*d,tgt[1]+dir[1]*d,tgt[2]+dir[2]*d]}
-const FILL0=.1,FILLMAX=BOWLH-.06,BPLANE=.85;
+const FILL0=.1,FILLMAX=BOWLH-.06,BPLANE=.95;
 function bowlQual(){const b=J.bowl;if(b.fill<.8)return'less';if(b.fill>1.08)return'spill';if(b.scorched)return'scorch';return'good'}
 function stir(a){J.pot=Math.min(1,J.pot+a);J.stirV=Math.min(6,J.stirV+a*40);if(J.scorch>0)J.scorch=Math.max(0,J.scorch-a*.6)}
 function addTop(k){if(!S.run)return;const b=J.bowl;if(b.fill<.3){toast('先盛仙草','#ffd56a');return}
-  if(!b.tops.includes(k))b.tops.push(k);const y=FILL0+(FILLMAX-FILL0)*Math.min(1,b.fill);
-  for(let i=0;i<(k==='pearl'||k==='bean'?9:5);i++){const a=rnd(0,7),r=Math.sqrt(Math.random())*.38,o={parent:bowl,pos:[Math.cos(a)*r,y+.025,Math.sin(a)*r],rot:[rnd(-.3,.3),rnd(0,6),rnd(-.3,.3)],col:C(TOP[k].c),sp:.6,sh:50};let m=SPH;
-    if(k==='taro'||k==='sweet')m=NB[k];else if(k==='pearl')Object.assign(o,{scl:[.045,.045,.045],sp:1.6,sh:120});else if(k==='peanut')Object.assign(o,{scl:[.05,.03,.035]});else if(k==='bean')Object.assign(o,{scl:[.035,.025,.028],sp:1});else Object.assign(o,{scl:[.055,.05,.055]});
+  if(b.tops.includes(k)){toast(`已經加過${TOP[k].n}了`,'#f3ead2');return}b.tops.push(k);const y=FILL0+(FILLMAX-FILL0)*Math.min(1,b.fill);
+  const sec=TK.indexOf(k),a0=sec/6*Math.PI*2-Math.PI/2,cnt={taro:4,sweet:4,pearl:8,peanut:6,bean:9,yuan:4}[k];
+  for(let i=0;i<cnt;i++){const a=a0+rnd(-.36,.36),r=rnd(.18,.42),o={parent:bowl,pos:[Math.cos(a)*r,y+.03,Math.sin(a)*r],rot:[rnd(-.25,.25),rnd(0,6),rnd(-.25,.25)],col:C(TOP[k].c),sp:.7,sh:60,rim:.3};let m=SPH;
+    if(k==='taro'||k==='sweet'){m=NB[k];o.scl=[1.6,1.6,1.6]}else if(k==='pearl')Object.assign(o,{scl:[.07,.07,.07],sp:1.8,sh:140});else if(k==='peanut')Object.assign(o,{scl:[.085,.048,.06],nz:.2,ns:40});else if(k==='bean')Object.assign(o,{scl:[.06,.042,.048],sp:1.2,sh:90});else Object.assign(o,{scl:[.09,.075,.09],sp:1,sh:80});
     b.pieces.push(E3.add(m,o))}
+  b.lab=b.lab||[];b.lab.push({k,a:a0});
   beep(600+TK.indexOf(k)*60,.05,'triangle');updSum()}
-function newBowl(){const b=J.bowl;b.pieces.forEach(n=>E3.remove(n));J.bowl={fill:0,scorched:false,tops:[],milk:false,pieces:[]};setMilk()}
+function newBowl(){const b=J.bowl;b.pieces.forEach(n=>E3.remove(n));J.bowl={fill:0,scorched:false,tops:[],milk:false,pieces:[],lab:[]};setMilk()}
 function grab(x,y){const lp=E3.project(E3.worldPos(ladle,[0,0,0]));if(Math.hypot(x-lp[0],y-lp[1])<70)return'ladle';
   const pc=E3.project([POTC[0],.34+JLV,POTC[2]]),pe=E3.project([POTC[0]+POTR,.34+JLV,POTC[2]]);if(Math.hypot(x-pc[0],y-pc[1])<Math.abs(pe[0]-pc[0]))return'stir';return null}
 boot({key:'grassjelly',gl:true,round:100,patience:44,loop:true,goal:d=>230+d*130,
@@ -389,7 +391,7 @@ boot({key:'grassjelly',gl:true,round:100,patience:44,loop:true,goal:d=>230+d*130
     if(J.hold)stir(dt*.5);J.stirV=Math.max(0,J.stirV-dt*3);
     if(J.tool==='ladle'&&J.ptr){const p=J.ptr,q=J.ptrB||p,dPot=Math.hypot(p[0]-POTC[0],p[2]-POTC[2]),dB=Math.hypot(q[0]-BOWLC[0],q[2]-BOWLC[2]);
       if(dPot<POTR*.85&&J.ld<1){J.ld=Math.min(1,J.ld+dt*2.5);if(J.ld>=1&&!J.filledBeep){J.filledBeep=true;beep(500,.05)}J.scoopScorch=J.scorch>.15}
-      if(dB<BOWLR*.9&&J.ld>0){const a=Math.min(J.ld,dt*1.1);J.ld-=a;J.bowl.fill+=a*LAD/1;J.filledBeep=false;if(J.scoopScorch)J.bowl.scorched=true;if(Math.random()<dt*8)noise(.12,.05,1500,'lowpass');updSum()}}
+      if(dB<BOWLR*BSC*.9&&J.ld>0){const a=Math.min(J.ld,dt*1.1);J.ld-=a;J.bowl.fill+=a*LAD/1;J.filledBeep=false;if(J.scoopScorch)J.bowl.scorched=true;if(Math.random()<dt*8)noise(.12,.05,1500,'lowpass');updSum()}}
     loopVol(run?.03+.04*(1-J.pot):0)},
   draw(_,W,H,dt){if(!E3)return;J.el+=dt;const el=J.el;let ti=0;
     swirl.rot=[0,swirl.rot[1]+dt*(.3+J.stirV),0];jelly.col=J.scorch>.15?[.2,.1,.06]:C(0x140a07);
@@ -403,15 +405,17 @@ boot({key:'grassjelly',gl:true,round:100,patience:44,loop:true,goal:d=>230+d*130
     /* bowl */
     const b=J.bowl,f=Math.min(b.fill,1.05),y=FILL0+(FILLMAX-FILL0)*f,rr=.3+(.6-.3)*Math.min(1,(y-.07)/(BOWLH-.07));
     bowlJ.vis=b.fill>.02;bowlJ.pos=[0,y,0];bowlJ.scl=[rr,1,rr];bowlJ.col=b.scorched?[.16,.09,.06]:C(0x1c0e0a);
-    spillJ.vis=b.fill>1.08;if(spillJ.vis){const e=.65+(b.fill-1.08)*2.5;spillJ.scl=[e,1,e]}
+    spillJ.vis=b.fill>1.08;if(spillJ.vis){const e=(.65+(b.fill-1.08)*2.5)*BSC;spillJ.scl=[e,1,e]}
     const ly=FILL0+(FILLMAX-FILL0)*.9,lr=.3+.3*Math.min(1,(ly-.07)/(BOWLH-.07));LINE.pos=[0,ly,0];LINE.scl=[lr,1,lr];LINE.vis=b.fill<.9;
-    b.pieces.forEach(n=>n.pos[1]=y+.025);milk.vis=b.milk&&b.fill>.3;milk.pos=[0,y+.05,0];
-    if(b.fill>.05){const sp=E3.project([BOWLC[0],.5,BOWLC[2]+.75]),t=tags.get(ti++);t.style.display='block';t.style.transform=`translate(${sp[0]-30}px,${sp[1]}px)`;
+    b.pieces.forEach(n=>n.pos[1]=y+.03);milk.vis=b.milk&&b.fill>.3;milk.pos=[0,y+.05,0];
+    (b.lab||[]).forEach(L=>{const r=.74*BSC,sp=E3.project([BOWLC[0]+Math.cos(L.a)*r,BOWLH*BSC,BOWLC[2]+Math.sin(L.a)*r*.92]),t=tags.get(ti++);t.style.display='block';t.style.transform=`translate(${sp[0]-22}px,${sp[1]-12}px)`;
+      const key='l'+L.k;if(t.dataset.k!==key){t.dataset.k=key;t.innerHTML=`<div class="chip">${TOP[L.k].n}</div>`}});
+    if(b.fill>.05){const sp=E3.project([BOWLC[0],.5,BOWLC[2]+1.2]),t=tags.get(ti++);t.style.display='block';t.style.transform=`translate(${sp[0]-30}px,${sp[1]}px)`;
       if(t.dataset.k!=='bowl'){t.dataset.k='bowl';t.innerHTML='<div class="mt bw"><i></i></div>'}t.firstChild.style.setProperty('--p',Math.min(100,b.fill/1.25*100)+'%')}
     tags.hideFrom(ti);
     /* ladle follows finger */
-    if(J.tool==='ladle'&&J.ptr){const q=J.ptrB||J.ptr,overB=Math.hypot(q[0]-BOWLC[0],q[2]-BOWLC[2])<BOWLR*.9&&J.ld>0,p=overB?q:J.ptr;ladle.pos=[p[0]+(overB?.25:0),overB?BPLANE+.15:.34+JLV+.05,p[2]];ladle.rot=[0,0,overB?-.9:0];
-      stream.vis=overB;if(overB){stream.pos=[p[0]+.05,y,p[2]];stream.scl=[1,Math.max(.1,BPLANE-y),1]}}
+    if(J.tool==='ladle'&&J.ptr){const q=J.ptrB||J.ptr,overB=Math.hypot(q[0]-BOWLC[0],q[2]-BOWLC[2])<BOWLR*BSC*.9&&J.ld>0,p=overB?q:J.ptr;ladle.pos=[p[0]+(overB?.3:0),overB?BPLANE+.25:.34+JLV+.05,p[2]];ladle.rot=[0,0,overB?-.9:0];
+      stream.vis=overB;if(overB){stream.pos=[p[0]+.08,y*BSC,p[2]];stream.scl=[1,Math.max(.1,BPLANE+.1-y*BSC),1]}}
     else{for(let i=0;i<3;i++)ladle.pos[i]+=(LHOME[i]-ladle.pos[i])*Math.min(1,dt*8);ladle.rot=[0,0,0];stream.vis=false}
     ladleFill.vis=J.ld>.05;ladleFill.pos=[0,-.17+.15*J.ld,0];ladleFill.scl=[.1+.12*J.ld,1,.1+.12*J.ld];
     ring.emi=[.9+.15*Math.sin(el*9),.38,.1];
