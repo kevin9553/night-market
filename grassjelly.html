@@ -74,8 +74,20 @@ h1{outline:1.5px solid rgba(255,244,224,.45);outline-offset:-5px;letter-spacing:
 .toast{background:linear-gradient(90deg,transparent,rgba(20,8,4,.55) 20%,rgba(20,8,4,.55) 80%,transparent);padding:6px 34px}
 .card{background:linear-gradient(#fdf6e8,var(--cream));box-shadow:0 20px 50px #000,0 0 0 1px #ffffff40 inset}
 
+/* readable order rows */
+#counter{grid-template-columns:1fr;gap:5px;min-height:46px}
+.cust{grid-template-columns:34px minmax(0,1fr);padding:5px 8px 6px;gap:2px 8px;min-height:44px}
+.cust>svg{width:34px;height:34px;grid-row:span 2}
+.cust .o{font-size:14px;gap:4px 5px;line-height:1.2}
+.cust .o .it{display:inline-flex;align-items:center;gap:3px;background:rgba(255,236,200,.13);border:1px solid rgba(255,236,200,.18);border-radius:7px;padding:2px 7px 2px 3px;font-weight:700;color:#fff3dc;white-space:nowrap}
+.cust .o .it.no{background:none;border-style:dashed;color:#c4ad92;font-weight:500;padding-left:6px}
+.cust .o .it img{width:22px;height:22px}.cust .o .it b{font-size:15px;color:var(--acc3,#ffd06a);margin-left:1px}
+.cust .o .lbl{font-size:12px;color:#c4ad92}.cust .o .ar{font-style:normal;color:#c4ad92;font-weight:900}
+.cust .pat{grid-column:2;height:4px}
+.empty{padding:10px 0}
+
 :root{ --acc:#3a2218;--acc2:#1a0c08;--acc3:#f2a640 }
-.panel .row+.row{margin-top:8px}.row.tops{--cols:6;gap:5px}.row.tops .btn.fr{min-height:54px;font-size:12px;padding:3px 1px}.row.tops .btn img{width:26px;height:26px}.mt.bw{width:60px;height:9px;background:linear-gradient(90deg,#efe3c8 0 64%,#7cc243 64% 86%,#6e300e 86%)}.potm{width:120px;padding:5px 8px;border-radius:10px;background:rgba(20,10,6,.8);color:#f3e6d0;font:700 12px 'Noto Sans TC',sans-serif;box-shadow:0 4px 10px #0007}.potm b{display:block;margin-bottom:3px}.potm .pb{height:8px;border-radius:4px;background:#0008;overflow:hidden}.potm .pb i{display:block;height:100%}.potm span{display:block;color:#ff8a6a;margin-top:2px;min-height:0}.potm.warn{box-shadow:0 0 0 2px #ff6a4a,0 0 14px #ff6a4a99;animation:pulse .5s ease-in-out infinite alternate}#guide{position:absolute;left:10px;right:10px;top:8px;background:rgba(255,248,234,.94);color:#3a2414;border-radius:12px;padding:8px 12px;font:700 15px/1.4 'Noto Sans TC',sans-serif;text-align:center;box-shadow:0 4px 12px #0007;pointer-events:none}#guide[hidden]{display:none}.chip{width:44px;text-align:center;background:rgba(255,248,234,.92);color:#3a2414;border-radius:8px;padding:1px 0;font:900 12px 'Noto Sans TC',sans-serif;box-shadow:0 2px 6px #0008}.cust .o img{width:22px;height:22px}
+.panel .row+.row{margin-top:8px}.row.tops{--cols:6;gap:5px}.row.tops .btn.fr{min-height:54px;font-size:12px;padding:3px 1px}.row.tops .btn img{width:26px;height:26px}.mt.bw{width:60px;height:9px;background:linear-gradient(90deg,#efe3c8 0 64%,#7cc243 64% 86%,#6e300e 86%)}.potm{width:120px;padding:5px 8px;border-radius:10px;background:rgba(20,10,6,.8);color:#f3e6d0;font:700 12px 'Noto Sans TC',sans-serif;box-shadow:0 4px 10px #0007}.potm b{display:block;margin-bottom:3px}.potm .pb{height:8px;border-radius:4px;background:#0008;overflow:hidden}.potm .pb i{display:block;height:100%}.potm span{display:block;color:#ff8a6a;margin-top:2px;min-height:0}.potm.warn{box-shadow:0 0 0 2px #ff6a4a,0 0 14px #ff6a4a99;animation:pulse .5s ease-in-out infinite alternate}#guide{position:absolute;left:10px;right:10px;top:8px;background:rgba(255,248,234,.94);color:#3a2414;border-radius:12px;padding:8px 12px;font:700 15px/1.4 'Noto Sans TC',sans-serif;text-align:center;box-shadow:0 4px 12px #0007;pointer-events:none}#guide[hidden]{display:none}.chip{width:44px;text-align:center;background:rgba(255,248,234,.92);color:#3a2414;border-radius:8px;padding:1px 0;font:900 12px 'Noto Sans TC',sans-serif;box-shadow:0 2px 6px #0008}
 </style></head><body>
 <div id="app">
   <div class="lan" aria-hidden="true"></div>
@@ -379,7 +391,7 @@ boot({key:'grassjelly',gl:true,round:100,patience:44,loop:true,goal:d=>230+d*130
   demo(){J.bowl.fill=.95;['taro','peanut'].forEach(k=>{const r=S.run;S.run=true;addTop(k);S.run=r})},
   order(day){const tops=TK.slice().sort(()=>Math.random()-.5).slice(0,day<2?2:2+(Math.random()<.5?1:0)).sort();return{tops,milk:Math.random()<.4}},
   orderText:o=>`客人要一碗燒仙草，加${o.tops.map(k=>TOP[k].n).join('、')}${o.milk?'，淋煉乳':''}`,
-  orderHTML:o=>`<img src="${bowlIcon()}" alt="">${o.tops.map(k=>`<img src="${tIcon(k)}" alt="${TOP[k].n}">`).join('')}<br>${o.milk?'煉乳':'不加煉乳'}`,
+  orderHTML:o=>`<span class="it"><img src="${bowlIcon()}" alt="">燒仙草</span>${o.tops.map(k=>`<span class="it"><img src="${tIcon(k)}" alt="">${TOP[k].n}</span>`).join('')}<span class="it ${o.milk?'':'no'}">${o.milk?'加煉乳':'不加煉乳'}</span>`,
   matches:o=>{const b=J.bowl;return b.fill>=.8&&b.fill<=1.08&&b.tops.slice().sort().join()===o.tops.join()&&b.milk===o.milk},
   check(o){const b=J.bowl;if(b.fill<.3)return{err:'碗是空的'};if(b.tops.slice().sort().join()!==o.tops.join())return{err:'配料不對！'};
     const q=bowlQual();let pay=q==='good'?50:q==='scorch'?25:q==='less'?22:30,msg=q==='scorch'?'有焦味…':q==='less'?'怎麼這麼少':q==='spill'?'都滿出來了':'';

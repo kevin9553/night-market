@@ -74,6 +74,18 @@ h1{outline:1.5px solid rgba(255,244,224,.45);outline-offset:-5px;letter-spacing:
 .toast{background:linear-gradient(90deg,transparent,rgba(20,8,4,.55) 20%,rgba(20,8,4,.55) 80%,transparent);padding:6px 34px}
 .card{background:linear-gradient(#fdf6e8,var(--cream));box-shadow:0 20px 50px #000,0 0 0 1px #ffffff40 inset}
 
+/* readable order rows */
+#counter{grid-template-columns:1fr;gap:5px;min-height:46px}
+.cust{grid-template-columns:34px minmax(0,1fr);padding:5px 8px 6px;gap:2px 8px;min-height:44px}
+.cust>svg{width:34px;height:34px;grid-row:span 2}
+.cust .o{font-size:14px;gap:4px 5px;line-height:1.2}
+.cust .o .it{display:inline-flex;align-items:center;gap:3px;background:rgba(255,236,200,.13);border:1px solid rgba(255,236,200,.18);border-radius:7px;padding:2px 7px 2px 3px;font-weight:700;color:#fff3dc;white-space:nowrap}
+.cust .o .it.no{background:none;border-style:dashed;color:#c4ad92;font-weight:500;padding-left:6px}
+.cust .o .it img{width:22px;height:22px}.cust .o .it b{font-size:15px;color:var(--acc3,#ffd06a);margin-left:1px}
+.cust .o .lbl{font-size:12px;color:#c4ad92}.cust .o .ar{font-style:normal;color:#c4ad92;font-weight:900}
+.cust .pat{grid-column:2;height:4px}
+.empty{padding:10px 0}
+
 :root{ --acc:#2f3a8a;--acc2:#161c4a;--acc3:#ffb45a }
 .panel{padding:10px 12px 12px}.panel .row{gap:6px}.panel .row+.row{margin-top:6px}.btn.sm{min-height:44px;font-size:15px}.row.fills .btn.fr{min-height:52px;font-size:12px;padding:3px 1px}.row.fills .btn img{width:24px;height:24px}.btn.go2{background:linear-gradient(#ffe2a8,#ffc35a);box-shadow:0 3px 0 #b8781a,inset 0 1px 0 #fff;color:#4a2805}.mt.tk{width:36px;background:linear-gradient(90deg,#efe3c8 0 28%,#8fc7ff 28% 50%,#7cc243 50% 72%,#6e300e 72%)}.flip{text-align:center;font:900 14px 'Noto Sans TC',sans-serif;color:#8fd0ff;text-shadow:0 1px 3px #000;margin-bottom:2px;animation:pulse .5s ease-in-out infinite alternate}#guide{position:absolute;left:10px;right:10px;top:8px;background:rgba(255,248,234,.94);color:#3a2414;border-radius:12px;padding:8px 12px;font:700 15px/1.4 'Noto Sans TC',sans-serif;text-align:center;box-shadow:0 4px 12px #0007;pointer-events:none}#guide[hidden]{display:none}
 </style></head><body>
@@ -408,7 +420,7 @@ boot({key:'takoyaki',gl:true,round:100,patience:46,loop:true,goal:d=>250+d*140,
     if(sweet)set=SWEET.slice().sort(()=>Math.random()-.5).slice(0,1+(Math.random()<.5?1:0));else set=['tako',...SAVORY.slice().sort(()=>Math.random()-.5).slice(0,day<2?1:1+(Math.random()<.5?1:0))];
     return{n:pick(day<2?[4,6]:[4,6,8]),set:set.sort(),sweet,sauce:!sweet&&Math.random()<.85,mayo:!sweet&&Math.random()<.6,bonito:!sweet&&Math.random()<.6}},
   orderText:o=>`客人要 ${o.n} 顆，餡料：${o.set.map(k=>FILL[k].n).join('、')}，${o.sweet?'甜口味不加醬':[o.sauce&&'醬汁',o.mayo&&'美乃滋',o.bonito&&'柴魚'].filter(Boolean).join('、')||'不加醬'}`,
-  orderHTML:o=>`<b>${o.n}</b>顆 ${o.set.map(k=>`<img src="${fIcon(k)}" alt="${FILL[k].n}">`).join('')}<br>${o.sweet?'甜的':[o.sauce&&'醬',o.mayo&&'美乃滋',o.bonito&&'柴魚'].filter(Boolean).join('·')||'不加醬'}`,
+  orderHTML:o=>`<span class="it"><img src="${tIcon()}" alt="">章魚燒<b>×${o.n}</b></span>${o.set.slice().sort((a,b)=>(b==='tako')-(a==='tako')).map(k=>`<span class="it"><img src="${fIcon(k)}" alt="">${FILL[k].n}</span>`).join('')}${o.sweet?'<span class="it no">甜的不加醬</span>':[['sauce','醬汁'],['mayo','美乃滋'],['bonito','柴魚']].map(([k,n])=>`<span class="it ${o[k]?'':'no'}">${o[k]?n:'無'+n}</span>`).join('')}`,
   matches:o=>T2.boat.length===o.n&&T2.boat.every(b=>b.set===o.set.join(','))&&T2.sauce===o.sauce&&T2.mayo===o.mayo&&T2.bonito===o.bonito,
   check(o){if(!T2.boat.length)return{err:'船盒是空的'};if(T2.boat.length!==o.n)return{err:`我要 ${o.n} 顆啦！`};if(!T2.boat.every(b=>b.set===o.set.join(',')))return{err:'餡料不對！'};
     let pay=0,perfect=true,msg='';T2.boat.forEach(b=>{if(b.q==='good')pay+=9;else{perfect=false;pay+=b.q==='over'?5:2;msg=b.q==='over'?'有點焦':b.q==='raw'?'裡面還是生的':'形狀怪怪的'}});

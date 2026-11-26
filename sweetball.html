@@ -74,6 +74,18 @@ h1{outline:1.5px solid rgba(255,244,224,.45);outline-offset:-5px;letter-spacing:
 .toast{background:linear-gradient(90deg,transparent,rgba(20,8,4,.55) 20%,rgba(20,8,4,.55) 80%,transparent);padding:6px 34px}
 .card{background:linear-gradient(#fdf6e8,var(--cream));box-shadow:0 20px 50px #000,0 0 0 1px #ffffff40 inset}
 
+/* readable order rows */
+#counter{grid-template-columns:1fr;gap:5px;min-height:46px}
+.cust{grid-template-columns:34px minmax(0,1fr);padding:5px 8px 6px;gap:2px 8px;min-height:44px}
+.cust>svg{width:34px;height:34px;grid-row:span 2}
+.cust .o{font-size:14px;gap:4px 5px;line-height:1.2}
+.cust .o .it{display:inline-flex;align-items:center;gap:3px;background:rgba(255,236,200,.13);border:1px solid rgba(255,236,200,.18);border-radius:7px;padding:2px 7px 2px 3px;font-weight:700;color:#fff3dc;white-space:nowrap}
+.cust .o .it.no{background:none;border-style:dashed;color:#c4ad92;font-weight:500;padding-left:6px}
+.cust .o .it img{width:22px;height:22px}.cust .o .it b{font-size:15px;color:var(--acc3,#ffd06a);margin-left:1px}
+.cust .o .lbl{font-size:12px;color:#c4ad92}.cust .o .ar{font-style:normal;color:#c4ad92;font-weight:900}
+.cust .pat{grid-column:2;height:4px}
+.empty{padding:10px 0}
+
 :root{ --acc:#e8862a;--acc2:#8f4510;--acc3:#ffb45a }
 .dots{display:flex;gap:3px;padding:2px 4px;background:rgba(0,0,0,.45);border-radius:6px}.dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25)}.dots i.on{background:#fff3c4;box-shadow:0 0 4px #ffd56a}.sign3{position:absolute;left:50%;top:10px;transform:translateX(-50%);background:#e8862a;color:#fff8ea;font:900 26px/1.1 'Noto Serif TC',serif;padding:8px 22px;border-radius:10px;text-align:center;box-shadow:0 6px 16px #0008,inset 0 0 0 2px #fff1d6;pointer-events:none;white-space:nowrap}.sign3 small{display:block;font:700 13px 'Noto Sans TC',sans-serif;color:#4a2205;margin-top:3px}@media(max-height:780px){.sign3{display:none}}#hint3{position:absolute;left:0;right:0;top:46%;text-align:center;font:900 18px 'Noto Sans TC',sans-serif;color:#ffecc8;text-shadow:0 2px 6px #000;pointer-events:none;animation:pulse 1.2s ease-in-out infinite alternate}#hint3[hidden]{display:none}@keyframes pulse{to{opacity:.5}}
 </style></head><body>
@@ -177,6 +189,7 @@ function end(){S.run=false;loopVol(0);let best=0;const key='nm_best_'+G.key;try{
 function pos(e){const r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]}
 cv.addEventListener('pointerdown',e=>{if(!S||!S.run||!G.down)return;try{cv.setPointerCapture(e.pointerId)}catch(_){}G.down(...pos(e))});
 ['pointerup','pointercancel'].forEach(t=>cv.addEventListener(t,e=>{if(S&&G.up)G.up(...pos(e))}));
+cv.addEventListener('pointermove',e=>{if(S&&S.run&&G.move)G.move(...pos(e))});
 function boot(game){G=game;if(!game.gl)cx=cv.getContext('2d');fit();reset();dayUI();G.demo&&G.demo();$('#go').onclick=start;$('#again').onclick=start;requestAnimationFrame(loop)}
 
 /* ---------- mini3d: a small WebGL renderer for the night-market games ---------- */
@@ -191,6 +204,11 @@ const M4={
   nrm(m){const a=m[0],b=m[1],c=m[2],d=m[4],e=m[5],f=m[6],g=m[8],h=m[9],i=m[10],A=e*i-f*h,B=-(d*i-f*g),C=d*h-e*g,det=a*A+b*B+c*C||1e-9;
     /* inverse-transpose of the 3x3 */
     return[A/det,B/det,C/det,-(b*i-c*h)/det,(a*i-c*g)/det,-(a*h-b*g)/det,(b*f-c*e)/det,-(a*f-c*d)/det,(a*e-b*d)/det]},
+  inv(m){const o=new Array(16),[a00,a01,a02,a03,a10,a11,a12,a13,a20,a21,a22,a23,a30,a31,a32,a33]=m;
+    const b00=a00*a11-a01*a10,b01=a00*a12-a02*a10,b02=a00*a13-a03*a10,b03=a01*a12-a02*a11,b04=a01*a13-a03*a11,b05=a02*a13-a03*a12,b06=a20*a31-a21*a30,b07=a20*a32-a22*a30,b08=a20*a33-a23*a30,b09=a21*a32-a22*a31,b10=a21*a33-a23*a31,b11=a22*a33-a23*a32;
+    const d=1/(b00*b11-b01*b10+b02*b09+b03*b08-b04*b07+b05*b06);
+    o[0]=(a11*b11-a12*b10+a13*b09)*d;o[1]=(a02*b10-a01*b11-a03*b09)*d;o[2]=(a31*b05-a32*b04+a33*b03)*d;o[3]=(a22*b04-a21*b05-a23*b03)*d;o[4]=(a12*b08-a10*b11-a13*b07)*d;o[5]=(a00*b11-a02*b08+a03*b07)*d;o[6]=(a32*b02-a30*b05-a33*b01)*d;o[7]=(a20*b05-a22*b02+a23*b01)*d;
+    o[8]=(a10*b10-a11*b08+a13*b06)*d;o[9]=(a01*b08-a00*b10-a03*b06)*d;o[10]=(a30*b04-a31*b02+a33*b00)*d;o[11]=(a21*b02-a20*b04-a23*b00)*d;o[12]=(a11*b07-a10*b09-a12*b06)*d;o[13]=(a00*b09-a01*b07+a02*b06)*d;o[14]=(a31*b01-a30*b03-a32*b00)*d;o[15]=(a20*b03-a21*b01+a22*b00)*d;return o},
   xf(m,v){return[m[0]*v[0]+m[4]*v[1]+m[8]*v[2]+m[12],m[1]*v[0]+m[5]*v[1]+m[9]*v[2]+m[13],m[2]*v[0]+m[6]*v[1]+m[10]*v[2]+m[14]]}
 };
 function sub(a,b){return[a[0]-b[0],a[1]-b[1],a[2]-b[2]]}function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]}
@@ -267,6 +285,9 @@ void main(){
   function vis(n){return n.vis&&(!n.parent||vis(n.parent))}
   let frame=0;
   E.project=p=>{if(!E.VP)return[0,0,1];const v=E.VP,x=v[0]*p[0]+v[4]*p[1]+v[8]*p[2]+v[12],y=v[1]*p[0]+v[5]*p[1]+v[9]*p[2]+v[13],w=v[3]*p[0]+v[7]*p[1]+v[11]*p[2]+v[15];return[(x/w*.5+.5)*E.W,(1-(y/w*.5+.5))*E.H,w]};
+  /* screen point -> point on the horizontal plane y=py */
+  E.unproject=(sx,sy,py)=>{if(!E.VP)return null;const iv=M4.inv(E.VP),nx=sx/E.W*2-1,ny=1-sy/E.H*2;const h=(z)=>{const v=[nx,ny,z,1],o=[0,0,0,0];for(let r=0;r<4;r++)o[r]=iv[r]*v[0]+iv[4+r]*v[1]+iv[8+r]*v[2]+iv[12+r]*v[3];return[o[0]/o[3],o[1]/o[3],o[2]/o[3]]};
+    const a=h(-1),b=h(1),dy=b[1]-a[1];if(Math.abs(dy)<1e-6)return null;const t=(py-a[1])/dy;return[a[0]+(b[0]-a[0])*t,py,a[2]+(b[2]-a[2])*t]};
   E.worldPos=(n,local=[0,0,0])=>M4.xf(world(n,frame),local);
   E.render=(W,H)=>{frame++;E.W=W;E.H=H;gl.viewport(0,0,cv.width,cv.height);const e=E.env;gl.clearColor(e.fog[0],e.fog[1],e.fog[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
     const c=E.cam,tt=performance.now()/1000,sw=e.sway,cp=[c.pos[0]+Math.sin(tt*.31)*.07*sw,c.pos[1]+Math.sin(tt*.23)*.04*sw,c.pos[2]],V=M4.look(cp,c.tgt,[0,1,0]);E.VP=M4.mul(M4.persp(c.fov*Math.PI/180,W/H,.1,60),V);
@@ -350,7 +371,7 @@ boot({key:'sweetball',gl:true,round:90,patience:40,loop:true,goal:d=>230+d*120,
   demo(){addBalls(9);W2.balls.forEach((b,i)=>{b.in=1;b.p=.2+i*.11;b.float=b.p>=.3;b.s=b.float?Math.min(4,i%5):0})},
   order(day){return{n:pick(day<2?[6,8,10]:[6,8,10,12]),plum:Math.random()<.5}},
   orderText:o=>`客人要 ${o.n} 顆，${o.plum?'加梅粉':'原味'}`,
-  orderHTML:o=>`<img src="${bIcon()}" alt=""><b>${o.n}</b> 顆<br>${o.plum?'梅粉':'原味'}`,
+  orderHTML:o=>`<span class="it"><img src="${bIcon()}" alt="">地瓜球<b>×${o.n}</b></span><span class="it">${o.plum?'加梅粉':'原味'}</span>`,
   matches:o=>W2.bag.length===o.n&&W2.plum===o.plum,
   check(o){if(!W2.bag.length)return{err:'袋子是空的'};if(W2.bag.length!==o.n)return{err:`我要 ${o.n} 顆啦！`};
     let pay=0,perfect=true,msg='';W2.bag.forEach(p=>{const st=stageOf(p);if(st==='good')pay+=5;else{perfect=false;pay+=st==='over'?3:1;msg=st==='over'?'有點焦':'裡面沒熟'}});
