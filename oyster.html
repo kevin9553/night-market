@@ -87,14 +87,14 @@ h1{outline:1.5px solid rgba(255,244,224,.45);outline-offset:-5px;letter-spacing:
 .empty{padding:10px 0}
 
 :root{ --acc:#c0482e;--acc2:#6e1e10;--acc3:#ffb45a }
-.panel .row+.row{margin-top:8px}.row.ing{gap:6px}.row.ing .btn.fr{min-height:56px;font-size:13px;padding:3px 1px}.row.ing .btn img{width:28px;height:28px}.step{white-space:nowrap;text-align:center;font:900 12px 'Noto Sans TC',sans-serif;color:#3a2414;background:rgba(255,248,234,.9);border-radius:8px;padding:2px 7px;margin:0 auto 3px;width:max-content;box-shadow:0 2px 6px #0008}.step.sel{box-shadow:0 0 0 2px #ffd56a,0 2px 6px #0008}.step.hot{background:#ffd56a;animation:pulse .5s ease-in-out infinite alternate}.mt.ma,.mt.mb{width:76px;margin:0 auto}.mt.ma{background:linear-gradient(90deg,#efe3c8 0 32%,#7cc243 32% 68%,#e8a23a 68% 86%,#6e300e 86%)}.mt.mb{background:linear-gradient(90deg,#efe3c8 0 31%,#7cc243 31% 69%,#6e300e 69%)}#guide{position:absolute;left:10px;right:10px;top:8px;background:rgba(255,248,234,.94);color:#3a2414;border-radius:12px;padding:8px 12px;font:700 15px/1.4 'Noto Sans TC',sans-serif;text-align:center;box-shadow:0 4px 12px #0007;pointer-events:none}#guide[hidden]{display:none}
+.panel .row+.row{margin-top:8px}.row.ing{gap:6px}.row.ing .btn.fr{min-height:56px;font-size:13px;padding:3px 1px}.row.ing .btn img{width:28px;height:28px}.step{white-space:nowrap;text-align:center;font:900 12px 'Noto Sans TC',sans-serif;color:#3a2414;background:rgba(255,248,234,.9);border-radius:8px;padding:2px 7px;margin:0 auto 3px;width:max-content;box-shadow:0 2px 6px #0008}.step.sel{box-shadow:0 0 0 2px #ffd56a,0 2px 6px #0008}.step.hot{background:#ffd56a;animation:pulse .5s ease-in-out infinite alternate}.mt.ma,.mt.mb{width:76px;margin:0 auto}.mt.ma{background:linear-gradient(90deg,#efe3c8 0 32%,#7cc243 32% 68%,#e8a23a 68% 86%,#6e300e 86%)}.mt.mb{background:linear-gradient(90deg,#efe3c8 0 31%,#7cc243 31% 69%,#6e300e 69%)}#guide{position:absolute;left:10px;right:10px;top:8px;background:rgba(255,248,234,.94);color:#3a2414;border-radius:12px;padding:8px 12px;font:700 15px/1.4 'Noto Sans TC',sans-serif;text-align:center;box-shadow:0 4px 12px #0007;pointer-events:none}#guide[hidden]{display:none}.heat{position:absolute;right:8px;top:62px;background:#1b120cd9;border:1px solid #ffffff1a;border-radius:12px;padding:4px 6px;display:flex;align-items:center;gap:5px;font-size:12px;color:#c4ad92;z-index:2}.heat button{width:44px;height:36px;border:0;border-radius:10px;font:900 16px 'Noto Serif TC',serif;background:#f6ecd5;color:#3a2414;cursor:pointer;box-shadow:0 3px 0 #0008}.heat button.on{background:linear-gradient(#ffcf7a,#e9932f);color:#4a1c05;box-shadow:0 3px 0 #8a4a10,0 0 12px #ffae4a99}#upg .card>b{display:block;font:900 22px 'Noto Serif TC',serif;color:var(--acc2);margin-bottom:12px}#upg .ul{display:grid;gap:10px}.ub{display:block;width:100%;text-align:left;border:0;border-radius:12px;padding:12px 14px;background:linear-gradient(#fff,#f6eedd);box-shadow:0 3px 0 #d4c3a3;cursor:pointer;font:inherit;color:#3a2414}.ub b{display:block;font-size:17px;color:var(--acc)}.ub span{font-size:14px;color:#6a4a32}.ub:active{transform:translateY(2px)}
 </style></head><body>
 <div id="app">
   <div class="lan" aria-hidden="true"></div>
   <header><h1>老店蚵仔煎</h1>
     <div class="hud"><div><span id="dayl">第 1 天</span><b id="time">0</b></div><div><span id="goal">目標</span><b id="money">$0</b></div></div></header>
   <div id="counter" aria-label="排隊客人"><div class="empty">等客人上門…</div></div>
-  <div id="stage"><canvas id="cv" aria-label="蚵仔煎鐵板"></canvas><div id="tags"></div><div id="guide" hidden></div></div>
+  <div id="stage"><canvas id="cv" aria-label="蚵仔煎鐵板"></canvas><div id="tags"></div><div id="guide" hidden></div><div class="heat" role="group" aria-label="火力">火力<button data-h="2">大</button><button data-h="1" class="on">中</button><button data-h="0">小</button></div><div id="upg" class="ov" hidden><div class="card"><b></b><div class="ul"></div></div></div></div>
   <div class="panel">
     <div class="sum"><span id="sum"></span><small>淋好醬就點客人</small></div>
     <div class="row ing" style="--cols:4"><button class="btn fr" data-a="oyster"><img alt="">蚵仔</button><button class="btn fr" data-a="shrimp"><img alt="">蝦仁</button><button class="btn fr" data-a="egg"><img alt="">打蛋</button><button class="btn fr" data-a="greens"><img alt="">青菜</button></div><div class="row" style="--cols:4"><button class="btn hot" id="flip">翻面</button><button class="btn hot" id="up">起鍋</button><button class="btn" id="wipe">擦掉醬</button><button class="btn" id="dumpo">倒掉</button></div>
@@ -102,7 +102,7 @@ h1{outline:1.5px solid rgba(255,244,224,.45);outline-offset:-5px;letter-spacing:
 </div>
 <div class="ov" id="start"><div class="card">
   <h2>煎蚵仔煎</h2><div>油壺下油、杓子淋粉漿、擠醬瓶畫醬，大火鐵板現煎</div><div class="goalline" id="sgoal"></div>
-  <ol><li>鐵板有 1～3 號位置，<b>點鐵板</b>選要煎哪一份</li><li><b>按住左邊油壺</b>拖到鐵板上下油 → 按<b>蚵仔／蝦仁</b>（煎香一下）→ <b>按住右邊粉漿杓</b>拖過去淋粉漿 → <b>打蛋、青菜</b></li><li>出現「翻面！」按<b>翻面</b>，另一面熟了按<b>起鍋</b></li><li><b>按住醬料瓶</b>在盤子上畫圈擠醬：紅色甜辣醬、深色辣醬，照客人要的淋，再<b>點客人</b>出餐</li></ol>
+  <ol><li><b>點一下</b>油壺、食材碗、粉漿桶、鍋鏟、醬料瓶就會自動做那一步，會自動找到該做的那份；想自己來也可以<b>按住拖</b></li><li>順序：<b>下油 → 蚵仔／蝦仁</b>（煎香一下）<b>→ 粉漿 → 打蛋 → 青菜</b></li><li>出現「翻面！」就翻，另一面熟了按<b>起鍋</b>；右邊<b>火力</b>大火煎得快、但容易焦</li><li>照客人要的淋<b>甜辣醬、辣醬</b>，<b>點客人</b>出餐</li><li>從第 2 天起，開攤前可以挑一個<b>升級</b></li></ol>
   <button class="btn" id="go">開攤！</button>
   <div><a class="home" href="index.html">← 回夜市小吃街</a></div>
 </div></div>
@@ -330,7 +330,7 @@ const E3=createEngine(cv);
 if(!E3)$('#stage').insertAdjacentHTML('beforeend','<div class="nogl">這台裝置不支援 3D 畫面</div>');
 const C=hex,SPH=E3.mesh(GEO.sphere(1,22,16));
 /* ---- scene ---- */
-E3.env.kd=[.3,1,.8];E3.env.kc=[1.4,1.22,.98];E3.env.sky=C(0x8a6a50);E3.env.gnd=C(0x2a1408);E3.env.fog=C(0x120806);E3.env.pl=[0,.2,SPZ+1.6];E3.env.pc=[.9,.4,.1];E3.env.pr=3.2;
+E3.env.kd=[.3,1,.8];E3.env.kc=[1.4,1.22,.98];E3.env.sky=C(0x8a6a50);E3.env.gnd=C(0x2a1408);E3.env.fog=C(0x120806);E3.env.pl=[0,1.9,SPZ+.2];E3.env.pc=[.85,.62,.34];E3.env.pr=4.2;
 E3.add(E3.mesh(GEO.rbox(16,.4,10,.1,2)),{pos:[0,-.2,0],col:C(0x4e2c16),nz:.5,ns:1.1,na:[.35,6,7],sp:.12,sh:20,refl:.08});
 E3.add(E3.Q,{pos:[0,3,-3.4],scl:[10,4.5,1],col:C(0x2c1a10),nz:.3,ns:1.3,sp:0,rim:0});
 for(let i=0;i<9;i++)E3.add(SPH,{pos:[-4+i,4.3+Math.sin(i)*.15,-3.2],scl:[.15,.18,.15],col:C(0xffb060),emi:C(0xd0803a),mode:1});
@@ -338,6 +338,16 @@ const cart=E3.add(E3.mesh(GEO.rbox(5.5,.5,2.6,.08,3)),{pos:[0,.25,SPZ],col:C(0x9
 E3.blob(cart,3.4,-.245,.55);
 E3.add(E3.mesh(GEO.rbox(5.2,.12,2.3,.04,3)),{pos:[0,TY-.06,SPZ],col:C(0x2a2826),sp:.6,sh:40,nz:.3,ns:4});
 E3.add(E3.mesh(GEO.rbox(5.3,.18,.08,.03,2)),{pos:[0,TY+.03,SPZ-1.15],col:C(0x6a6e72),sp:1});
+/* stall dressing: splash panel, shelf, ice tray of oysters, eggs, sauce bottles, hanging bulbs */
+E3.add(E3.mesh(GEO.rbox(5.6,1.25,.07,.02,2)),{pos:[0,TY+.62,SPZ-1.3],col:C(0xa9adb0),sp:1.1,sh:70,rim:.3,nz:.15,ns:3});
+E3.add(E3.mesh(GEO.rbox(5.5,.06,.38,.02,2)),{pos:[0,TY+.86,SPZ-1.08],col:C(0x6a4428),nz:.4,ns:3,na:[.3,5,5],sp:.2});
+{const tray=E3.group({pos:[-1.75,TY+.89,SPZ-1.08]});E3.add(E3.mesh(GEO.rbox(1.1,.1,.32,.02,2)),{parent:tray,pos:[0,.05,0],col:C(0xe8ecef),sp:1});
+ for(let j=0;j<26;j++)E3.add(SPH,{parent:tray,pos:[rnd(-.48,.48),.1,rnd(-.12,.12)],scl:[.04,.03,.04],col:[.88,.94,.98],a:.85,sp:2.4,sh:160,refl:.5,order:2});
+ for(let j=0;j<9;j++)E3.add(SPH,{parent:tray,pos:[-.4+j*.1,.13,rnd(-.06,.06)],rot:[0,j,0],scl:[.055,.022,.04],col:j%2?[.92,.9,.86]:[.8,.76,.7],sp:2,sh:140})}
+{const crate=E3.group({pos:[-.35,TY+.89,SPZ-1.08]});E3.add(E3.mesh(GEO.rbox(.7,.06,.3,.02,2)),{parent:crate,pos:[0,.03,0],col:C(0xc8a878),nz:.5,ns:20});
+ for(let j=0;j<10;j++)E3.add(SPH,{parent:crate,pos:[-.28+(j%5)*.14,.1,j<5?-.06:.06],scl:[.055,.07,.055],col:C(0xf6e8d2),sp:.8,sh:60})}
+[0xe0482e,0x7a0e06,0xe0482e,0xf2c44a,0x7a0e06].forEach((c,j)=>{const b=E3.group({pos:[.65+j*.32,TY+.89,SPZ-1.08]});E3.add(E3.mesh(GEO.lathe([[0,0],[.09,0],[.1,.03],[.1,.3],[.08,.35],[.035,.38],[0,.38]],16)),{parent:b,col:C(c),sp:1.2,sh:90});E3.add(E3.mesh(GEO.lathe([[0,0],[.035,0],[.008,.15],[0,.16]],8)),{parent:b,pos:[0,.37,0],col:C(0xf6f3ee)})});
+const BULBS=[-1.7,0,1.7].map(x=>{E3.add(E3.mesh(GEO.lathe([[0,0],[.008,0],[.008,1],[0,1]],6)),{pos:[x,TY+1.55,SPZ-.45],scl:[1,1.2,1],col:C(0x222222)});return E3.add(SPH,{pos:[x,TY+1.5,SPZ-.45],scl:[.11,.14,.11],col:[1,.85,.55],emi:C(0xffc060),mode:1})});
 const flame=E3.add(E3.mesh(GEO.rbox(4.9,.05,.1,.02,2)),{pos:[0,.38,SPZ+1.31],col:[1,.5,.15],emi:C(0xff7020),mode:1});
 const wob=t=>1+.08*Math.sin(3*t+.5)+.05*Math.sin(5*t+1.3)+.03*Math.sin(9*t);
 const BLOB=E3.mesh(GEO.pillow(wob,.06,6,72)),BLOBF=E3.mesh(GEO.pillow(wob,.11,8,72)),EGGM=E3.mesh(GEO.pillow(t=>1+.12*Math.sin(2*t+1)+.06*Math.sin(5*t),.05,6,60)),SHRIMP=E3.mesh(GEO.torus(1,.42,18,8));
@@ -349,13 +359,14 @@ const spots=SPX.map((x,i)=>{const g=E3.group({pos:[x,TY,SPZ]});
   const stack=E3.group({parent:g});
   const protN=E3.group({parent:stack,vis:false});
   const slN=E3.add(BLOB,{parent:stack,pos:[0,.008,0],col:[.96,.96,.97],a:.9,sp:1.6,sh:140,refl:.2,order:3,vis:false});
-  const eggN=E3.group({parent:stack,vis:false});const white=E3.add(EGGM,{parent:eggN,pos:[0,.06,0],scl:[.42,1,.34],col:[1,.99,.96],sp:1,sh:90});const yolk=E3.add(SPH,{parent:eggN,pos:[.05,.11,.02],scl:[.13,.07,.13],col:C(0xffb020),sp:1.6,sh:120});
+  const eggN=E3.group({parent:stack,vis:false});for(let j=0;j<9;j++){const a=j*2.3,r=j?rnd(.08,.3):0;E3.add(SPH,{parent:eggN,pos:[Math.cos(a)*r,.075+j*.002,Math.sin(a)*r*.8],rot:[0,a,0],scl:[rnd(.1,.17),.022,rnd(.07,.12)],col:j%3?[1,.83,.32]:[1,.97,.9],sp:1,sh:80})}const white=null,yolk=null;
   const grN=E3.group({parent:stack,vis:false});for(let j=0;j<8;j++){const a=j*.8;const lf=E3.group({parent:grN,pos:[Math.cos(a)*.28,.13,Math.sin(a)*.2],rot:[0,a,.12]});
     E3.add(SPH,{parent:lf,pos:[.06,0,0],scl:[.17,.016,.075],col:C(j%2?0x3f9a32:0x5cb84a),sp:1,sh:70});E3.add(SPH,{parent:lf,pos:[-.1,0,0],scl:[.08,.014,.018],col:C(0xcfe8b0),sp:.6})}
+  const crumbs=E3.group({parent:stack,vis:false});for(let j=0;j<10;j++){const a=j/10*Math.PI*2+rnd(-.2,.2),r=SR*rnd(.78,.98);E3.add(SPH,{parent:crumbs,pos:[Math.cos(a)*r,.03,Math.sin(a)*r*.82],scl:[.03,.018,.03],col:[.62,.38,.15],nz:.4,ns:40,sp:.8})}
   const flN=E3.add(BLOBF,{parent:stack,pos:[0,-.008,0],rot:[Math.PI,0,0],scl:[SR*.95,1,SR*.78],col:[.85,.6,.3],nz:.5,ns:7,sp:1,sh:70,vis:false});
   const laceN=E3.add(LACE,{parent:stack,pos:[0,-.004,0],rot:[Math.PI,0,0],scl:[SR*.95,1,SR*.78],col:[.58,.34,.14],nz:.6,ns:9,sp:.9,sh:60,vis:false});
-  return{i,x,g,ringN,oilN,stack,protN,slN,eggN,white,yolk,grN,flN,laceN,pieces:[]}});
-function resetSpot(s){Object.assign(s,{oilAmt:0,oiled:false,prot:null,t:0,slAmt:0,slurryAt:null,slurry:false,egg:false,eggT:0,greens:false,p:0,flipped:false,flipQ:null,pFlip:0,p2:0,flipT:0});s.pieces.forEach(n=>E3.remove(n));s.pieces=[]}
+  return{i,x,g,ringN,oilN,stack,protN,slN,eggN,white,yolk,grN,crumbs,flN,laceN,pieces:[]}});
+function resetSpot(s){Object.assign(s,{oilAmt:0,oiled:false,prot:null,t:0,slAmt:0,slurryAt:null,slurry:false,egg:false,eggT:0,greens:false,grT:0,p:0,flipped:false,flipQ:null,pFlip:0,p2:0,flipT:0});s.pieces.forEach(n=>E3.remove(n));s.pieces=[]}
 spots.forEach(resetSpot);
 const busy=s=>s.oilAmt>0;
 /* ---- props you pick up ---- */
@@ -381,6 +392,21 @@ function bottle(col,label){const g=E3.group();E3.add(E3.mesh(GEO.lathe([[0,0],[.
 const SB_HOME=[-1.55,0,PLATE[2]+.25],HB_HOME=[1.55,0,PLATE[2]+.25];
 const sweetB=bottle(0xe0482e,0xfff1d6),hotB=bottle(0x7a0e06,0xffd56a);sweetB.pos=SB_HOME.slice();hotB.pos=HB_HOME.slice();
 E3.blob(sweetB,.3,.005,.4);E3.blob(hotB,.3,.005,.4);
+/* ingredient bowls you pick from */
+const BOWLS={oyster:[-2.05,SPZ+1.68],shrimp:[-1.2,SPZ+1.72],egg:[1.2,SPZ+1.72],greens:[2.05,SPZ+1.68]};
+const BOWLM=E3.mesh(GEO.lathe([[0,0],[.16,0],[.26,.12],[.3,.2],[.28,.21],[.22,.13],[.14,.04],[0,.04]],28));
+Object.entries(BOWLS).forEach(([k,[x,z]])=>{const g=E3.group({pos:[x,0,z]});E3.add(BOWLM,{parent:g,col:C(k==='egg'?0xc8a878:0xf2f0ec),sp:.9,sh:60,nz:k==='egg'?.5:0,ns:20});E3.blob(g,.36,.005,.4);
+  for(let j=0;j<(k==='egg'?3:6);j++){const a=j*2.1,r=j?.1:0,o={parent:g,pos:[Math.cos(a)*r,.15+(j?0:.02),Math.sin(a)*r]};
+    if(k==='oyster'){E3.add(SPH,Object.assign(o,{scl:[.08,.035,.06],rot:[0,a,0],col:OYC[j%2],nz:.4,ns:22,sp:2,sh:140}))}
+    else if(k==='shrimp')E3.add(SHRIMP,Object.assign(o,{scl:[.055,.055,.055],rot:[0,a,0],col:C(0xffa07a),sp:1.2}));
+    else if(k==='egg')E3.add(SPH,Object.assign(o,{pos:[Math.cos(a)*.09,.2,Math.sin(a)*.09],scl:[.08,.1,.08],col:C(0xf6e8d2),sp:.8,sh:60}));
+    else E3.add(SPH,Object.assign(o,{scl:[.14,.015,.06],rot:[0,a,.3],col:C(j%2?0x3f9a32:0x5cb84a),sp:1}))}
+  BOWLS[k].g=g});
+const held=E3.group({vis:false}),heldK={};
+['oyster','shrimp','egg','greens'].forEach(k=>{const g=E3.group({parent:held,vis:false});heldK[k]=g;
+  for(let j=0;j<(k==='egg'?1:4);j++){const a=j*1.6,o={parent:g,pos:[Math.cos(a)*.07,0,Math.sin(a)*.07]};
+    if(k==='oyster')E3.add(SPH,Object.assign(o,{scl:[.08,.035,.06],col:OYC[j%2],sp:2,sh:140}));else if(k==='shrimp')E3.add(SHRIMP,Object.assign(o,{scl:[.055,.055,.055],col:C(0xffa07a),sp:1.2}));
+    else if(k==='egg')E3.add(SPH,Object.assign(o,{pos:[0,0,0],scl:[.1,.13,.1],col:C(0xf6e8d2),sp:.9,sh:70}));else E3.add(SPH,Object.assign(o,{scl:[.15,.016,.065],rot:[0,a,.2],col:C(0x4caf3a),sp:1}))}});
 const streamOil=E3.add(E3.mesh(GEO.lathe([[0,0],[.018,0],[.012,1],[0,1]],8)),{col:[1,.8,.35],a:.85,sp:2,sh:120,vis:false,order:3});
 const streamSl=E3.add(E3.mesh(GEO.lathe([[0,0],[.045,0],[.03,1],[0,1]],10)),{col:[.95,.95,.96],sp:1.2,vis:false});
 /* plate */
@@ -390,11 +416,13 @@ E3.blob(plate,1.2,-.025,.4);
 const dish=E3.group({parent:plate,pos:[0,.02,0],vis:false});
 const dishB=E3.add(BLOBF,{parent:dish,scl:[.62,1,.48],col:[.85,.6,.3],nz:.5,ns:7,sp:1,sh:70});
 const dishLace=E3.add(LACE,{parent:dish,pos:[0,-.005,0],scl:[.62,1,.48],col:[.58,.34,.14],nz:.6,ns:9,sp:.9});
+const dishEgg=E3.group({parent:dish});for(let j=0;j<8;j++){const a=j*2.4,r=j?rnd(.1,.36):0;E3.add(SPH,{parent:dishEgg,pos:[Math.cos(a)*r,.11,Math.sin(a)*r*.6],rot:[0,a,0],scl:[rnd(.09,.14),.02,rnd(.06,.1)],col:j%3?[1,.8,.3]:[1,.96,.86],sp:1,sh:80})}
 const dishGr=E3.group({parent:dish});for(let j=0;j<6;j++)E3.add(SPH,{parent:dishGr,pos:[Math.cos(j*1.1)*.34,.12,Math.sin(j*1.1)*.22],rot:[0,j,.1],scl:[.15,.015,.06],col:C(0x3f9a32),sp:1});
 const dishProt=E3.group({parent:dish});
 const DROP=E3.mesh(GEO.sphere(1,12,8));
 const tags=makeTags($('#tags'));
-const O={sel:0,plate:null,drops:[],sweetN:0,hotN:0,el:0,tool:null,ptr:null,dropT:0};
+const HEAT=[.75,1,1.35],UPG=[{k:'autoOil',n:'小幫手下油',d:'空著的鐵板會自動幫你下好油'},{k:'fast',n:'大火爐',d:'所有東西都煎得快 20%'},{k:'patient',n:'熟客上門',d:'客人耐心多 30%'},{k:'tip',n:'招牌甜辣醬',d:'完美出餐多給 $10 小費'}];
+const O={heat:1,up:{},chosen:{},sel:0,plate:null,drops:[],sweetN:0,hotN:0,el:0,tool:null,ptr:null,dropT:0};
 function frame(W,H){const tgt=[0,.5,SPZ+1.05],dir=norm([0,1.3,1]),vf=E3.cam.fov*Math.PI/360,hf=Math.atan(Math.tan(vf)*W/H),d=Math.max(3.25/Math.tan(hf),2.3/Math.tan(vf));
   E3.cam.tgt=tgt;E3.cam.pos=[tgt[0]+dir[0]*d,tgt[1]+dir[1]*d,tgt[2]+dir[2]*d]}
 function addProt(s,k){const n=k==='oyster'?8:6;for(let j=0;j<n;j++){const a=j/n*Math.PI*2+rnd(-.3,.3),r=rnd(.12,.38),px=Math.cos(a)*r,pz=Math.sin(a)*r*.8;
@@ -403,17 +431,19 @@ function addProt(s,k){const n=k==='oyster'?8:6;for(let j=0;j<n;j++){const a=j/n*
   else s.pieces.push(E3.add(SHRIMP,{parent:s.protN,pos:[px,.05,pz],rot:[0,a,0],scl:[.075,.075,.075],col:C(0xffa07a),nz:.3,ns:30,sp:1.2,sh:90}))}}
 function nextStep(s){if(!s.oiled)return'拿油壺下油';if(!s.prot)return'放蚵仔／蝦仁';if(!s.slurry)return s.t<SEAR?'煎香中…':'用杓子淋粉漿';if(s.slAmt<.7)return'粉漿再多一點';if(!s.egg)return'打蛋';if(!s.greens)return'放青菜';
   if(!s.flipped)return s.p<FLIP0?'等底部焦脆':s.p<=FLIP1?'翻面！':'快翻！要焦了';return s.p2<DONE0?'等另一面熟':s.p2<=DONE1?'起鍋！':'快起鍋！'}
-function act(k){if(!S.run)return;const s=spots[O.sel];
+const NEED={oil:s=>!s.oiled&&!s.prot,oyster:s=>s.oiled&&!s.prot,shrimp:s=>s.oiled&&!s.prot,slurry:s=>!!s.prot&&!s.flipped&&s.slAmt<.7,egg:s=>s.slurry&&s.slAmt>=.5&&!s.egg,greens:s=>s.slurry&&s.slAmt>=.5&&!s.greens,flip:s=>s.egg&&s.greens&&!s.flipped,up:s=>s.flipped&&s.flipT>=1};
+function pickSpot(k){const order=[O.sel,...[0,1,2].filter(i=>i!==O.sel)],i=order.find(i=>NEED[k](spots[i]));if(i!==undefined)O.sel=i;return i}
+function act(k){if(!S.run)return;pickSpot(k);const s=spots[O.sel];
   if(k==='oyster'||k==='shrimp'){if(!s.oiled){toast('先用油壺下油','#ffd56a');return}if(s.prot){toast('已經放料了','#f3ead2');return}s.prot=k;s.t=0;addProt(s,k);noise(.7,.22,2600);beep(560,.05);return}
   if(k==='egg'){if(!s.slurry||s.slAmt<.5){toast('先淋粉漿','#ffd56a');return}if(s.egg){toast('已經打過蛋','#f3ead2');return}s.egg=true;s.eggT=0;beep(700,.05);noise(.3,.1,3000);return}
   if(k==='greens'){if(!s.slurry||s.slAmt<.5){toast('先淋粉漿','#ffd56a');return}if(s.greens){toast('已經放過青菜','#f3ead2');return}s.greens=true;beep(640,.05)}}
-function flip(){if(!S.run)return;const s=spots[O.sel];if(!s.slurry){toast('還不能翻','#ffd56a');return}if(s.flipped){toast('已經翻過了','#f3ead2');return}
+function flip(){if(!S.run)return;pickSpot('flip');const s=spots[O.sel];if(!s.slurry){toast('還不能翻','#ffd56a');return}if(s.flipped){toast('已經翻過了','#f3ead2');return}
   if(!s.egg||!s.greens){toast(!s.egg?'還沒打蛋':'還沒放青菜','#ffd56a');return}
   s.flipQ=s.p<FLIP0?'early':s.p>FLIP1+.25?'burnt':s.p>FLIP1?'late':'good';s.pFlip=s.p;s.flipped=true;s.flipT=0;s.p2=0;
   noise(.4,.15,2800);beep(s.flipQ==='good'?880:300,.1,'triangle');toast(s.flipQ==='good'?'漂亮翻面！':s.flipQ==='early'?'太早翻，散掉了':'底部有點焦',s.flipQ==='good'?'#ffd56a':'#ffb08a');if(s.flipQ==='good')buzz(12)}
 const crustCol=p=>p<FLIP0?[.93,.88,.74]:p<=FLIP1?[.86,.6,.28]:p<=FLIP1+.25?[.62,.36,.16]:[.25,.15,.08];
 function clearDrops(){O.drops.forEach(n=>E3.remove(n));O.drops=[];O.sweetN=O.hotN=0}
-function serveUp(){if(!S.run)return;const s=spots[O.sel];if(!s.flipped||s.flipT<1){toast('還沒翻面','#ffd56a');return}if(O.plate){toast('盤子上還有一份，先出餐','#ffd56a');return}
+function serveUp(){if(!S.run)return;pickSpot('up');const s=spots[O.sel];if(!s.flipped||s.flipT<1){toast('還沒翻面','#ffd56a');return}if(O.plate){toast('盤子上還有一份，先出餐','#ffd56a');return}
   const seared=(s.slurryAt||0)>=SEAR,q2=s.p2<DONE0?'raw':s.p2>DONE1+.3?'burnt':'ok',thin=s.slAmt<.7,good=seared&&!thin&&s.flipQ==='good'&&q2==='ok';
   O.plate={prot:s.prot,good,why:!seared?'海鮮沒煎香':thin?'粉漿太少':s.flipQ==='early'?'散掉了':s.flipQ!=='good'?'有點焦':q2==='raw'?'還沒熟':q2==='burnt'?'煎焦了':''};
   E3.nodes.filter(n=>n.parent===dishProt).forEach(n=>E3.remove(n));
@@ -423,7 +453,18 @@ function serveUp(){if(!S.run)return;const s=spots[O.sel];if(!s.flipped||s.flipT<
 const sauceOK=()=>({sweet:O.sweetN>=30,hot:O.hotN>=10,sweetLow:O.sweetN>0&&O.sweetN<30,hotLow:O.hotN>0&&O.hotN<10});
 function spotAt(x,y){let best=-1,bd=1e9;spots.forEach((s,i)=>{const p=E3.project([s.x,TY,SPZ]),q=E3.project([s.x+SR,TY,SPZ]),r=Math.max(40,Math.abs(q[0]-p[0])*1.15),d=Math.hypot(x-p[0],y-p[1]);if(d<r&&d<bd){bd=d;best=i}});return best}
 function grab(x,y){const near=(n,l,r)=>{const p=E3.project(E3.worldPos(n,l));return Math.hypot(x-p[0],y-p[1])<r};
-  if(near(oilPot,[0,.35,0],55))return'oil';if(near(ladle,[0,0,0],50)||near(bucket,[0,.4,0],55))return'slurry';if(near(sweetB,[0,.35,0],45))return'sweet';if(near(hotB,[0,.35,0],45))return'hot';return null}
+  const C2=[['ing:oyster',E3.worldPos(BOWLS.oyster.g,[0,.15,0]),44],['ing:shrimp',E3.worldPos(BOWLS.shrimp.g,[0,.15,0]),44],['ing:egg',E3.worldPos(BOWLS.egg.g,[0,.15,0]),44],['ing:greens',E3.worldPos(BOWLS.greens.g,[0,.15,0]),44],
+    ['spat',SPAT_HOME,48],['oil',[OIL_HOME[0],.35,OIL_HOME[2]],58],['slurry',LADLE_HOME,52],['slurry',[SLB_HOME[0],.4,SLB_HOME[2]],58],['sweet',[SB_HOME[0],.35,SB_HOME[2]],50],['hot',[HB_HOME[0],.35,HB_HOME[2]],50]];
+  let best=null,bd=1e9;C2.forEach(([k,w,r])=>{const p=E3.project(w),d=Math.hypot(x-p[0],y-p[1]);if(d<r&&d<bd){bd=d;best=k}});return best}
+function addDrop(x,z,hot){const r=hot?.032:.05;O.drops.push(E3.add(DROP,{pos:[x,PLY+.14+(hot?.012:0),z],scl:[r,r*.32,r],col:C(hot?0x6e0c04:0xe0482e),sp:2,sh:150,refl:.3}));if(hot)O.hotN++;else O.sweetN++}
+function tapTool(T){if(!S.run)return;
+  if(T.startsWith('ing:'))return act(T.slice(4));if(T==='spat')return flip();
+  if(T==='oil'){const i=pickSpot('oil');if(i===undefined){toast('沒有要下油的鐵板','#f3ead2');return}const s=spots[i];s.oilAmt=1;s.oiled=true;O.anim={k:'oil',i,t:0};noise(.6,.18,3000);beep(500,.05);return}
+  if(T==='slurry'){const i=pickSpot('slurry');if(i===undefined){toast(spots.some(s=>s.oiled&&!s.prot)?'先放蚵仔或蝦仁':'現在不用淋粉漿','#ffd56a');return}const s=spots[i];
+    if(!s.slurry){s.slurry=true;s.slurryAt=s.t;s.p=0;if(s.t<SEAR)toast('料還沒煎香就淋了','#ffb08a')}s.slAmt=1;O.anim={k:'slurry',i,t:0};noise(.6,.15,1800,'bandpass');beep(420,.06);return}
+  if(T==='sweet'||T==='hot'){if(!O.plate){toast('先起鍋再淋醬','#ffd56a');return}const hot=T==='hot';if(hot?O.hotN>=10:O.sweetN>=30){toast('已經淋夠了','#f3ead2');return}
+    const rows=hot?2:4,per=hot?8:10;for(let r=0;r<rows;r++)for(let j=0;j<per;j++){const u=j/(per-1),x=PLATE[0]-.48+u*.96,z=PLATE[2]+(-.22+r*(.44/Math.max(1,rows-1)))*(hot?.6:1)+(j%2?.05:-.05);addDrop(x,z,hot)}
+    O.anim={k:T,t:0};noise(.5,.08,1200,'lowpass');beep(hot?650:600,.06);updSum()}}
 const planeOf=t=>t==='sweet'||t==='hot'?PLY:TY+.05;
 boot({key:'oyster',gl:true,round:120,patience:50,loop:true,goal:d=>240+d*140,
   layout:frame,
@@ -438,23 +479,24 @@ boot({key:'oyster',gl:true,round:120,patience:50,loop:true,goal:d=>240+d*140,
     let pay=O.plate.good?60:34,msg=O.plate.why,ok=true;
     if(o.sauce&&!q.sweet){ok=false;msg=q.sweetLow?'醬太少了':'醬呢？'}else if(!o.sauce&&O.sweetN>0){ok=false;msg='我不要醬'}
     else if(o.spicy&&!q.hot){ok=false;msg=q.hotLow?'不夠辣':'我要加辣'}else if(!o.spicy&&O.hotN>0){ok=false;msg='太辣了！'}
-    if(!ok)pay=Math.round(pay*.55);return O.plate.good&&ok?{pay:pay+8,perfect:true}:{pay,msg}},
+    if(!ok)pay=Math.round(pay*.55);return O.plate.good&&ok?{pay:pay+8+(O.up.tip?10:0),perfect:true}:{pay,msg}},
   clear(){O.plate=null;clearDrops()},
   sum(){if(!O.plate)return'盤子是空的';const q=sauceOK();return`<span class="bag"><img src="${dishIcon(O.plate.prot)}" alt="">${PROT[O.plate.prot]}煎</span><span style="font-weight:500;font-size:14px">${O.plate.good?'香酥':O.plate.why}${O.sweetN?` · 甜辣醬${q.sweetLow?'（少）':''}`:''}${O.hotN?` · 辣醬${q.hotLow?'（少）':''}`:''}</span>`},
-  update(dt,run){let n=0;spots.forEach(s=>{if(!busy(s))return;n++;if(!run)return;if(s.prot&&!s.slurry)s.t+=dt;if(s.slurry&&!s.flipped)s.p+=dt/6;if(s.egg)s.eggT=Math.min(1,s.eggT+dt/3);if(s.flipped){s.p2+=dt/5;s.flipT=Math.min(1,s.flipT+dt*2.6)}});
+  update(dt,run){let n=0;const hm=HEAT[O.heat]*(O.up.fast?1.2:1);
+    if(run&&O.up.autoOil)spots.forEach(s=>{if(!s.oiled&&!s.prot&&s.oilAmt===0){s.idle=(s.idle||0)+dt;if(s.idle>.8){s.idle=0;s.oilAmt=1;s.oiled=true;noise(.3,.1,3000)}}});
+    spots.forEach(s=>{if(!busy(s))return;n++;if(!run)return;if(s.prot&&!s.slurry)s.t+=dt*hm;if(s.slurry&&!s.flipped)s.p+=dt/6*hm;if(s.egg)s.eggT=Math.min(1,s.eggT+dt/3);if(s.greens)s.grT=Math.min(1,s.grT+dt/5);if(s.flipped){s.p2+=dt/5*hm;s.flipT=Math.min(1,s.flipT+dt*2.6)}});
     if(O.tool&&O.ptr&&S.run){const p=O.ptr;
       if(O.tool==='oil'||O.tool==='slurry'){const i=spots.findIndex(s=>Math.hypot(p[0]-s.x,p[2]-SPZ)<SR*.9);if(i>=0){const s=spots[i];O.sel=i;
-        if(O.tool==='oil'&&!s.slurry){s.oilAmt=Math.min(1.3,s.oilAmt+dt*.9);if(s.oilAmt>=.6&&!s.oiled){s.oiled=true;noise(.5,.18,3000)}}
-        if(O.tool==='slurry'){if(!s.prot){if(!O.warned){O.warned=true;toast('先放蚵仔或蝦仁','#ffd56a')}}else if(!s.flipped){if(!s.slurry){s.slurry=true;s.slurryAt=s.t;s.p=0;noise(.6,.15,1800,'bandpass');if(s.t<SEAR)toast('料還沒煎香就淋了','#ffb08a')}s.slAmt=Math.min(1.5,s.slAmt+dt*.7)}}}}
-      else if(O.plate){const dx=(p[0]-PLATE[0])/.6,dz=(p[2]-PLATE[2])/.38;O.dropT+=dt;if(dx*dx+dz*dz<1&&O.dropT>.016&&O.drops.length<260){O.dropT=0;const hot=O.tool==='hot',r=hot?.032:.05;
-        O.drops.push(E3.add(DROP,{pos:[p[0]+rnd(-.01,.01),PLY+.14+(hot?.012:0),p[2]],scl:[r,r*.32,r],col:C(hot?0x6e0c04:0xe0482e),sp:2,sh:150,refl:.3}));if(hot)O.hotN++;else O.sweetN++;if(O.drops.length%6===0){updSum();noise(.08,.05,1200,'lowpass')}}}}
+        if(O.tool==='oil'&&!s.slurry){s.oilAmt=Math.min(1.3,s.oilAmt+dt*1.15);if(s.oilAmt>=.6&&!s.oiled){s.oiled=true;noise(.5,.18,3000)}}
+        if(O.tool==='slurry'){if(!s.prot){if(!O.warned){O.warned=true;toast('先放蚵仔或蝦仁','#ffd56a')}}else if(!s.flipped){if(!s.slurry){s.slurry=true;s.slurryAt=s.t;s.p=0;noise(.6,.15,1800,'bandpass');if(s.t<SEAR)toast('料還沒煎香就淋了','#ffb08a')}s.slAmt=Math.min(1.5,s.slAmt+dt*.95)}}}}
+      else if(O.plate){const dx=(p[0]-PLATE[0])/.6,dz=(p[2]-PLATE[2])/.38;O.dropT+=dt;if(dx*dx+dz*dz<1&&O.dropT>.03&&O.drops.length<150){O.dropT=0;addDrop(p[0]+rnd(-.01,.01),p[2],O.tool==='hot');if(O.drops.length%6===0){updSum();noise(.08,.05,1200,'lowpass')}}}}
     loopVol(run?Math.min(.12,.03*n):0)},
   draw(_,W,H,dt){if(!E3)return;O.el+=dt;const el=O.el;let ti=0,flipping=null;
     spots.forEach((s,i)=>{const fl=s.flipped&&s.flipT>.5;s.ringN.a=i===O.sel?.55+.3*Math.sin(el*5):0;
       s.oilN.vis=s.oilAmt>0&&!s.slurry;const oe=SR*Math.min(1.05,.25+.65*s.oilAmt);s.oilN.scl=[oe,1,oe*.85];
       s.protN.vis=!!s.prot&&!fl;const sear=Math.min(1,s.t/SEAR);s.pieces.forEach((n,j)=>{if(s.prot==='oyster'&&j%2===0)n.col=[.42-.12*sear,.4-.12*sear,.37-.12*sear]});
-      const k=Math.min(1,s.p/1),sa=Math.min(1.2,s.slAmt);s.slN.vis=s.slurry&&!fl;s.slN.scl=[SR*(.45+.55*sa),1,SR*.82*(.45+.55*sa)];s.slN.col=[.96-.1*k,.96-.13*k,.97-.25*k];s.slN.a=.82+.15*k;
-      s.eggN.vis=s.egg&&!fl;s.white.scl=[.42+.08*s.eggT,1,.34+.06*s.eggT];s.yolk.scl=[.13+.05*s.eggT,.07-.03*s.eggT,.13+.04*s.eggT];s.grN.vis=s.greens&&!fl;
+      const k=Math.min(1,s.p/1),sa=Math.min(1.2,s.slAmt);s.slN.vis=s.slurry&&!fl;s.slN.scl=[SR*(.45+.55*sa),1,SR*.82*(.45+.55*sa)];s.slN.col=[.9-.04*k,.92-.08*k,.95-.22*k];s.slN.a=.5+.38*k;
+      s.eggN.vis=s.egg&&!fl;s.eggN.scl=[1+.4*s.eggT,1,1+.35*s.eggT];s.grN.vis=s.greens&&!fl;s.grN.scl=[1-.12*s.grT,1-.4*s.grT,1-.12*s.grT];s.crumbs.vis=s.slurry&&!fl&&s.p>.35;if(s.crumbs.vis){const c=Math.min(1,(s.p-.35)/.8);s.crumbs.scl=[1,.4+c,1]}
       s.flN.vis=fl;s.laceN.vis=fl&&s.flipQ!=='early';if(fl){s.flN.col=crustCol(s.pFlip);s.laceN.col=s.pFlip>FLIP1?[.35,.2,.08]:[.62,.38,.16]}
       if(s.flipped&&s.flipT<1){flipping=s;s.stack.rot=[s.flipT*Math.PI,0,0];s.stack.pos=[0,Math.sin(Math.PI*s.flipT)*.55,0]}else{s.stack.rot=[s.flipped?Math.PI:0,0,0];s.stack.pos=[0,s.flipped?.02:0,0]}
       if(busy(s)){const burn=(!s.flipped&&s.p>FLIP1+.25)||s.p2>DONE1+.3;
@@ -465,32 +507,49 @@ boot({key:'oyster',gl:true,round:120,patience:50,loop:true,goal:d=>240+d*140,
       if(t.dataset.k!==key){t.dataset.k=key;t.innerHTML=`<div class="step ${hot?'hot':''}">${i+1}號${idle?'':'・'+step}</div>`+(s.slurry?`<div class="mt ${s.flipped?'mb':'ma'}"><i></i></div>`:'')}
       t.firstChild.classList.toggle('sel',i===O.sel);const m=t.querySelector('.mt');if(m)m.style.setProperty('--p',Math.min(100,(s.flipped?s.p2/1.6:s.p/1.4)*100)+'%')});
     tags.hideFrom(ti);
-    const home=(g,h,kk)=>{for(let i=0;i<3;i++)g.pos[i]+=(h[i]-g.pos[i])*Math.min(1,dt*kk)};const T=O.tool,P=O.ptr;
+    if(O.anim){O.anim.t+=dt;if(O.anim.t>.75)O.anim=null}
+    const A=O.anim,home=(g,h,kk)=>{for(let i=0;i<3;i++)g.pos[i]+=(h[i]-g.pos[i])*Math.min(1,dt*kk)};let T=O.tool,P=O.ptr;
+    if(!T&&A){T=A.k;P=A.i!==undefined?[spots[A.i].x+Math.sin(A.t*9)*.12,TY+.05,SPZ+Math.cos(A.t*7)*.08]:[PLATE[0]-.45+A.t/.75*.9,PLY,PLATE[2]+Math.sin(A.t*30)*.15]}
     if(T==='oil'&&P){oilPot.pos=[P[0]+.5,TY+.55,P[2]];oilPot.rot=[0,0,.85];streamOil.vis=true;streamOil.pos=[P[0]+.02,TY,P[2]];streamOil.scl=[1,.62,1]}else{home(oilPot,OIL_HOME,10);oilPot.rot=[0,0,oilPot.rot[2]*.8];streamOil.vis=false}
     if(T==='slurry'&&P){ladle.pos=[P[0]+.15,TY+.7,P[2]];ladle.rot=[0,0,-1.1];streamSl.vis=true;streamSl.pos=[P[0]-.02,TY,P[2]];streamSl.scl=[1,.62,1];ladleFill.vis=false}else{home(ladle,LADLE_HOME,10);ladle.rot=[0,0,ladle.rot[2]*.8];streamSl.vis=false;ladleFill.vis=true}
     if(T==='sweet'&&P){sweetB.pos=[P[0],PLY+.8,P[2]];sweetB.rot=[0,0,Math.PI]}else{home(sweetB,SB_HOME,10);sweetB.rot=[0,0,sweetB.rot[2]*.75]}
     if(T==='hot'&&P){hotB.pos=[P[0],PLY+.8,P[2]];hotB.rot=[0,0,Math.PI]}else{home(hotB,HB_HOME,10);hotB.rot=[0,0,hotB.rot[2]*.75]}
-    if(flipping){spat.vis=true;spat.pos=[flipping.x,TY+.08+Math.sin(Math.PI*flipping.flipT)*.6,SPZ+.1];spat.rot=[flipping.flipT*Math.PI*.6,0,0]}else spat.vis=false;
+    held.vis=!!(T&&T.startsWith('ing:')&&P);Object.entries(heldK).forEach(([k,g])=>g.vis=T==='ing:'+k);if(held.vis)held.pos=[P[0],TY+.45+Math.sin(el*8)*.03,P[2]];
+    if(T==='spat'&&P&&!flipping){spat.vis=true;spat.pos=[P[0],TY+.25,P[2]+.1];spat.rot=[.25,0,0]}else if(flipping){spat.vis=true;spat.pos=[flipping.x,TY+.08+Math.sin(Math.PI*flipping.flipT)*.6,SPZ+.1];spat.rot=[flipping.flipT*Math.PI*.6,0,0]}else{spat.vis=true;spat.pos=SPAT_HOME.slice();spat.rot=[0,-Math.PI/2,0]}
     dish.vis=!!O.plate;
-    flame.emi=[.9+.15*Math.sin(el*9),.38,.1];
+    flame.emi=[.55+.3*O.heat+.15*Math.sin(el*9),.25+.1*O.heat,.06];BULBS.forEach((b,j)=>b.emi=[1,.75+.05*Math.sin(el*2+j),.38]);
+    if(S&&S.run&&DAY>1&&!O.chosen[DAY])showUpg();
     E3.stepParts(dt);E3.render(W,H);guide()},
-  down(x,y){const t=grab(x,y);if(t){if((t==='sweet'||t==='hot')&&!O.plate){toast('先起鍋再淋醬','#ffd56a');return}O.tool=t;O.warned=false;O.ptr=E3.unproject(x,y,planeOf(t));beep(480,.05);return}
+  down(x,y){O.dn={x,y,t:performance.now()};const t=grab(x,y);if(t){if((t==='sweet'||t==='hot')&&!O.plate){toast('先起鍋再淋醬','#ffd56a');return}O.tool=t;O.warned=false;O.ptr=E3.unproject(x,y,planeOf(t));O.moved=0;return}
     const i=spotAt(x,y);if(i>=0&&i!==O.sel){O.sel=i;beep(520,.04)}},
-  move(x,y){if(O.tool)O.ptr=E3.unproject(x,y,planeOf(O.tool))},
-  up(){if(O.tool==='sweet'||O.tool==='hot')updSum();O.tool=null;O.ptr=null}
+  move(x,y){if(O.tool){O.ptr=E3.unproject(x,y,planeOf(O.tool));if(O.dn)O.moved=Math.max(O.moved||0,Math.hypot(x-O.dn.x,y-O.dn.y))}},
+  up(){const T=O.tool,P=O.ptr;if(T&&(O.moved||0)<14&&O.dn&&performance.now()-O.dn.t<450){O.tool=null;O.ptr=null;tapTool(T);return}if(T==='sweet'||T==='hot')updSum();
+    if(T&&P&&(T.startsWith('ing:')||T==='spat')){const i=spots.findIndex(s=>Math.hypot(P[0]-s.x,P[2]-SPZ)<SR*1.05);
+      if(i>=0){O.sel=i;if(T==='spat')flip();else{const k=T.slice(4),before=JSON.stringify([spots[i].prot,spots[i].egg,spots[i].greens]);act(k);
+        if(JSON.stringify([spots[i].prot,spots[i].egg,spots[i].greens])!==before)for(let j=0;j<(k==='egg'?8:6);j++)E3.puff([P[0],TY+.1,P[2]],k==='egg'?{vx:rnd(-.8,.8),vy:rnd(.6,1.4),vz:rnd(-.8,.8),g:6,r:.03,grow:0,a:.95,col:[.96,.92,.84],life:.5,max:.5}:{vx:rnd(-.9,.9),vy:rnd(1,2),vz:rnd(-.9,.9),g:6,r:.02,grow:0,a:.9,col:[1,.85,.45],life:.45,max:.45})}}
+      else{if(T==='spat')flip();else act(T.slice(4))}}
+    O.tool=null;O.ptr=null}
 });
 /* spatula (declared after boot is fine: only used inside draw) */
-const spat=E3.group({vis:false});
+const SPAT_HOME=[.75,TY+.03,SPZ+1.08],spat=E3.group({vis:true,pos:SPAT_HOME.slice(),rot:[0,-Math.PI/2,0]});
 E3.add(E3.mesh(GEO.rbox(.6,.02,.45,.01,2)),{parent:spat,col:C(0xc9ccce),sp:1.4,sh:90});
 E3.add(E3.mesh(GEO.lathe([[0,0],[.03,0],[.03,1.1],[0,1.12]],8)),{parent:spat,pos:[0,0,.22],rot:[1.25,0,0],col:C(0x5a3a22),sp:.3});
 let lastG='';
 function guide(){const g=$('#guide');if(!g||!S)return;const s=spots[O.sel];let t='';
-  if(S.run){if(O.plate&&!spots.some(busy))t='按住醬料瓶，在蚵仔煎上畫圈淋醬，再點客人出餐';else t=`${O.sel+1}號鐵板：${nextStep(s)}　（點鐵板切換）`}
+  if(S.run){if(O.plate&&!spots.some(busy))t='點醬料瓶淋醬（也可按住自己畫），再點客人出餐';else t=`${O.sel+1}號鐵板：${nextStep(s)}　（點工具或食材就會自動做）`}
   if(t!==lastG){lastG=t;g.textContent=t;g.hidden=!t}}
 document.querySelectorAll('[data-a]').forEach(b=>{b.querySelector('img').src=iIcon(b.dataset.a);b.onclick=()=>act(b.dataset.a)});
 $('#flip').onclick=flip;$('#up').onclick=serveUp;
 $('#wipe').onclick=()=>{if(!O.drops.length)return;clearDrops();updSum();beep(300,.08)};
 $('#dumpo').onclick=()=>{if(!O.plate)return;O.plate=null;clearDrops();updSum();beep(200,.15,'square',.05)};
+
+
+function showUpg(){const left=UPG.filter(u=>!O.up[u.k]);O.chosen[DAY]=true;if(!left.length)return;S.run=false;
+  const pick3=left.sort(()=>Math.random()-.5).slice(0,3),m=$('#upg');m.querySelector('b').textContent=`第 ${DAY} 天開攤前，挑一個升級`;
+  m.querySelector('.ul').innerHTML=pick3.map(u=>`<button class="ub" data-u="${u.k}"><b>${u.n}</b><span>${u.d}</span></button>`).join('');m.hidden=false;
+  m.querySelectorAll('.ub').forEach(b=>b.onclick=()=>{const k=b.dataset.u;O.up[k]=true;if(k==='patient')G.patience=Math.round(50*1.3);m.hidden=true;S.run=true;beep(988,.1,'triangle');setTimeout(()=>beep(1319,.15,'triangle'),90);toast('升級：'+UPG.find(u=>u.k===k).n,'#ffd56a')})}
+function setHeat(h){O.heat=h;document.querySelectorAll('.heat button').forEach(b=>b.classList.toggle('on',+b.dataset.h===h))}
+document.querySelectorAll('.heat button').forEach(b=>b.onclick=()=>{setHeat(+b.dataset.h);beep(300+ +b.dataset.h*200,.06);if(+b.dataset.h===2)noise(.4,.12,2500)});
 
 }
 </script>
